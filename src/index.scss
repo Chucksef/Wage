@@ -1,7 +1,18 @@
-$primary: pink;
-
 @import "~bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=Bellota+Text:wght@300;400;700&display=swap');
+
+/* Remapping Color Variables */
+$primary: pink;
+$secondary: #657581;
+$success: #28a745;
+$info: #17a2b8;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #343a40;
 
 #logo {
 	color: $primary;
+	font-family: "Bellota Text", sans-serif;
+	font-weight: 300;
 }
