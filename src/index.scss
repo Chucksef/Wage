@@ -2,24 +2,155 @@
 @import url('https://fonts.googleapis.com/css2?family=Bellota+Text:wght@300;400;700&display=swap');
 
 /* Remapping Color Variables */
-$primary: pink;
-$secondary: #657581;
+
+$primary: #fbdde5;
+$secondary: #e88ca5;
+$control: #737172;
 $success: #28a745;
-$info: #17a2b8;
 $warning: #ffc107;
 $danger: #dc3545;
 $light: #f8f9fa;
-$dark: #343a40;
+$dark: #625c5c;
 
-#logo {
-	color: $primary;
-	font-family: "Bellota Text", sans-serif;
+/* VARIOUS BASIC STYLES */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+p {
 	font-weight: 300;
-	display: inline;
+	font-family: "Bellota Text", cursive;
+	color: white;
 }
 
-img {
-	height: 50px;
-	width: auto;
-	display: inline-block;
+div {
+	text-align: center;
+}
+
+hr {
+	border-bottom: 2px solid $secondary;
+	margin: 10px;
+}
+
+h1 {
+	font-size: 5em;
+	font-weight: 400;
+	margin-top: -20px;
+}
+
+h2 {
+	display: block;
+	position: relative;
+	left: 15%;
+	width: 70%;
+	font-size: 1.75em;
+}
+
+button {
+	border: none;
+	transition: .1s;
+	color: white;
+	width: 100%;
+	padding: .3em;
+	background: $control;
+	border-radius: 16px;
+	margin: .3em 0;
+	font-weight: 300;
+	font-size: 1.25em;
+	line-height: 1;
+}
+
+button:hover {
+	color: $control;
+	background: $primary;
+}
+
+button.btn-Large {
+	font-size: 2.25em;
+	padding: 1em;
+	font-weight: 300;
+	margin: 0;
+}
+
+/* BACKGROUND */
+
+#background {
+	position: absolute;
+	background: $primary;
+	height: 100vh;
+	width: 100vw;
+}
+
+#background::before {
+	content: "";
+	display: block;
+	position: absolute;
+	width: 50vw;
+	height: 100vh;
+	background: $dark;
+}
+
+#background::after {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+	background: radial-gradient(circle farthest-corner, transparent 50%, rgba(0, 0, 0, .4));
+}
+
+/* MAIN SITE STRUCTURE */
+
+#main {
+	position: absolute;
+	left: 14.6vw;
+	top: 0;
+	height: 100vh;
+	width: 70.8vw;
+	background: white;
+}
+
+#sidebar {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	z-index: 1;
+	width: 33%;
+	height: 100%;
+	background: $dark;
+	box-shadow: 2px 0px 25px rgba(0, 0, 0, .5);
+	padding: 1em;
+
+	#controls {
+		display: flex;
+		flex-direction: column;
+	}
+
+	#timer {
+		display: flex;
+		flex-direction: column;
+
+		svg {
+			position: relative;
+			left: 10%;
+			width: 100px;
+			height: auto;
+			fill: $secondary;
+		}
+	}
+}
+
+#display {
+	position: absolute;
+	width: 67%;
+	height: 100%;
+	left: 33%;
+	background: $primary;
+	box-shadow: 0px 0px 20px rgba(0, 0, 0, .5);
 }
