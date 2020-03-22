@@ -1,5 +1,5 @@
 @import "~bootstrap/scss/bootstrap";
-@import url('https://fonts.googleapis.com/css2?family=Bellota+Text:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bellota+Text:wght@300;400;700&display=swap'); // Google Fonts Import
 
 /* Remapping Color Variables */
 
@@ -14,7 +14,11 @@ $dark: #625c5c;
 
 /* VARIOUS BASIC STYLES */
 
-h1,
+:selected {
+	outline: none;
+}
+
+* h1,
 h2,
 h3,
 h4,
@@ -27,12 +31,16 @@ p {
 	color: white;
 }
 
+body {
+	overflow: hidden;
+}
+
 div {
 	text-align: center;
 }
 
 hr {
-	border-bottom: 2px solid $secondary;
+	border-bottom: 1px solid $secondary;
 	margin: 10px;
 }
 
@@ -51,22 +59,33 @@ h2 {
 }
 
 button {
-	border: none;
-	transition: .1s;
 	color: white;
-	width: 100%;
-	padding: .3em;
+	border: none;
 	background: $control;
-	border-radius: 16px;
-	margin: .3em 0;
+	border-radius: 20px;
 	font-weight: 300;
 	font-size: 1.25em;
 	line-height: 1;
+	outline: none;
 }
 
-button:hover {
-	color: $control;
-	background: $primary;
+button.btn-Block {
+	transition: color .1s;
+	width: 100%;
+	padding: .3em;
+	margin: .3em 0;
+}
+
+button.btn-Block:hover {
+	color: $primary;
+}
+
+button.btn-Block:focus {
+	position: relative;
+	left: -3px;
+	border: 3px solid $secondary;
+	outline: none;
+	margin: calc(.3em - 3px);
 }
 
 button.btn-Large {
@@ -74,6 +93,14 @@ button.btn-Large {
 	padding: 1em;
 	font-weight: 300;
 	margin: 0;
+}
+
+#logo {
+	position: relative;
+	left: -20%;
+	width: 25%;
+	height: auto;
+	fill: $secondary;
 }
 
 /* BACKGROUND */
@@ -106,20 +133,18 @@ button.btn-Large {
 
 /* MAIN SITE STRUCTURE */
 
+// Default/Large Screens
 #main {
 	position: absolute;
-	left: 14.6vw;
 	top: 0;
 	height: 100vh;
-	width: 70.8vw;
 	background: white;
+	left: 14.6vw;
+	width: 70.8vw;
 }
 
 #sidebar {
 	position: absolute;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
 	z-index: 1;
 	width: 33%;
 	height: 100%;
@@ -127,24 +152,58 @@ button.btn-Large {
 	box-shadow: 2px 0px 25px rgba(0, 0, 0, .5);
 	padding: 1em;
 
+	#header {
+		position: relative;
+		margin-bottom: 2em;
+	}
+
 	#controls {
-		display: flex;
-		flex-direction: column;
+		position: relative;
 	}
 
 	#timer {
-		display: flex;
-		flex-direction: column;
-
-		svg {
-			position: relative;
-			left: 10%;
-			width: 100px;
-			height: auto;
-			fill: $secondary;
-		}
+		position: absolute;
+		bottom: 1em;
+		width: calc(100% - 2em);
 	}
 }
+
+#user-buttons {
+	position: absolute;
+	right: 0;
+	top: 1em;
+	padding: 0;
+}
+
+button.btn-Icon {
+	position: relative;
+	right: -1.5em;
+	border-radius: 100%;
+	padding: 0;
+	margin: 0;
+
+	ion-icon {
+		width: 3em;
+		height: 3em;
+	}
+}
+
+// FOR MEDIUM WIDTH SCREENS
+@media only screen and (max-aspect-ratio: 1500/1080) {
+	#main {
+		left: 0;
+		width: 100vw;
+	}
+}
+
+// MOBILE STYLING
+@media only screen and (orientation: portrait) {
+	#main {
+		background: green;
+	}
+}
+
+/* DISPLAY/READOUT STYLING */
 
 #display {
 	position: absolute;
