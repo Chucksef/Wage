@@ -23,24 +23,75 @@ const TEMPLATES = {
 	entries: {
 		client: `
 			<div class="data-block first-block">
-				<h3>Client Name</h1>
+				<h3>%clientName</h1>
+			</div>
+			<div class="data-block">
+				<p>%lastClockedIn</p>
+				<p>%active</p>
+			</div>
+			<div class="data-block">
+				<p>%hourlyRate</p>
+				<p>%totalHours</p>
+			</div>	
+		`,
+		project: `
+			<div class="data-block first-block">
+				<h4>Project Name</h1>
+				<h5>Client Name</h2>
 			</div>
 			<div class="data-block">
 				<p>Last Clocked In</p>
-				<p>Active?</p>
+				<p>Completed?</p>
 			</div>
 			<div class="data-block">
 				<p>Hourly Rate</p>
 				<p>Total Hours</p>
-			</div>	
+			</div>
 		`,
 	},
 };
 
-class Readout {
-	constructor() {}
+class Client {
+	constructor(client) {
+		this.name = client.Name;
+		this.address = client.Address;
+		this.city = client.City;
+		this.state = client.State;
+		this.country = client.Country;
+		this.zip = client.Zip;
+		this.phone = client.Phone;
+		this.email = client.Email;
+		this.contact_name = client.Contact_name;
+		this.invoice_frequency = client.Invoice_frequency;
+		this.notes = client.Notes;
+		this.rate = client.Rate;
+		this.active = client.Active;
+	}
+}
 
-	static addEntry(entry) {
+class Project {
+	constructor(project) {
+		this.name = project.Name;
+		this.description = project.Description;
+		this.rate = project.Rate;
+		this.client_id = project.Client_id;
+		this.completed = project.Completed;
+		this.due_date = project.Due_date;
+	}
+}
+
+class Session {
+	constructor(session) {
+		this.session_id = session.Session_id;
+		this.clock_in = session.Clock_in;
+		this.clock_out = session.Clock_out;
+		this.breaks = session.Breaks;
+	}
+}
+
+class Readout {
+	static addClient(entry) {
+		//add element to DOM
 		DOM.readout.appendChild(entry);
 	}
 
@@ -49,9 +100,28 @@ class Readout {
 	}
 }
 
-let client = document.createElement("div");
-client.classList.add("entry");
-client.innerHTML = TEMPLATES.entries.client;
+function loadDB() {
+	Readout.clear();
 
-Readout.clear();
-Readout.addEntry(client);
+	let clients = {};
+
+	db.collection("Clients").get().then((client_snap) => {
+		client_snap.docs.forEach((client) => {
+			clients[`${client.id}`] = client.data();
+		});
+
+		Object.keys(clients).forEach((key) => {
+			let client = new Client(clients[key]);
+			let entry = document.createElement("div");
+			entry.classList.add("entry");
+
+			//replace relevant lines...
+			entry.innerHTML = TEMPLATES.entries.client
+				.replace(/%clientName/g, client.name)
+				.replace(/%hourlyRate/g, `$${client.rate} / hr`);
+			Readout.addClient(entry);
+		});
+	});
+}
+
+loadDB();
