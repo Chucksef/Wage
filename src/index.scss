@@ -3,14 +3,15 @@
 
 /* Remapping Color Variables */
 
+$default: #eee4e4;
 $primary: #fbdde5;
 $secondary: #e88ca5;
-$control: #756f6f;
+$control: #776a6a;
 $success: #28a745;
 $warning: #ffc107;
 $danger: #dc3545;
 $light: #f8f9fa;
-$dark: #635f5f;
+$dark: #615858;
 
 /* VARIOUS BASIC STYLES */
 
@@ -193,7 +194,7 @@ button.btn-Icon {
 	margin: 0;
 	outline: none;
 	transition: .15s;
-	background: $primary;
+	background: $default;
 	box-shadow: 0 10px 20px rgba(0, 0, 0, .4);
 
 	svg {
@@ -207,19 +208,19 @@ button.btn-Icon {
 
 		.st0 {
 			fill: none;
-			stroke: $control;
+			stroke: $secondary;
 			stroke-width: 10;
 			stroke-miterlimit: 10;
 		}
 		.st1 {
-			fill: $control;
-			stroke: $control;
+			fill: $secondary;
+			stroke: $secondary;
 			stroke-width: 10;
 			stroke-miterlimit: 10;
 		}
 		.st2 {
-			fill: $control;
-			stroke: $control;
+			fill: $secondary;
+			stroke: $secondary;
 			stroke-width: 10;
 			stroke-miterlimit: 10;
 		}
@@ -267,7 +268,7 @@ button.btn-Icon:hover {
 	height: 100%;
 	left: 33%;
 	padding: 1em;
-	background: $primary;
+	background: $default;
 	box-shadow: 0px 0px 20px rgba(0, 0, 0, .5);
 	overflow-y: auto;
 	overflow-y: -moz-scrollbars-none;
@@ -289,7 +290,7 @@ button.btn-Icon:hover {
 	margin-bottom: 1em;
 
 	div.data-block {
-		flex: 0 0 30.9%;
+		flex: 0 0 33.333%;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-evenly;
@@ -300,7 +301,6 @@ button.btn-Icon:hover {
 	}
 	div.data-block.first-block {
 		border-left: none;
-		flex: 0 0 38.2%;
 	}
 	div.data-block.first-block p {
 		text-align: left;
