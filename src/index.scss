@@ -281,11 +281,30 @@ button.btn-Icon:hover {
 
 .entry {
 	position: relative;
+	display: flex;
 	width: 100%;
 	background: white;
 	border-radius: 10px;
 	padding: 1em;
 	margin-bottom: 1em;
+
+	div.data-block {
+		flex: 0 0 30.9%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+		border-left: 1px solid $primary;
+	}
+	div.data-block p {
+		text-align: center;
+	}
+	div.data-block.first-block {
+		border-left: none;
+		flex: 0 0 38.2%;
+	}
+	div.data-block.first-block p {
+		text-align: left;
+	}
 
 	* {
 		text-align: left;

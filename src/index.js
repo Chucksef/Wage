@@ -14,3 +14,44 @@ let firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 const db = firebase.firestore();
+
+const DOM = {
+	readout: document.querySelector("#display"),
+};
+
+const TEMPLATES = {
+	entries: {
+		client: `
+			<div class="data-block first-block">
+				<h3>Client Name</h1>
+			</div>
+			<div class="data-block">
+				<p>Last Clocked In</p>
+				<p>Active?</p>
+			</div>
+			<div class="data-block">
+				<p>Hourly Rate</p>
+				<p>Total Hours</p>
+			</div>	
+		`,
+	},
+};
+
+class Readout {
+	constructor() {}
+
+	static addEntry(entry) {
+		DOM.readout.appendChild(entry);
+	}
+
+	static clear() {
+		DOM.readout.innerHTML = "";
+	}
+}
+
+let client = document.createElement("div");
+client.classList.add("entry");
+client.innerHTML = TEMPLATES.entries.client;
+
+Readout.clear();
+Readout.addEntry(client);
