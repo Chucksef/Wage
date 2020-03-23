@@ -70,7 +70,10 @@ button {
 }
 
 button.btn-Block {
-	transition: color .15s;
+	position: relative;
+	outline: none;
+	transition: .15s;
+	transition-property: background, color;
 	width: 100%;
 	padding: .3em;
 	margin: .3em 0;
@@ -78,12 +81,14 @@ button.btn-Block {
 
 button.btn-Block:hover {
 	color: $primary;
+	border: 1px solid $secondary;
+	margin: calc(.3em - 1px) 0;
 }
 
 button.btn-Block:focus {
-	position: relative;
 	left: -3px;
 	border: 3px solid $secondary;
+	color: $secondary;
 	outline: none;
 	margin: calc(.3em - 3px);
 }
@@ -93,6 +98,12 @@ button.btn-Large {
 	padding: 1em;
 	font-weight: 300;
 	margin: 0;
+}
+
+button.btn-Large.btn-Block {
+	left: 0;
+	margin: 0;
+	border: none;
 }
 
 #logo {
@@ -182,19 +193,56 @@ button.btn-Icon {
 	padding: 0;
 	margin: 0;
 	outline: none;
-	transition: background .15s;
+	transition: .15s;
 	background: $primary;
 	box-shadow: 0 10px 20px rgba(0, 0, 0, .4);
-	border: 2px solid white;
 
-	img {
+	svg {
 		width: 3em;
 		height: 3em;
+
+		path,
+		circle {
+			transition: .15s;
+		}
+
+		.st0 {
+			fill: none;
+			stroke: $control;
+			stroke-width: 10;
+			stroke-miterlimit: 10;
+		}
+		.st1 {
+			fill: $control;
+			stroke: $control;
+			stroke-width: 10;
+			stroke-miterlimit: 10;
+		}
+		.st2 {
+			fill: $control;
+			stroke: $control;
+			stroke-width: 10;
+			stroke-miterlimit: 10;
+		}
 	}
 }
 
 button.btn-Icon:hover {
 	background: white;
+
+	svg {
+		.st0 {
+			stroke: $secondary;
+		}
+		.st1 {
+			fill: $secondary;
+			stroke: $secondary;
+		}
+		.st2 {
+			fill: $secondary;
+			stroke: $secondary;
+		}
+	}
 }
 
 // FOR MEDIUM WIDTH SCREENS
