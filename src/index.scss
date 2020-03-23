@@ -70,7 +70,7 @@ button {
 }
 
 button.btn-Block {
-	transition: color .1s;
+	transition: color .15s;
 	width: 100%;
 	padding: .3em;
 	margin: .3em 0;
@@ -181,11 +181,20 @@ button.btn-Icon {
 	border-radius: 100%;
 	padding: 0;
 	margin: 0;
+	outline: none;
+	transition: background .15s;
+	background: $primary;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, .4);
+	border: 2px solid white;
 
-	ion-icon {
+	img {
 		width: 3em;
 		height: 3em;
 	}
+}
+
+button.btn-Icon:hover {
+	background: white;
 }
 
 // FOR MEDIUM WIDTH SCREENS
