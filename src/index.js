@@ -74,7 +74,7 @@ class UserApp {
 
 	// load all FireStore user clients into a clients{} object
 	loadClients(user_id) {
-		db.collection("Clients").where("User_id", "==", user_id).get().then((clients_snap) => {
+		db.collection("Clients").where("User_ID", "==", user_id).get().then((clients_snap) => {
 			// load all docs in Sessions collection into a sessions{} object
 			clients_snap.docs.forEach((client) => {
 				this.clients[`${client.id}`] = new Client(client.data());
@@ -90,7 +90,7 @@ class UserApp {
 
 	// load all FireStore user projects into a projects{} object
 	loadProjects(user_id) {
-		db.collection("Projects").where("User_id", "==", user_id).get().then((projects_snap) => {
+		db.collection("Projects").where("User_ID", "==", user_id).get().then((projects_snap) => {
 			// load all docs in Sessions collection into a sessions{} object
 			projects_snap.docs.forEach((project) => {
 				this.projects[`${project.id}`] = new Project(project.data());
@@ -103,7 +103,7 @@ class UserApp {
 
 	// load all FireStore user sessions into a sessions{} object
 	loadSessions(user_id) {
-		db.collection("Sessions").where("User_id", "==", user_id).get().then((sessions_snap) => {
+		db.collection("Sessions").where("User_ID", "==", user_id).get().then((sessions_snap) => {
 			// load all docs in Sessions collection into a sessions{} object
 			sessions_snap.docs.forEach((session) => {
 				this.sessions[`${session.id}`] = new Session(session.data());
@@ -121,35 +121,34 @@ class UserApp {
 
 class Client {
 	constructor(client) {
-		this.client_id = client.Client_ID;
-		this.name = client.Name;
+		this.active = client.Active;
 		this.address = client.Address;
 		this.city = client.City;
-		this.state = client.State;
+		this.contact_name = client.Contact;
 		this.country = client.Country;
-		this.zip = client.Zip;
-		this.phone = client.Phone;
 		this.email = client.Email;
-		this.contact_name = client.Contact_name;
-		this.invoice_frequency = client.Invoice_frequency;
-		this.notes = client.Notes;
-		this.rate = client.Rate;
-		this.active = client.Active;
+		this.invoice_frequency = client.Invoice_Frequency;
 		this.lastClockedIn = client.Last_Clocked_In;
+		this.name = client.Name;
+		this.notes = client.Notes;
+		this.phone = client.Phone;
+		this.rate = client.Rate;
+		this.state = client.State;
 		this.totalHours = client.Total_Hours;
 		this.totalWages = client.Total_Wages;
+		this.zip = client.Zip;
 	}
 }
 
 class Project {
 	constructor(project) {
+		this.active = project.Active;
 		this.client_id = project.Client_ID;
 		this.user_id = project.User_ID;
 		this.name = project.Name;
 		this.description = project.Description;
 		this.rate = project.Rate;
 		this.due_date = project.Due_Date;
-		this.active = project.Active;
 		this.lastClockedIn = project.Last_Clocked_In;
 		this.totalHours = project.Total_Hours;
 		this.totalWages = project.Total_Wages;
