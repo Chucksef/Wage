@@ -51,6 +51,70 @@ const TEMPLATES = {
 	},
 };
 
+class UserApp {
+	constructor(email) {
+		this.loaded = 0;
+		this.clients = {};
+		this.projects = {};
+		this.sessions = {};
+		this.getUserData(email);
+	}
+
+	getUserData(email) {
+		// look up user by email, return user_id
+		db.collection("Users").where("Email", "==", email).get().then((users_snap) => {
+			users_snap.docs.forEach((user) => {
+				this.user_id = user.id;
+
+				// Now use this user ID to load all CPS (Clients Projects Sessions) from the FireStore;
+				this.loadClients(this.user_id);
+			});
+		});
+	}
+
+	// load all FireStore user clients into a clients{} object
+	loadClients(user_id) {
+		db.collection("Clients").where("User_id", "==", user_id).get().then((clients_snap) => {
+			// load all docs in Sessions collection into a sessions{} object
+			this.loaded++;
+			clients_snap.docs.forEach((client) => {
+				this.clients[`${client.id}`] = client.data();
+			});
+
+			// now load projects sequentially...
+			this.loadProjects(this.user_id);
+		});
+	}
+
+	// load all FireStore user projects into a projects{} object
+	loadProjects(user_id) {
+		db.collection("Projects").where("User_id", "==", user_id).get().then((projects_snap) => {
+			// load all docs in Sessions collection into a sessions{} object
+			this.loaded++;
+			projects_snap.docs.forEach((project) => {
+				this.projects[`${project.id}`] = project.data();
+			});
+
+			// now load sessions sequentially...
+			this.loadSessions(this.user_id);
+		});
+	}
+
+	// load all FireStore user sessions into a sessions{} object
+	loadSessions(user_id) {
+		db.collection("Sessions").where("User_id", "==", user_id).get().then((sessions_snap) => {
+			// load all docs in Sessions collection into a sessions{} object
+			this.loaded++;
+			sessions_snap.docs.forEach((session) => {
+				this.sessions[`${session.id}`] = session.data();
+			});
+
+			// now that all CPS are loaded, display clients...
+			UI.display(this.clients, TEMPLATES.entries.client);
+		});
+	}
+}
+
 class Client {
 	constructor(client) {
 		this.name = client.Name;
@@ -66,7 +130,12 @@ class Client {
 		this.notes = client.Notes;
 		this.rate = client.Rate;
 		this.active = client.Active;
+		this.lastClcokedIn = this.getLastClockedIn();
 	}
+
+	getLastClockedIn() {}
+
+	getActive() {}
 }
 
 class Project {
@@ -89,8 +158,8 @@ class Session {
 	}
 }
 
-class Readout {
-	static addClient(entry) {
+class UI {
+	static addEntry(entry) {
 		//add element to DOM
 		DOM.readout.appendChild(entry);
 	}
@@ -98,30 +167,35 @@ class Readout {
 	static clear() {
 		DOM.readout.innerHTML = "";
 	}
-}
 
-function loadDB() {
-	Readout.clear();
+	static display(data, template) {
+		UI.clear();
 
-	let clients = {};
-
-	db.collection("Clients").get().then((client_snap) => {
-		client_snap.docs.forEach((client) => {
-			clients[`${client.id}`] = client.data();
-		});
-
-		Object.keys(clients).forEach((key) => {
-			let client = new Client(clients[key]);
+		Object.keys(data).forEach((key) => {
+			let datum = new Client(data[key]);
 			let entry = document.createElement("div");
 			entry.classList.add("entry");
+			entry.id = key;
 
-			//replace relevant lines...
-			entry.innerHTML = TEMPLATES.entries.client
-				.replace(/%clientName/g, client.name)
-				.replace(/%hourlyRate/g, `$${client.rate} / hr`);
-			Readout.addClient(entry);
+			entry.innerHTML = template
+				.replace(/%clientName/g, datum.name)
+				.replace(/%hourlyRate/g, `$${datum.rate} / hr`);
+
+			UI.addEntry(entry);
 		});
-	});
+	}
 }
 
-loadDB();
+let app = new UserApp("chucksef@gmail.com");
+
+/* SAVED
+
+// replace relevant lines...
+
+
+// append session to the UI
+UI.addSession(entry);
+
+
+
+*/
