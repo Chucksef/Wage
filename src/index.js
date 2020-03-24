@@ -53,7 +53,6 @@ const TEMPLATES = {
 
 class UserApp {
 	constructor(email) {
-		this.loaded = 0;
 		this.clients = {};
 		this.projects = {};
 		this.sessions = {};
@@ -76,10 +75,12 @@ class UserApp {
 	loadClients(user_id) {
 		db.collection("Clients").where("User_id", "==", user_id).get().then((clients_snap) => {
 			// load all docs in Sessions collection into a sessions{} object
-			this.loaded++;
 			clients_snap.docs.forEach((client) => {
-				this.clients[`${client.id}`] = client.data();
+				this.clients[`${client.id}`] = new Client(client.data());
 			});
+
+			// now that all CPS are loaded, display clients...
+			UI.display(this.clients, TEMPLATES.entries.client);
 
 			// now load projects sequentially...
 			this.loadProjects(this.user_id);
@@ -90,9 +91,8 @@ class UserApp {
 	loadProjects(user_id) {
 		db.collection("Projects").where("User_id", "==", user_id).get().then((projects_snap) => {
 			// load all docs in Sessions collection into a sessions{} object
-			this.loaded++;
 			projects_snap.docs.forEach((project) => {
-				this.projects[`${project.id}`] = project.data();
+				this.projects[`${project.id}`] = new Project(project.data());
 			});
 
 			// now load sessions sequentially...
@@ -104,13 +104,9 @@ class UserApp {
 	loadSessions(user_id) {
 		db.collection("Sessions").where("User_id", "==", user_id).get().then((sessions_snap) => {
 			// load all docs in Sessions collection into a sessions{} object
-			this.loaded++;
 			sessions_snap.docs.forEach((session) => {
-				this.sessions[`${session.id}`] = session.data();
+				this.sessions[`${session.id}`] = new Session(session.data());
 			});
-
-			// now that all CPS are loaded, display clients...
-			UI.display(this.clients, TEMPLATES.entries.client);
 		});
 	}
 }
@@ -172,14 +168,14 @@ class UI {
 		UI.clear();
 
 		Object.keys(data).forEach((key) => {
-			let datum = new Client(data[key]);
+			let current = data[key];
 			let entry = document.createElement("div");
 			entry.classList.add("entry");
 			entry.id = key;
 
 			entry.innerHTML = template
-				.replace(/%clientName/g, datum.name)
-				.replace(/%hourlyRate/g, `$${datum.rate} / hr`);
+				.replace(/%clientName/g, current.name)
+				.replace(/%hourlyRate/g, `$${current.rate} / hr`);
 
 			UI.addEntry(entry);
 		});
