@@ -17,13 +17,14 @@ const db = firebase.firestore();
 
 const DOM = {
 	readout: document.querySelector("#display"),
+	controls: document.querySelector("#controls"),
 };
 
 const TEMPLATES = {
 	entries: {
 		client: `
 			<div class="data-block first-block">
-				<h3>%clientName</h1>
+				<h3>%name</h1>
 			</div>
 			<div class="data-block">
 				<p>%lastClockedIn</p>
@@ -36,16 +37,16 @@ const TEMPLATES = {
 		`,
 		project: `
 			<div class="data-block first-block">
-				<h4>Project Name</h1>
-				<h5>Client Name</h2>
+				<h4>%name</h1>
+				<h5>%clientName</h2>
 			</div>
 			<div class="data-block">
-				<p>Last Clocked In</p>
-				<p>Completed?</p>
+				<p>%lastClockedIn</p>
+				<p>%active</p>
 			</div>
 			<div class="data-block">
-				<p>Hourly Rate</p>
-				<p>Total Hours</p>
+				<p>%hourlyRate</p>
+				<p>%totalHours</p>
 			</div>
 		`,
 	},
@@ -109,10 +110,18 @@ class UserApp {
 			});
 		});
 	}
+
+	/*static calculateWages(rate, sessions) {
+		sessions.forEach((sess) => {
+			let dur = sess.clock_out - sess.clock_in;
+
+		}
+	}*/
 }
 
 class Client {
 	constructor(client) {
+		this.client_id = client.Client_ID;
 		this.name = client.Name;
 		this.address = client.Address;
 		this.city = client.City;
@@ -126,31 +135,35 @@ class Client {
 		this.notes = client.Notes;
 		this.rate = client.Rate;
 		this.active = client.Active;
-		this.lastClcokedIn = this.getLastClockedIn();
+		this.lastClockedIn = client.Last_Clocked_In;
+		this.totalHours = client.Total_Hours;
+		this.totalWages = client.Total_Wages;
 	}
-
-	getLastClockedIn() {}
-
-	getActive() {}
 }
 
 class Project {
 	constructor(project) {
+		this.client_id = project.Client_ID;
+		this.user_id = project.User_ID;
 		this.name = project.Name;
 		this.description = project.Description;
 		this.rate = project.Rate;
-		this.client_id = project.Client_id;
-		this.completed = project.Completed;
-		this.due_date = project.Due_date;
+		this.due_date = project.Due_Date;
+		this.active = project.Active;
+		this.lastClockedIn = project.Last_Clocked_In;
+		this.totalHours = project.Total_Hours;
+		this.totalWages = project.Total_Wages;
 	}
 }
 
 class Session {
 	constructor(session) {
-		this.session_id = session.Session_id;
-		this.clock_in = session.Clock_in;
-		this.clock_out = session.Clock_out;
+		this.user_id = session.User_ID;
+		this.project_id = session.Project_ID;
+		this.clock_in = session.Clock_In;
+		this.clock_out = session.Clock_Out;
 		this.breaks = session.Breaks;
+		this.rate = session.Rate;
 	}
 }
 
@@ -174,8 +187,11 @@ class UI {
 			entry.id = key;
 
 			entry.innerHTML = template
-				.replace(/%clientName/g, current.name)
-				.replace(/%hourlyRate/g, `$${current.rate} / hr`);
+				.replace(/%name/g, current.name)
+				.replace(/%hourlyRate/g, `$${current.rate} / hr`)
+				.replace(/%lastClockedIn/g, current.lastClockedIn)
+				.replace(/%active/g, current.active)
+				.replace(/%totalHours/g, current.totalHours);
 
 			UI.addEntry(entry);
 		});
