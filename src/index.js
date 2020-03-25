@@ -1,4 +1,5 @@
 import "./index.scss";
+import { TEMPLATES } from "./templates.js";
 
 let firebaseConfig = {
 	apiKey: "AIzaSyBCblfryZE9C1r2opb9PdzF4o1oK8lDiNM",
@@ -18,38 +19,6 @@ const db = firebase.firestore();
 const DOM = {
 	readout: document.querySelector("#display"),
 	controls: document.querySelector("#controls"),
-};
-
-const TEMPLATES = {
-	entries: {
-		client: `
-			<div class="data-block first-block">
-				<h3>%name</h1>
-			</div>
-			<div class="data-block">
-				<p>%lastClockedIn</p>
-				<p>%active</p>
-			</div>
-			<div class="data-block">
-				<p>%hourlyRate</p>
-				<p>%totalHours</p>
-			</div>	
-		`,
-		project: `
-			<div class="data-block first-block">
-				<h4>%name</h1>
-				<h5>%clientName</h2>
-			</div>
-			<div class="data-block">
-				<p>%lastClockedIn</p>
-				<p>%active</p>
-			</div>
-			<div class="data-block">
-				<p>%hourlyRate</p>
-				<p>%totalHours</p>
-			</div>
-		`,
-	},
 };
 
 class App {
@@ -107,7 +76,7 @@ class App {
 			});
 
 			// now that all CPS are loaded, display clients...
-			UI.display(this, this.clients, TEMPLATES.entries.client);
+			UI.display(this, this.clients, TEMPLATES.client);
 		});
 	}
 
@@ -284,7 +253,7 @@ class Format {
 
 	static date(ts) {
 		let date = ts.toDate().toString().split(" ");
-		return `${date[0]} ${date[1]} ${date[2]} ${date[3]}`;
+		return `${date[0]}, ${date[1]} ${date[2]}, ${date[3]}`;
 	}
 }
 

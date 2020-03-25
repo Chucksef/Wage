@@ -290,7 +290,7 @@ button.btn-Icon:hover {
 	margin-bottom: 1em;
 
 	div.data-block {
-		flex: 0 0 33.333%;
+		flex: 0 0 25%;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-evenly;
@@ -301,6 +301,7 @@ button.btn-Icon:hover {
 	}
 	div.data-block.first-block {
 		border-left: none;
+		flex: 0 0 50%;
 	}
 	div.data-block.first-block p {
 		text-align: left;
@@ -311,5 +312,8 @@ button.btn-Icon:hover {
 		color: $control;
 		margin: 0;
 		margin-bottom: .1em;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 }
