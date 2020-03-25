@@ -52,7 +52,7 @@ const TEMPLATES = {
 	},
 };
 
-class UserApp {
+class App {
 	constructor(email) {
 		this.clients = {};
 		this.projects = {};
@@ -110,13 +110,6 @@ class UserApp {
 			});
 		});
 	}
-
-	/*static calculateWages(rate, sessions) {
-		sessions.forEach((sess) => {
-			let dur = sess.clock_out - sess.clock_in;
-
-		}
-	}*/
 }
 
 class Client {
@@ -144,25 +137,25 @@ class Project {
 	constructor(project) {
 		this.active = project.Active;
 		this.client_id = project.Client_ID;
-		this.user_id = project.User_ID;
-		this.name = project.Name;
 		this.description = project.Description;
-		this.rate = project.Rate;
 		this.due_date = project.Due_Date;
 		this.lastClockedIn = project.Last_Clocked_In;
+		this.name = project.Name;
+		this.rate = project.Rate;
 		this.totalHours = project.Total_Hours;
 		this.totalWages = project.Total_Wages;
+		this.user_id = project.User_ID;
 	}
 }
 
 class Session {
 	constructor(session) {
-		this.user_id = session.User_ID;
-		this.project_id = session.Project_ID;
+		this.breaks = session.Breaks;
 		this.clock_in = session.Clock_In;
 		this.clock_out = session.Clock_Out;
-		this.breaks = session.Breaks;
+		this.project_id = session.Project_ID;
 		this.rate = session.Rate;
+		this.user_id = session.User_ID;
 	}
 }
 
@@ -187,26 +180,41 @@ class UI {
 
 			entry.innerHTML = template
 				.replace(/%name/g, current.name)
-				.replace(/%hourlyRate/g, `$${current.rate} / hr`)
-				.replace(/%lastClockedIn/g, current.lastClockedIn)
+				.replace(/%lastClockedIn/g, Formatter.getDate(current.lastClockedIn))
 				.replace(/%active/g, current.active)
-				.replace(/%totalHours/g, current.totalHours);
+				.replace(/%hourlyRate/g, `${Formatter.numToDollar(current.rate)} / hr`)
+				.replace(/%totalHours/g, `${current.totalHours} hours`);
 
 			UI.addEntry(entry);
 		});
 	}
 }
 
-let app = new UserApp("chucksef@gmail.com");
+class Formatter {
+	static numToDollar(num) {
+		let split = num.toString().split(".");
+		if (split.length == 1) {
+			return `$${num}.00`;
+		}
+		else {
+			let oldPrefix = split[0];
+			let newPrefix = "";
+			for (let i = oldPrefix.length - 1, j = 1; i >= 0; i--, j++) {
+				// append first
+				newPrefix = `${oldPrefix[i]}${newPrefix}`;
+				// if idx/3 gives no remainder, append a comma...
+				if (j % 3 == 0 && i != 0) {
+					newPrefix = `,${newPrefix}`;
+				}
+			}
+			return `$${newPrefix}.${(split[1] + "00").substr(0, 2)}`;
+		}
+	}
 
-/* SAVED
+	static getDate(ts) {
+		let date = ts.toDate().toString().split(" ");
+		return `${date[0]} ${date[1]} ${date[2]} ${date[3]}`;
+	}
+}
 
-// replace relevant lines...
-
-
-// append session to the UI
-UI.addSession(entry);
-
-
-
-*/
+let app = new App("chucksef@gmail.com");
