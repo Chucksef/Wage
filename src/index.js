@@ -80,9 +80,6 @@ class App {
 				this.clients[`${client.id}`] = new Client(client.data());
 			});
 
-			// now that all CPS are loaded, display clients...
-			UI.display(this.clients, TEMPLATES.entries.client);
-
 			// now load projects sequentially...
 			this.loadProjects(this.user_id);
 		});
@@ -108,7 +105,81 @@ class App {
 			sessions_snap.docs.forEach((session) => {
 				this.sessions[`${session.id}`] = new Session(session.data());
 			});
+
+			// now that all CPS are loaded, display clients...
+			UI.display(this, this.clients, TEMPLATES.entries.client);
 		});
+	}
+
+	getLastDate(entry) {
+		// set up initial arrays of each object type's keys for checking...
+		let client_keys = Object.keys(this.clients);
+		let project_keys = Object.keys(this.projects);
+		let session_keys = Object.keys(this.sessions);
+
+		// check if entry is a client...
+		if (client_keys.includes(entry.id)) {
+			// It is! Now build an object with all projects whose client_id matches the client's key
+			let client_projects = {};
+			project_keys.forEach((key) => {
+				let proj = this.projects[key]; // grab each project and check if it's the client's key
+				if (proj.client_id == entry.id) {
+					client_projects[key] = proj; // add it to client_projects
+				}
+			});
+
+			// set up a new array of all valid project keys for the client in question
+			let client_project_keys = Object.keys(client_projects);
+
+			// Great! Now build an array with all clock-out times of sessions that are a part of relevant projects
+			let project_sessions = [];
+			session_keys.forEach((key) => {
+				let sess = this.sessions[key];
+				if (client_project_keys.includes(sess.project_id)) {
+					project_sessions.push(sess.clock_out);
+				}
+			});
+
+			// Neat!
+			let highestVal = 0;
+			let ts;
+
+			// iterate through all the values in project_sessions...
+			for (let x of project_sessions) {
+				if (x.seconds > highestVal) {
+					highestVal = x.seconds;
+					ts = x;
+				}
+			}
+
+			return ts;
+		}
+		else if (project_keys.includes(entry.id)) {
+			let project_sessions = [];
+			session_keys.forEach((key) => {
+				let sess = this.sessions[key];
+				if (sess.project_id == entry.id) {
+					project_sessions.push(sess.clock_out);
+				}
+			});
+
+			// Neat!
+			let highestVal = 0;
+			let timestamp;
+
+			// iterate through all the values in project_sessions...
+			for (let x of project_sessions) {
+				if (x.seconds > highestVal) {
+					highestVal = x.seconds;
+					timestamp = x;
+				}
+			}
+
+			return timestamp;
+		}
+		else {
+			return entry.clock_out;
+		}
 	}
 }
 
@@ -169,7 +240,7 @@ class UI {
 		DOM.readout.innerHTML = "";
 	}
 
-	static display(data, template) {
+	static display(app, data, template) {
 		UI.clear();
 
 		Object.keys(data).forEach((key) => {
@@ -180,9 +251,9 @@ class UI {
 
 			entry.innerHTML = template
 				.replace(/%name/g, current.name)
-				.replace(/%lastClockedIn/g, Formatter.getDate(current.lastClockedIn))
+				.replace(/%lastClockedIn/g, Format.date(app.getLastDate(entry)))
 				.replace(/%active/g, current.active)
-				.replace(/%hourlyRate/g, `${Formatter.numToDollar(current.rate)} / hr`)
+				.replace(/%hourlyRate/g, `${Format.dollars(current.rate)} / hr`)
 				.replace(/%totalHours/g, `${current.totalHours} hours`);
 
 			UI.addEntry(entry);
@@ -190,8 +261,8 @@ class UI {
 	}
 }
 
-class Formatter {
-	static numToDollar(num) {
+class Format {
+	static dollars(num) {
 		let split = num.toString().split(".");
 		if (split.length == 1) {
 			return `$${num}.00`;
@@ -211,10 +282,10 @@ class Formatter {
 		}
 	}
 
-	static getDate(ts) {
+	static date(ts) {
 		let date = ts.toDate().toString().split(" ");
 		return `${date[0]} ${date[1]} ${date[2]} ${date[3]}`;
 	}
 }
 
-let app = new App("chucksef@gmail.com");
+let main = new App("chucksef@gmail.com");
