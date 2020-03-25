@@ -21,6 +21,52 @@ const DOM = {
 	controls: document.querySelector("#controls"),
 };
 
+class Client {
+	constructor(client) {
+		this.active = client.Active;
+		this.address = client.Address;
+		this.city = client.City;
+		this.contactName = client.Contact;
+		this.country = client.Country;
+		this.email = client.Email;
+		this.invoiceFrequency = client.Invoice_Frequency;
+		this.lastClockedIn = client.Last_Clocked_In;
+		this.name = client.Name;
+		this.notes = client.Notes;
+		this.phone = client.Phone;
+		this.hourlyRate = client.Rate;
+		this.state = client.State;
+		this.totalHours = client.Total_Hours;
+		this.totalWages = client.Total_Wages;
+		this.zip = client.Zip;
+	}
+}
+
+class Project {
+	constructor(project) {
+		this.active = project.Active;
+		this.clientID = project.Client_ID;
+		this.description = project.Description;
+		this.due_date = project.Due_Date;
+		this.lastClockedIn = project.Last_Clocked_In;
+		this.name = project.Name;
+		this.hourlyRate = project.Rate;
+		this.totalHours = project.Total_Hours;
+		this.totalWages = project.Total_Wages;
+		this.userID = project.User_ID;
+	}
+}
+
+class Session {
+	constructor(session) {
+		this.breaks = session.Breaks;
+		this.clockIn = session.Clock_In;
+		this.clockOut = session.Clock_Out;
+		this.projectID = session.Project_ID;
+		this.userID = session.User_ID;
+	}
+}
+
 class App {
 	constructor(email) {
 		this.clients = {};
@@ -30,53 +76,53 @@ class App {
 	}
 
 	getUserData(email) {
-		// look up user by email, return user_id
+		// look up user by email, return userID
 		db.collection("Users").where("Email", "==", email).get().then((users_snap) => {
 			users_snap.docs.forEach((user) => {
-				this.user_id = user.id;
+				this.userID = user.id;
 
 				// Now use this user ID to load all CPS (Clients Projects Sessions) from the FireStore;
-				this.loadClients(this.user_id);
+				this.loadClients(this.userID);
 			});
 		});
 	}
 
 	// load all FireStore user clients into a clients{} object
-	loadClients(user_id) {
-		db.collection("Clients").where("User_ID", "==", user_id).get().then((clients_snap) => {
+	loadClients(userID) {
+		db.collection("Clients").where("User_ID", "==", userID).get().then((clients_snap) => {
 			// load all docs in Sessions collection into a sessions{} object
 			clients_snap.docs.forEach((client) => {
 				this.clients[`${client.id}`] = new Client(client.data());
 			});
 
 			// now load projects sequentially...
-			this.loadProjects(this.user_id);
+			this.loadProjects(this.userID);
 		});
 	}
 
 	// load all FireStore user projects into a projects{} object
-	loadProjects(user_id) {
-		db.collection("Projects").where("User_ID", "==", user_id).get().then((projects_snap) => {
+	loadProjects(userID) {
+		db.collection("Projects").where("User_ID", "==", userID).get().then((projects_snap) => {
 			// load all docs in Sessions collection into a sessions{} object
 			projects_snap.docs.forEach((project) => {
 				this.projects[`${project.id}`] = new Project(project.data());
 			});
 
 			// now load sessions sequentially...
-			this.loadSessions(this.user_id);
+			this.loadSessions(this.userID);
 		});
 	}
 
 	// load all FireStore user sessions into a sessions{} object
-	loadSessions(user_id) {
-		db.collection("Sessions").where("User_ID", "==", user_id).get().then((sessions_snap) => {
+	loadSessions(userID) {
+		db.collection("Sessions").where("User_ID", "==", userID).get().then((sessions_snap) => {
 			// load all docs in Sessions collection into a sessions{} object
 			sessions_snap.docs.forEach((session) => {
 				this.sessions[`${session.id}`] = new Session(session.data());
 			});
 
 			// now that all CPS are loaded, display clients...
-			UI.display(this, this.clients, TEMPLATES.client);
+			UI.display(this, this.sessions, TEMPLATES.session);
 		});
 	}
 
@@ -88,11 +134,11 @@ class App {
 
 		// check if entry is a client...
 		if (client_keys.includes(entry.id)) {
-			// It is! Now build an object with all projects whose client_id matches the client's key
+			// It is! Now build an object with all projects whose clientID matches the client's key
 			let client_projects = {};
 			project_keys.forEach((key) => {
 				let proj = this.projects[key]; // grab each project and check if it's the client's key
-				if (proj.client_id == entry.id) {
+				if (proj.clientID == entry.id) {
 					client_projects[key] = proj; // add it to client_projects
 				}
 			});
@@ -104,8 +150,8 @@ class App {
 			let project_sessions = [];
 			session_keys.forEach((key) => {
 				let sess = this.sessions[key];
-				if (client_project_keys.includes(sess.project_id)) {
-					project_sessions.push(sess.clock_out);
+				if (client_project_keys.includes(sess.projectID)) {
+					project_sessions.push(sess.clockOut);
 				}
 			});
 
@@ -127,8 +173,8 @@ class App {
 			let project_sessions = [];
 			session_keys.forEach((key) => {
 				let sess = this.sessions[key];
-				if (sess.project_id == entry.id) {
-					project_sessions.push(sess.clock_out);
+				if (sess.projectID == entry.id) {
+					project_sessions.push(sess.clockOut);
 				}
 			});
 
@@ -147,55 +193,8 @@ class App {
 			return timestamp;
 		}
 		else {
-			return entry.clock_out;
+			return this.sessions[entry.id].clockOut;
 		}
-	}
-}
-
-class Client {
-	constructor(client) {
-		this.active = client.Active;
-		this.address = client.Address;
-		this.city = client.City;
-		this.contact_name = client.Contact;
-		this.country = client.Country;
-		this.email = client.Email;
-		this.invoice_frequency = client.Invoice_Frequency;
-		this.lastClockedIn = client.Last_Clocked_In;
-		this.name = client.Name;
-		this.notes = client.Notes;
-		this.phone = client.Phone;
-		this.rate = client.Rate;
-		this.state = client.State;
-		this.totalHours = client.Total_Hours;
-		this.totalWages = client.Total_Wages;
-		this.zip = client.Zip;
-	}
-}
-
-class Project {
-	constructor(project) {
-		this.active = project.Active;
-		this.client_id = project.Client_ID;
-		this.description = project.Description;
-		this.due_date = project.Due_Date;
-		this.lastClockedIn = project.Last_Clocked_In;
-		this.name = project.Name;
-		this.rate = project.Rate;
-		this.totalHours = project.Total_Hours;
-		this.totalWages = project.Total_Wages;
-		this.user_id = project.User_ID;
-	}
-}
-
-class Session {
-	constructor(session) {
-		this.breaks = session.Breaks;
-		this.clock_in = session.Clock_In;
-		this.clock_out = session.Clock_Out;
-		this.project_id = session.Project_ID;
-		this.rate = session.Rate;
-		this.user_id = session.User_ID;
 	}
 }
 
@@ -217,13 +216,10 @@ class UI {
 			let entry = document.createElement("div");
 			entry.classList.add("entry");
 			entry.id = key;
+			current.id = key;
 
-			entry.innerHTML = template
-				.replace(/%name/g, current.name)
-				.replace(/%lastClockedIn/g, Format.date(app.getLastDate(entry)))
-				.replace(/%active/g, current.active)
-				.replace(/%hourlyRate/g, `${Format.dollars(current.rate)} / hr`)
-				.replace(/%totalHours/g, `${current.totalHours} hours`);
+			// replace fields in template with corresponding data
+			entry.innerHTML = Format.template(template, current);
 
 			UI.addEntry(entry);
 		});
@@ -254,6 +250,46 @@ class Format {
 	static date(ts) {
 		let date = ts.toDate().toString().split(" ");
 		return `${date[0]}, ${date[1]} ${date[2]}, ${date[3]}`;
+	}
+
+	static time(ts) {
+		let time = ts.toDate().toString().split(" ")[4];
+		return time;
+	}
+
+	static template(temp, data) {
+		if (temp.includes("%name")) {
+			temp = temp.replace(/%name/g, data.name);
+		}
+		if (temp.includes("%clientName")) {
+			temp = temp.replace(/%clientName/g, data.clientName);
+		}
+		if (temp.includes("%projectName")) {
+			temp = temp.replace(/%projectName/g, data.projectName);
+		}
+		if (temp.includes("%lastClockedIn")) {
+			temp = temp.replace(/%lastClockedIn/g, Format.date(main.getLastDate(data)));
+		}
+		if (temp.includes("%active")) {
+			temp = temp.replace(/%active/g, `Active: ${data.active}`);
+		}
+		if (temp.includes("%hourlyRate")) {
+			temp = temp.replace(/%hourlyRate/g, `${Format.dollars(data.hourlyRate)} / hr`);
+		}
+		if (temp.includes("%totalHours")) {
+			temp = temp.replace(/%totalHours/g, `${data.totalHours} hours`);
+		}
+		if (temp.includes("%duration")) {
+			temp = temp.replace(/%duration/g, data.duration);
+		}
+		if (temp.includes("%clockIn")) {
+			temp = temp.replace(/%clockIn/g, Format.time(data.clockIn));
+		}
+		if (temp.includes("%clockOut")) {
+			temp = temp.replace(/%clockOut/g, Format.time(data.clockOut));
+		}
+
+		return temp;
 	}
 }
 

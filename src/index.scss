@@ -296,19 +296,18 @@ button.btn-Icon:hover {
 		justify-content: space-evenly;
 		border-left: 1px solid $primary;
 	}
-	div.data-block p {
-		text-align: center;
-	}
+
 	div.data-block.first-block {
 		border-left: none;
 		flex: 0 0 50%;
 	}
+
 	div.data-block.first-block p {
 		text-align: left;
 	}
 
 	* {
-		text-align: left;
+		text-align: center;
 		color: $control;
 		margin: 0;
 		margin-bottom: .1em;

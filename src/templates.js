@@ -30,11 +30,12 @@ const TEMPLATES = {
 
 	session: `
 		<div class="data-block first-block">
-			<h4>%duration</h4>
-		</div>
-		<div class="data-block">
 			<p>%clientName</p>
 			<p>%projectName</p>
+		</div>
+		<div class="data-block">
+			<h4>%duration</h4>
+		</div>
 		<div class="data-block">
 			<p>%clockIn</p>
 			<p>%clockOut</p>
