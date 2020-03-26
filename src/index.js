@@ -129,7 +129,7 @@ class App {
 			this.deriveProperties();
 
 			// and then display a list of clients as default...
-			UI.display(this, this.clients, TEMPLATES.client); // <------------------------------------------------------
+			UI.display(this, this.clients, TEMPLATES.client);
 		});
 	}
 
@@ -251,11 +251,13 @@ class App {
 					let currentSession = this.sessions[sKey];
 					currentSession.clientName = clientName;
 					currentSession.projectName = projectName;
+					currentSession.duration =
+						this.getDuration(currentSession.clockOut, currentSession.clockIn) - currentSession.breaks;
 
 					// add the current session's duration to the sessions' total hours
-					sessionsHours +=
-						this.getDuration(currentSession.clockOut, currentSession.clockIn) - currentSession.breaks;
+					sessionsHours += currentSession.duration;
 				});
+
 				currentProject.totalHours += sessionsHours; // add the sessions' total hours to the current project's total hours
 				projectsHours += currentProject.totalHours; // add the project's total hours to the projects' total hours
 				projectsWages += currentProject.totalHours * currentProject.rate;
@@ -342,8 +344,19 @@ class Format {
 	}
 
 	static time(ts) {
-		let time = ts.toDate().toString().split(" ")[4];
-		return time;
+		let time = ts.toDate().toString().split(" ")[4].split(":");
+		let hours = parseInt(time[0]);
+		let minutes = time[1];
+		let ampm = "AM";
+
+		if (hours > 11) {
+			ampm = "PM";
+		}
+		if (hours > 12) {
+			hours = hours - 12;
+		}
+
+		return `${hours}:${minutes} ${ampm}`;
 	}
 
 	static template(app, temp, data) {
@@ -369,7 +382,10 @@ class Format {
 			temp = temp.replace(/%totalHours/g, `${data.totalHours} hours`);
 		}
 		if (temp.includes("%duration")) {
-			temp = temp.replace(/%duration/g, data.duration);
+			temp = temp.replace(/%duration/g, `${data.duration} hours`);
+		}
+		if (temp.includes("%date")) {
+			temp = temp.replace(/%date/g, Format.date(data.clockOut));
 		}
 		if (temp.includes("%clockIn")) {
 			temp = temp.replace(/%clockIn/g, Format.time(data.clockIn));

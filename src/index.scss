@@ -3,15 +3,19 @@
 
 /* Remapping Color Variables */
 
+$primary: #ff80a2;
+$secondary: #f8c6d4;
 $default: #eee4e4;
-$primary: #fbdde5;
-$secondary: #e88ca5;
-$control: #776a6a;
+$control: #94b3b1;
+
+$light: #f8f9fa;
+$lightText: #d5f1f0;
+$darkText: #324d4d;
+$dark: #615858;
+
 $success: #28a745;
 $warning: #ffc107;
 $danger: #dc3545;
-$light: #f8f9fa;
-$dark: #615858;
 
 /* VARIOUS BASIC STYLES */
 
@@ -41,7 +45,7 @@ div {
 }
 
 hr {
-	border-bottom: 1px solid $secondary;
+	border-bottom: 1px solid $primary;
 	margin: 10px;
 }
 
@@ -78,7 +82,6 @@ button {
 
 button:focus {
 	outline: none;
-	border: 3px solid $secondary;
 }
 
 button.btn-Block {
@@ -92,15 +95,15 @@ button.btn-Block {
 }
 
 button.btn-Block:hover {
-	color: $primary;
-	border: 1px solid $secondary;
+	border: 1px solid $primary;
+	color: $secondary;
 	margin: calc(.3em - 1px) 0;
 }
 
 button.btn-Block:focus {
 	left: -3px;
-	border: 3px solid $secondary;
-	color: $secondary;
+	border: 3px solid $primary;
+	color: $primary;
 	outline: none;
 	margin: calc(.3em - 3px);
 }
@@ -126,7 +129,7 @@ button.btn-Filter {
 
 button.btn-Filter:focus {
 	margin: -3px .5em;
-	border: 3px solid $secondary;
+	border: 3px solid $primary;
 }
 
 #logo {
@@ -134,7 +137,7 @@ button.btn-Filter:focus {
 	left: -20%;
 	width: 25%;
 	height: auto;
-	fill: $secondary;
+	fill: $primary;
 }
 
 /* BACKGROUND */
@@ -153,7 +156,7 @@ button.btn-Filter:focus {
 	top: 0;
 	width: 100vw;
 	height: 100vh;
-	background: radial-gradient(circle farthest-corner, transparent 50%, rgba(0, 0, 0, .4));
+	background: rgba(255, 255, 255, .5);
 }
 
 /* MAIN SITE STRUCTURE */
@@ -223,19 +226,19 @@ button.btn-Icon {
 
 		.st0 {
 			fill: none;
-			stroke: $secondary;
+			stroke: $primary;
 			stroke-width: 10;
 			stroke-miterlimit: 10;
 		}
 		.st1 {
-			fill: $secondary;
-			stroke: $secondary;
+			fill: $primary;
+			stroke: $primary;
 			stroke-width: 10;
 			stroke-miterlimit: 10;
 		}
 		.st2 {
-			fill: $secondary;
-			stroke: $secondary;
+			fill: $primary;
+			stroke: $primary;
 			stroke-width: 10;
 			stroke-miterlimit: 10;
 		}
@@ -247,15 +250,15 @@ button.btn-Icon:hover {
 
 	svg {
 		.st0 {
-			stroke: $secondary;
+			stroke: $primary;
 		}
 		.st1 {
-			fill: $secondary;
-			stroke: $secondary;
+			fill: $primary;
+			stroke: $primary;
 		}
 		.st2 {
-			fill: $secondary;
-			stroke: $secondary;
+			fill: $primary;
+			stroke: $primary;
 		}
 	}
 }
@@ -315,7 +318,7 @@ button.btn-Icon:hover {
 
 	* {
 		text-align: center;
-		color: $control;
+		color: $darkText;
 		margin: 0;
 		margin-bottom: .1em;
 		white-space: nowrap;
