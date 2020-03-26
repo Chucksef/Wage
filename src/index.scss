@@ -74,7 +74,11 @@ button {
 	font-weight: 300;
 	font-size: 1.25em;
 	line-height: 1;
+}
+
+button:focus {
 	outline: none;
+	border: 3px solid $secondary;
 }
 
 button.btn-Block {
@@ -112,6 +116,17 @@ button.btn-Large.btn-Block {
 	left: 0;
 	margin: 0;
 	border: none;
+}
+
+button.btn-Filter {
+	margin: 0 .5em;
+	padding: .25em 0;
+	width: 25%;
+}
+
+button.btn-Filter:focus {
+	margin: -3px .5em;
+	border: 3px solid $secondary;
 }
 
 #logo {
@@ -270,13 +285,22 @@ button.btn-Icon:hover {
 	padding: 1em;
 	background: $default;
 	box-shadow: 0px 0px 20px rgba(0, 0, 0, .5);
+}
+
+#filters {
+	padding-bottom: 1em;
+}
+
+#readout {
+	height: 100%;
+	padding-bottom: 2em;
 	overflow-y: auto;
 	overflow-y: -moz-scrollbars-none;
 	scrollbar-width: none;
 	-ms-overflow-style: none;
 }
 
-#display::-webkit-scrollbar {
+#readout::-webkit-scrollbar {
 	display: none;
 }
 
