@@ -47,7 +47,7 @@ class Project {
 		this.active = project.Active;
 		this.clientID = project.Client_ID;
 		this.description = project.Description;
-		this.due_date = project.Due_Date;
+		this.dueDate = project.Due_Date;
 		this.lastClockedIn = project.Last_Clocked_In;
 		this.name = project.Name;
 		this.hourlyRate = project.Rate;
@@ -77,8 +77,8 @@ class App {
 
 	getUserData(email) {
 		// look up user by email, return userID
-		db.collection("Users").where("Email", "==", email).get().then((users_snap) => {
-			users_snap.docs.forEach((user) => {
+		db.collection("Users").where("Email", "==", email).get().then((usersSnap) => {
+			usersSnap.docs.forEach((user) => {
 				this.userID = user.id;
 
 				// Now use this user ID to load all CPS (Clients Projects Sessions) from the FireStore;
@@ -89,9 +89,9 @@ class App {
 
 	// load all FireStore user clients into a clients{} object
 	loadClients(userID) {
-		db.collection("Clients").where("User_ID", "==", userID).get().then((clients_snap) => {
+		db.collection("Clients").where("User_ID", "==", userID).get().then((clientsSnap) => {
 			// load all docs in Sessions collection into a sessions{} object
-			clients_snap.docs.forEach((client) => {
+			clientsSnap.docs.forEach((client) => {
 				this.clients[`${client.id}`] = new Client(client.data());
 			});
 
@@ -102,9 +102,9 @@ class App {
 
 	// load all FireStore user projects into a projects{} object
 	loadProjects(userID) {
-		db.collection("Projects").where("User_ID", "==", userID).get().then((projects_snap) => {
+		db.collection("Projects").where("User_ID", "==", userID).get().then((projectsSnap) => {
 			// load all docs in Sessions collection into a sessions{} object
-			projects_snap.docs.forEach((project) => {
+			projectsSnap.docs.forEach((project) => {
 				this.projects[`${project.id}`] = new Project(project.data());
 			});
 
@@ -115,9 +115,9 @@ class App {
 
 	// load all FireStore user sessions into a sessions{} object
 	loadSessions(userID) {
-		db.collection("Sessions").where("User_ID", "==", userID).get().then((sessions_snap) => {
+		db.collection("Sessions").where("User_ID", "==", userID).get().then((sessionsSnap) => {
 			// load all docs in Sessions collection into a sessions{} object
-			sessions_snap.docs.forEach((session) => {
+			sessionsSnap.docs.forEach((session) => {
 				this.sessions[`${session.id}`] = new Session(session.data());
 			});
 
@@ -131,30 +131,30 @@ class App {
 
 	getLastDate(entry) {
 		// set up initial arrays of each object type's keys for checking...
-		let client_keys = Object.keys(this.clients);
-		let project_keys = Object.keys(this.projects);
-		let session_keys = Object.keys(this.sessions);
+		let clientKeys = Object.keys(this.clients);
+		let projectKeys = Object.keys(this.projects);
+		let sessionKeys = Object.keys(this.sessions);
 
 		// check if entry is a client...
-		if (client_keys.includes(entry.id)) {
+		if (clientKeys.includes(entry.id)) {
 			// It is! Now build an object with all projects whose clientID matches the client's key
-			let client_projects = {};
-			project_keys.forEach((key) => {
+			let clientProjects = {};
+			projectKeys.forEach((key) => {
 				let proj = this.projects[key]; // grab each project and check if it's the client's key
 				if (proj.clientID == entry.id) {
-					client_projects[key] = proj; // add it to client_projects
+					clientProjects[key] = proj; // add it to clientProjects
 				}
 			});
 
 			// set up a new array of all valid project keys for the client in question
-			let client_project_keys = Object.keys(client_projects);
+			let clientProjectKeys = Object.keys(clientProjects);
 
 			// Great! Now build an array with all clock-out times of sessions that are a part of relevant projects
-			let project_sessions = [];
-			session_keys.forEach((key) => {
+			let projectSessions = [];
+			sessionKeys.forEach((key) => {
 				let sess = this.sessions[key];
-				if (client_project_keys.includes(sess.projectID)) {
-					project_sessions.push(sess.clockOut);
+				if (clientProjectKeys.includes(sess.projectID)) {
+					projectSessions.push(sess.clockOut);
 				}
 			});
 
@@ -162,8 +162,8 @@ class App {
 			let highestVal = 0;
 			let ts;
 
-			// iterate through all the values in project_sessions...
-			for (let x of project_sessions) {
+			// iterate through all the values in projectSessions...
+			for (let x of projectSessions) {
 				if (x.seconds > highestVal) {
 					highestVal = x.seconds;
 					ts = x;
@@ -172,12 +172,12 @@ class App {
 
 			return ts;
 		}
-		else if (project_keys.includes(entry.id)) {
-			let project_sessions = [];
-			session_keys.forEach((key) => {
+		else if (projectKeys.includes(entry.id)) {
+			let projectSessions = [];
+			sessionKeys.forEach((key) => {
 				let sess = this.sessions[key];
 				if (sess.projectID == entry.id) {
-					project_sessions.push(sess.clockOut);
+					projectSessions.push(sess.clockOut);
 				}
 			});
 
@@ -185,8 +185,8 @@ class App {
 			let highestVal = 0;
 			let timestamp;
 
-			// iterate through all the values in project_sessions...
-			for (let x of project_sessions) {
+			// iterate through all the values in projectSessions...
+			for (let x of projectSessions) {
 				if (x.seconds > highestVal) {
 					highestVal = x.seconds;
 					timestamp = x;
@@ -202,45 +202,48 @@ class App {
 
 	deriveProperties() {
 		// set up initial arrays of each object type's keys for checking...
-		let client_keys = Object.keys(this.clients);
-		let project_keys = Object.keys(this.projects);
-		let session_keys = Object.keys(this.sessions);
+		let clientKeys = Object.keys(this.clients);
+		let projectKeys = Object.keys(this.projects);
+		let sessionKeys = Object.keys(this.sessions);
 
 		// Take each client one at a time ...
-		client_keys.forEach((cKey) => {
-			let current_client = this.clients[cKey];
-			let clientName = current_client.name;
+		clientKeys.forEach((cKey) => {
+			let currentClient = this.clients[cKey];
+			let clientName = currentClient.name;
 
 			// build an array of the client's projects
-			let client_projects = [];
-			project_keys.forEach((pKey) => {
+			let clientProjects = [];
+			projectKeys.forEach((pKey) => {
 				if (this.projects[pKey].clientID == cKey) {
-					client_projects.push(pKey);
+					clientProjects.push(pKey);
 				}
 			});
 
 			// take each of the client's projects ...
-			client_projects.forEach((pKey) => {
-				let current_project = this.projects[pKey];
-				let projectName = current_project.name;
-				current_project.clientName = clientName;
+			clientProjects.forEach((pKey) => {
+				let currentProject = this.projects[pKey];
+				let projectName = currentProject.name;
+				currentProject.clientName = clientName;
 
 				// build an array of the project's sessions
-				let project_sessions = [];
-				session_keys.forEach((sKey) => {
+				let projectSessions = [];
+				sessionKeys.forEach((sKey) => {
 					if (this.sessions[sKey].projectID == pKey) {
-						project_sessions.push(sKey);
+						projectSessions.push(sKey);
 					}
 				});
 
 				// take each session associated with ^ ...
-				project_sessions.forEach((sKey) => {
-					let current_session = this.sessions[sKey];
-					current_session.clientName = clientName;
-					current_session.projectName = projectName;
+				projectSessions.forEach((sKey) => {
+					let currentSession = this.sessions[sKey];
+					currentSession.clientName = clientName;
+					currentSession.projectName = projectName;
 				});
+				// assign project.totalHours
 			});
+			//assign client.totalHours
 		});
+		// next client ...
 	}
 }
 
