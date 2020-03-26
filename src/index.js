@@ -121,8 +121,11 @@ class App {
 				this.sessions[`${session.id}`] = new Session(session.data());
 			});
 
-			// now that all CPS are loaded, display clients...
-			UI.display(this, this.sessions, TEMPLATES.session);
+			// now that all CPS are loaded, calculate all derived properties...
+			this.deriveProperties();
+
+			// and then display a list of clients as default...
+			UI.display(this, this.clients, TEMPLATES.client);
 		});
 	}
 
@@ -195,6 +198,49 @@ class App {
 		else {
 			return this.sessions[entry.id].clockOut;
 		}
+	}
+
+	deriveProperties() {
+		// set up initial arrays of each object type's keys for checking...
+		let client_keys = Object.keys(this.clients);
+		let project_keys = Object.keys(this.projects);
+		let session_keys = Object.keys(this.sessions);
+
+		// Take each client one at a time ...
+		client_keys.forEach((cKey) => {
+			let current_client = this.clients[cKey];
+			let clientName = current_client.name;
+
+			// build an array of the client's projects
+			let client_projects = [];
+			project_keys.forEach((pKey) => {
+				if (this.projects[pKey].clientID == cKey) {
+					client_projects.push(pKey);
+				}
+			});
+
+			// take each of the client's projects ...
+			client_projects.forEach((pKey) => {
+				let current_project = this.projects[pKey];
+				let projectName = current_project.name;
+				current_project.clientName = clientName;
+
+				// build an array of the project's sessions
+				let project_sessions = [];
+				session_keys.forEach((sKey) => {
+					if (this.sessions[sKey].projectID == pKey) {
+						project_sessions.push(sKey);
+					}
+				});
+
+				// take each session associated with ^ ...
+				project_sessions.forEach((sKey) => {
+					let current_session = this.sessions[sKey];
+					current_session.clientName = clientName;
+					current_session.projectName = projectName;
+				});
+			});
+		});
 	}
 }
 

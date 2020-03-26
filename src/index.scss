@@ -289,8 +289,18 @@ button.btn-Icon:hover {
 	padding: 1em;
 	margin-bottom: 1em;
 
+	* {
+		text-align: center;
+		color: $control;
+		margin: 0;
+		margin-bottom: .1em;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
 	div.data-block {
-		flex: 0 0 25%;
+		flex: 0 0 30%;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-evenly;
@@ -302,17 +312,11 @@ button.btn-Icon:hover {
 		flex: 0 0 50%;
 	}
 
-	div.data-block.first-block p {
+	div.data-block.first-block * {
 		text-align: left;
 	}
 
-	* {
-		text-align: center;
-		color: $control;
-		margin: 0;
-		margin-bottom: .1em;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
+	div.data-block.last-block {
+		flex: 0 0 20%;
 	}
 }

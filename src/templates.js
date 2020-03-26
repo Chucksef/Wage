@@ -7,7 +7,7 @@ const TEMPLATES = {
 			<p>%lastClockedIn</p>
 			<p>%active</p>
 		</div>
-		<div class="data-block">
+		<div class="data-block last-block">
 			<p>%hourlyRate</p>
 			<p>%totalHours</p>
 		</div>	
@@ -16,13 +16,13 @@ const TEMPLATES = {
 	project: `
 		<div class="data-block first-block">
 			<h4>%name</h1>
-			<h5>%clientName</h2>
+			<h5>&nbsp&nbsp%clientName</h2>
 		</div>
 		<div class="data-block">
 			<p>%lastClockedIn</p>
 			<p>%active</p>
 		</div>
-		<div class="data-block">
+		<div class="data-block last-block">
 			<p>%hourlyRate</p>
 			<p>%totalHours</p>
 		</div>
@@ -30,13 +30,14 @@ const TEMPLATES = {
 
 	session: `
 		<div class="data-block first-block">
-			<p>%clientName</p>
-			<p>%projectName</p>
+			<h5>%clientName</h5>
+			<h6>%projectName</h6>
 		</div>
 		<div class="data-block">
-			<h4>%duration</h4>
+			<p>%duration</p>
+			<p>%date</p>
 		</div>
-		<div class="data-block">
+		<div class="data-block last-block">
 			<p>%clockIn</p>
 			<p>%clockOut</p>
 		</div>
