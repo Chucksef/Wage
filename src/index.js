@@ -17,8 +17,11 @@ firebase.analytics();
 const db = firebase.firestore();
 
 const DOM = {
-	readout: document.querySelector("#display"),
+	readout: document.querySelector("#readout"),
 	controls: document.querySelector("#controls"),
+	btn_Clients: document.querySelector("#btn-Clients"),
+	btn_Projects: document.querySelector("#btn-Projects"),
+	btn_Sessions: document.querySelector("#btn-Sessions"),
 };
 
 class Client {
@@ -73,6 +76,7 @@ class App {
 		this.projects = {};
 		this.sessions = {};
 		this.getUserData(email);
+		this.setUpEventListeners(this);
 	}
 
 	getUserData(email) {
@@ -265,6 +269,21 @@ class App {
 
 	getDuration(clockOut, clockIn) {
 		return Math.floor((clockOut.seconds - clockIn.seconds) / 60) / 60; // rounds down to the minute, then returns fraction of hour (eliminates the need to worry about seconds)
+	}
+
+	setUpEventListeners(app) {
+		DOM.btn_Clients.addEventListener("click", function() {
+			UI.clear();
+			UI.display(app, app.clients, TEMPLATES.client);
+		});
+		DOM.btn_Projects.addEventListener("click", function() {
+			UI.clear();
+			UI.display(app, app.projects, TEMPLATES.project);
+		});
+		DOM.btn_Sessions.addEventListener("click", function() {
+			UI.clear();
+			UI.display(app, app.sessions, TEMPLATES.session);
+		});
 	}
 }
 
