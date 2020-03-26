@@ -34,7 +34,7 @@ class Client {
 		this.name = client.Name;
 		this.notes = client.Notes;
 		this.phone = client.Phone;
-		this.hourlyRate = client.Rate;
+		this.rate = client.Rate;
 		this.state = client.State;
 		this.totalHours = client.Total_Hours;
 		this.totalWages = client.Total_Wages;
@@ -50,7 +50,7 @@ class Project {
 		this.dueDate = project.Due_Date;
 		this.lastClockedIn = project.Last_Clocked_In;
 		this.name = project.Name;
-		this.hourlyRate = project.Rate;
+		this.rate = project.Rate;
 		this.totalHours = project.Total_Hours;
 		this.totalWages = project.Total_Wages;
 		this.userID = project.User_ID;
@@ -125,7 +125,7 @@ class App {
 			this.deriveProperties();
 
 			// and then display a list of clients as default...
-			UI.display(this, this.clients, TEMPLATES.client);
+			UI.display(this, this.clients, TEMPLATES.client); // <------------------------------------------------------
 		});
 	}
 
@@ -210,6 +210,8 @@ class App {
 		clientKeys.forEach((cKey) => {
 			let currentClient = this.clients[cKey];
 			let clientName = currentClient.name;
+			currentClient.totalHours = 0;
+			currentClient.totalWages = 0;
 
 			// build an array of the client's projects
 			let clientProjects = [];
@@ -219,11 +221,16 @@ class App {
 				}
 			});
 
+			// store the projects' total wages and hours for use by the client eventually
+			let projectsHours = 0;
+			let projectsWages = 0;
 			// take each of the client's projects ...
 			clientProjects.forEach((pKey) => {
 				let currentProject = this.projects[pKey];
 				let projectName = currentProject.name;
 				currentProject.clientName = clientName;
+				currentProject.totalHours = 0;
+				currentProject.totalWages = 0;
 
 				// build an array of the project's sessions
 				let projectSessions = [];
@@ -233,17 +240,31 @@ class App {
 					}
 				});
 
+				// store the sessions' total hours for use by the project eventually
+				let sessionsHours = 0;
 				// take each session associated with ^ ...
 				projectSessions.forEach((sKey) => {
 					let currentSession = this.sessions[sKey];
 					currentSession.clientName = clientName;
 					currentSession.projectName = projectName;
+
+					// add the current session's duration to the sessions' total hours
+					sessionsHours +=
+						this.getDuration(currentSession.clockOut, currentSession.clockIn) - currentSession.breaks;
 				});
-				// assign project.totalHours
+				currentProject.totalHours += sessionsHours; // add the sessions' total hours to the current project's total hours
+				projectsHours += currentProject.totalHours; // add the project's total hours to the projects' total hours
+				projectsWages += currentProject.totalHours * currentProject.rate;
 			});
 			//assign client.totalHours
+			currentClient.totalHours += projectsHours;
+			currentClient.totalWages += projectsWages;
 		});
 		// next client ...
+	}
+
+	getDuration(clockOut, clockIn) {
+		return Math.floor((clockOut.seconds - clockIn.seconds) / 60) / 60; // rounds down to the minute, then returns fraction of hour (eliminates the need to worry about seconds)
 	}
 }
 
@@ -268,7 +289,7 @@ class UI {
 			current.id = key;
 
 			// replace fields in template with corresponding data
-			entry.innerHTML = Format.template(template, current);
+			entry.innerHTML = Format.template(app, template, current);
 
 			UI.addEntry(entry);
 		});
@@ -306,7 +327,7 @@ class Format {
 		return time;
 	}
 
-	static template(temp, data) {
+	static template(app, temp, data) {
 		if (temp.includes("%name")) {
 			temp = temp.replace(/%name/g, data.name);
 		}
@@ -317,13 +338,13 @@ class Format {
 			temp = temp.replace(/%projectName/g, data.projectName);
 		}
 		if (temp.includes("%lastClockedIn")) {
-			temp = temp.replace(/%lastClockedIn/g, Format.date(main.getLastDate(data)));
+			temp = temp.replace(/%lastClockedIn/g, Format.date(app.getLastDate(data)));
 		}
 		if (temp.includes("%active")) {
 			temp = temp.replace(/%active/g, `Active: ${data.active}`);
 		}
-		if (temp.includes("%hourlyRate")) {
-			temp = temp.replace(/%hourlyRate/g, `${Format.dollars(data.hourlyRate)} / hr`);
+		if (temp.includes("%rate")) {
+			temp = temp.replace(/%rate/g, `${Format.dollars(data.rate)} / hr`);
 		}
 		if (temp.includes("%totalHours")) {
 			temp = temp.replace(/%totalHours/g, `${data.totalHours} hours`);

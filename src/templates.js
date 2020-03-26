@@ -8,7 +8,7 @@ const TEMPLATES = {
 			<p>%active</p>
 		</div>
 		<div class="data-block last-block">
-			<p>%hourlyRate</p>
+			<p>%rate</p>
 			<p>%totalHours</p>
 		</div>	
 	`,
@@ -23,7 +23,7 @@ const TEMPLATES = {
 			<p>%active</p>
 		</div>
 		<div class="data-block last-block">
-			<p>%hourlyRate</p>
+			<p>%rate</p>
 			<p>%totalHours</p>
 		</div>
 	`,
