@@ -19,7 +19,6 @@
 	},
 	"homepage": "https://github.com/Chucksef/Wage#readme",
 	"devDependencies": {
-		"bootstrap": "^4.4.1",
 		"css-loader": "^3.4.2",
 		"file-loader": "^6.0.0",
 		"html-loader": "^1.0.0",

@@ -21,6 +21,8 @@ const DOM = {
 	readout: document.querySelector("#readout"),
 	controls: document.querySelector("#controls"),
 
+	filters: document.querySelector("#filters"),
+
 	btn_Clients: document.querySelector("#btn-Clients"),
 	btn_Projects: document.querySelector("#btn-Projects"),
 	btn_Sessions: document.querySelector("#btn-Sessions"),
@@ -70,7 +72,7 @@ class App {
 		this.clients = {};
 		this.projects = {};
 		this.sessions = {};
-		this.getUserData(email);
+		//this.getUserData(email);     <-----------------------------------------------------------
 		UI.setUpEventListeners(this);
 	}
 
@@ -323,6 +325,15 @@ class UI {
 	}
 
 	static setUpEventListeners(app) {
+		DOM.filters.addEventListener("click", function(e) {
+			let target = e.target;
+			let buttons = DOM.filters.querySelectorAll("button");
+			buttons.forEach((button) => {
+				button.classList.remove("selected");
+			});
+			target.classList.add("selected");
+		});
+
 		// Add Main Control Event Listeners
 		DOM.btn_NewClient.addEventListener("click", function() {
 			UI.menu(app, TEMPLATES.menus.client);

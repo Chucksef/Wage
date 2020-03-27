@@ -1,25 +1,24 @@
-@import "~bootstrap/scss/bootstrap";
 @import url('https://fonts.googleapis.com/css2?family=Bellota+Text:wght@300;400;700&display=swap'); // Google Fonts Import
 
 /* Remapping Color Variables */
 
 $primary: #ff80a2;
 $secondary: #f8c6d4;
-$control: #94b3b1;
+$light-control: #8bd8d4;
+$dark-control: #51807d;
 $entry: #ffffff;
-$display: #fff1f1;
-$background: $primary;
-
 $light: #fff1f1;
 $dark: #615858;
-$lightText: #d5f1f0;
-$darkText: #324d4d;
 
 $success: #28a745;
 $warning: #ffc107;
 $danger: #dc3545;
 
 /* VARIOUS BASIC STYLES */
+
+* {
+	box-sizing: border-box;
+}
 
 :selected {
 	outline: none;
@@ -32,13 +31,15 @@ h4,
 h5,
 h6,
 a,
-p {
+p,
+button {
 	font-weight: 300;
 	font-family: "Bellota Text", cursive;
-	color: white;
+	color: $entry;
 }
 
 body {
+	background: $primary;
 	overflow: hidden;
 }
 
@@ -47,11 +48,13 @@ div {
 }
 
 hr {
+	border: none;
 	border-bottom: 1px solid $primary;
 	margin: 10px;
 }
 
 h1 {
+	margin: 0;
 	font-size: 5em;
 	font-weight: 400;
 }
@@ -59,7 +62,7 @@ h1 {
 h2 {
 	display: block;
 	position: relative;
-	left: 15%;
+	margin: 0 auto;
 	width: 70%;
 	font-size: 1.75em;
 }
@@ -72,83 +75,72 @@ h4 {
 	font-size: 1.4em;
 }
 
-button {
-	color: white;
-	border: none;
-	background: $control;
-	border-radius: 20px;
-	font-weight: 300;
-	font-size: 1.25em;
-	line-height: 1;
-	padding: .3em;
-}
-
-button:focus {
-	outline: none;
-}
-
-button.btn-Block {
-	position: relative;
-	outline: none;
-	transition: .15s;
-	transition-property: background, color;
-	width: 100%;
-	margin: .3em 0;
-}
-
-button.btn-Block:hover {
-	border: 1px solid $primary;
-	color: $secondary;
-	margin: calc(.3em - 1px) 0;
-}
-
-button.btn-Block:focus {
-	left: -3px;
-	border: 3px solid $primary;
-	color: $primary;
-	outline: none;
-	margin: calc(.3em - 3px);
-}
-
-button.btn-Large {
-	font-size: 2.25em;
-	padding: 1em;
-	font-weight: 300;
-	margin: 0;
-}
-
-button.btn-Large.btn-Block {
-	left: 0;
-	margin: 0;
-	border: none;
-}
-
-button.btn-Filter {
-	margin: 0 .5em;
-	padding: .25em 0;
-	width: 25%;
-}
-
-button.btn-Filter:focus {
-	margin: -3px .5em;
-	border: 3px solid $primary;
-}
-
 #logo {
 	position: relative;
+	bottom: -4px;
 	left: -20%;
 	width: 25%;
 	height: auto;
 	fill: $primary;
 }
 
-/* BACKGROUND */
+/* BUTTONS */
 
-#background {
-	position: absolute;
-	background: $background;
-	height: 100vh;
-	width: 100vw;
+button {
+	color: $light-control;
+	border: 1px solid $light-control;
+	background: rgba(0, 0, 0, 0);
+	border-radius: 20px;
+	font-weight: 300;
+	font-size: 1.25em;
+	line-height: 1;
+	padding: .3em;
+	transition: .075s;
+	outline: none;
+}
+
+button.btn-dark {
+	color: $dark-control;
+	border-color: $dark-control;
+}
+
+button.btn-block {
+	position: relative;
+	width: 100%;
+	margin: .3em 0;
+}
+
+#filters button.selected {
+	background: $light-control;
+	border-color: $light-control;
+	color: $entry;
+}
+
+button.btn-large {
+	font-size: 2.25em;
+	padding: 1em;
+	font-weight: 300;
+	margin: 0;
+}
+
+button.btn-inline {
+	margin: 0 .5em;
+	padding: .25em 0;
+	width: 25%;
+}
+
+button:hover {
+	color: $dark;
+	background: $light-control;
+}
+
+button.btn-dark:hover {
+	color: $light;
+	background: $dark-control;
+}
+
+button:focus {
+	outline: none;
 }
 
 /* MAIN SITE STRUCTURE */
@@ -158,7 +150,7 @@ button.btn-Filter:focus {
 	position: absolute;
 	top: 0;
 	height: 100vh;
-	background: white;
+	background: $entry;
 	left: 14.6vw;
 	width: 70.8vw;
 }
@@ -199,37 +191,37 @@ button.btn-Icon {
 	position: relative;
 	right: -1.5em;
 	border-radius: 100%;
+	border: none;
 	padding: 0;
 	margin: 0;
 	outline: none;
-	transition: .15s;
+	transition: .075s;
 	background: $light;
 	box-shadow: 0 10px 20px rgba(0, 0, 0, .4);
+	height: 3em;
+	width: 3em;
 
 	svg {
-		width: 3em;
-		height: 3em;
-
 		path,
 		circle {
-			transition: .15s;
+			transition: .075s;
 		}
 
 		.st0 {
 			fill: none;
-			stroke: $primary;
+			stroke: $dark;
 			stroke-width: 10;
 			stroke-miterlimit: 10;
 		}
 		.st1 {
-			fill: $primary;
-			stroke: $primary;
+			fill: $dark;
+			stroke: $dark;
 			stroke-width: 10;
 			stroke-miterlimit: 10;
 		}
 		.st2 {
-			fill: $primary;
-			stroke: $primary;
+			fill: $dark;
+			stroke: $dark;
 			stroke-width: 10;
 			stroke-miterlimit: 10;
 		}
@@ -237,7 +229,7 @@ button.btn-Icon {
 }
 
 button.btn-Icon:hover {
-	background: white;
+	background: $entry;
 
 	svg {
 		.st0 {
@@ -277,7 +269,7 @@ button.btn-Icon:hover {
 	height: 100%;
 	left: 33%;
 	padding: 1em;
-	background: $display;
+	background: $light;
 	box-shadow: 0px 0px 20px rgba(0, 0, 0, .5);
 }
 
@@ -309,10 +301,10 @@ button.btn-Icon:hover {
 
 	* {
 		text-align: center;
-		color: $darkText;
+		color: $dark-control;
 		margin: 0;
 		margin-bottom: .1em;
-		white-space: nowrap;
+		$entry-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
@@ -361,7 +353,7 @@ button.btn-Icon:hover {
 		border-radius: .5em;
 
 		* {
-			color: $darkText;
+			color: $dark-control;
 			border: none;
 			padding: 2px;
 			padding-left: .5em;
@@ -371,7 +363,7 @@ button.btn-Icon:hover {
 		button {
 			margin-bottom: 0;
 			padding: .3em;
-			color: $lightText;
+			color: $light-control;
 		}
 
 		h1 {
