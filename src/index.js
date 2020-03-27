@@ -30,7 +30,6 @@ const DOM = {
 
 class Client {
 	constructor(client) {
-		this.active = client.Active;
 		this.address = client.Address;
 		this.city = client.City;
 		this.contactName = client.Contact;
@@ -48,10 +47,8 @@ class Client {
 
 class Project {
 	constructor(project) {
-		this.active = project.Active;
 		this.clientID = project.Client_ID;
 		this.description = project.Description;
-		this.dueDate = project.Due_Date;
 		this.name = project.Name;
 		this.rate = project.Rate;
 		this.userID = project.User_ID;
@@ -404,9 +401,6 @@ class Format {
 		}
 		if (temp.includes("%lastClockedIn")) {
 			temp = temp.replace(/%lastClockedIn/g, Format.date(app.getLastDate(data)));
-		}
-		if (temp.includes("%active")) {
-			temp = temp.replace(/%active/g, `Active: ${data.active}`);
 		}
 		if (temp.includes("%rate")) {
 			temp = temp.replace(/%rate/g, `${Format.dollars(data.rate)} / hr`);
