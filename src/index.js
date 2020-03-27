@@ -17,11 +17,15 @@ firebase.analytics();
 const db = firebase.firestore();
 
 const DOM = {
+	body: document.querySelector("body"),
 	readout: document.querySelector("#readout"),
 	controls: document.querySelector("#controls"),
+
 	btn_Clients: document.querySelector("#btn-Clients"),
 	btn_Projects: document.querySelector("#btn-Projects"),
 	btn_Sessions: document.querySelector("#btn-Sessions"),
+	btn_NewClient: document.querySelector("#btn-NewClient"),
+	btn_NewProject: document.querySelector("#btn-NewProject"),
 };
 
 class Client {
@@ -33,14 +37,11 @@ class Client {
 		this.country = client.Country;
 		this.email = client.Email;
 		this.invoiceFrequency = client.Invoice_Frequency;
-		this.lastClockedIn = client.Last_Clocked_In;
 		this.name = client.Name;
 		this.notes = client.Notes;
 		this.phone = client.Phone;
 		this.rate = client.Rate;
 		this.state = client.State;
-		this.totalHours = client.Total_Hours;
-		this.totalWages = client.Total_Wages;
 		this.zip = client.Zip;
 	}
 }
@@ -51,11 +52,8 @@ class Project {
 		this.clientID = project.Client_ID;
 		this.description = project.Description;
 		this.dueDate = project.Due_Date;
-		this.lastClockedIn = project.Last_Clocked_In;
 		this.name = project.Name;
 		this.rate = project.Rate;
-		this.totalHours = project.Total_Hours;
-		this.totalWages = project.Total_Wages;
 		this.userID = project.User_ID;
 	}
 }
@@ -76,7 +74,7 @@ class App {
 		this.projects = {};
 		this.sessions = {};
 		this.getUserData(email);
-		this.setUpEventListeners(this);
+		UI.setUpEventListeners(this);
 	}
 
 	getUserData(email) {
@@ -129,7 +127,7 @@ class App {
 			this.deriveProperties();
 
 			// and then display a list of clients as default...
-			UI.display(this, this.clients, TEMPLATES.client);
+			UI.display(this, this.clients, TEMPLATES.entries.client);
 		});
 	}
 
@@ -273,19 +271,11 @@ class App {
 		return Math.floor((clockOut.seconds - clockIn.seconds) / 60) / 60; // rounds down to the minute, then returns fraction of hour (eliminates the need to worry about seconds)
 	}
 
-	setUpEventListeners(app) {
-		DOM.btn_Clients.addEventListener("click", function() {
-			UI.clear();
-			UI.display(app, app.clients, TEMPLATES.client);
-		});
-		DOM.btn_Projects.addEventListener("click", function() {
-			UI.clear();
-			UI.display(app, app.projects, TEMPLATES.project);
-		});
-		DOM.btn_Sessions.addEventListener("click", function() {
-			UI.clear();
-			UI.display(app, app.sessions, TEMPLATES.session);
-		});
+	addClient(client) {
+		// save to FireStore
+		// get FireStore's ID
+		// add client to clients{}
+		// UI.display
 	}
 }
 
@@ -296,6 +286,10 @@ class UI {
 	}
 
 	static clear() {
+		let menu = document.querySelector("#modal");
+		if (menu) {
+			menu.remove();
+		}
 		DOM.readout.innerHTML = "";
 	}
 
@@ -310,9 +304,48 @@ class UI {
 			current.id = key;
 
 			// replace fields in template with corresponding data
-			entry.innerHTML = Format.template(app, template, current);
+			entry.innerHTML = Format.template(app, current, template);
 
 			UI.addEntry(entry);
+		});
+	}
+
+	static menu(app, template) {
+		let menu = document.createElement("div");
+		menu.id = "modal";
+		menu.innerHTML = template;
+
+		DOM.body.insertAdjacentElement("beforeend", menu);
+		document.querySelector("#submit").addEventListener("click", () => {
+			// validate fields are filled out
+			// build new Client object
+			// pass the object to save it
+			// app.saveClient()
+			UI.display(app, app.clients, TEMPLATES.entries.client);
+		});
+	}
+
+	static setUpEventListeners(app) {
+		// Add Main Control Event Listeners
+		DOM.btn_NewClient.addEventListener("click", function() {
+			UI.menu(app, TEMPLATES.menus.client);
+		});
+		DOM.btn_NewProject.addEventListener("click", function() {
+			UI.menu(app, TEMPLATES.menus.project);
+		});
+
+		// Add Filter Event Listeners
+		DOM.btn_Clients.addEventListener("click", function() {
+			UI.clear();
+			UI.display(app, app.clients, TEMPLATES.entries.client);
+		});
+		DOM.btn_Projects.addEventListener("click", function() {
+			UI.clear();
+			UI.display(app, app.projects, TEMPLATES.entries.project);
+		});
+		DOM.btn_Sessions.addEventListener("click", function() {
+			UI.clear();
+			UI.display(app, app.sessions, TEMPLATES.entries.session);
 		});
 	}
 }
@@ -338,13 +371,13 @@ class Format {
 		}
 	}
 
-	static date(ts) {
-		let date = ts.toDate().toString().split(" ");
+	static date(timestamp) {
+		let date = timestamp.toDate().toString().split(" ");
 		return `${date[0]}, ${date[1]} ${date[2]}, ${date[3]}`;
 	}
 
-	static time(ts) {
-		let time = ts.toDate().toString().split(" ")[4].split(":");
+	static time(timestamp) {
+		let time = timestamp.toDate().toString().split(" ")[4].split(":");
 		let hours = parseInt(time[0]);
 		let minutes = time[1];
 		let ampm = "AM";
@@ -359,7 +392,7 @@ class Format {
 		return `${hours}:${minutes} ${ampm}`;
 	}
 
-	static template(app, temp, data) {
+	static template(app, data, temp) {
 		if (temp.includes("%name")) {
 			temp = temp.replace(/%name/g, data.name);
 		}

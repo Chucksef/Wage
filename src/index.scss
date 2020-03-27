@@ -5,13 +5,15 @@
 
 $primary: #ff80a2;
 $secondary: #f8c6d4;
-$default: #eee4e4;
 $control: #94b3b1;
+$entry: #ffffff;
+$display: #fff1f1;
+$background: $primary;
 
-$light: #f8f9fa;
+$light: #fff1f1;
+$dark: #615858;
 $lightText: #d5f1f0;
 $darkText: #324d4d;
-$dark: #615858;
 
 $success: #28a745;
 $warning: #ffc107;
@@ -78,6 +80,7 @@ button {
 	font-weight: 300;
 	font-size: 1.25em;
 	line-height: 1;
+	padding: .3em;
 }
 
 button:focus {
@@ -90,7 +93,6 @@ button.btn-Block {
 	transition: .15s;
 	transition-property: background, color;
 	width: 100%;
-	padding: .3em;
 	margin: .3em 0;
 }
 
@@ -144,20 +146,20 @@ button.btn-Filter:focus {
 
 #background {
 	position: absolute;
-	background: $dark;
+	background: $background;
 	height: 100vh;
 	width: 100vw;
 }
 
-#background::after {
-	content: "";
-	display: block;
-	position: absolute;
-	top: 0;
-	width: 100vw;
-	height: 100vh;
-	background: rgba(255, 255, 255, .5);
-}
+// #background::after {
+// 	content: "";
+// 	display: block;
+// 	position: absolute;
+// 	top: 0;
+// 	width: 100vw;
+// 	height: 100vh;
+// 	background: rgba(255, 255, 255, .5);
+// }
 
 /* MAIN SITE STRUCTURE */
 
@@ -212,7 +214,7 @@ button.btn-Icon {
 	margin: 0;
 	outline: none;
 	transition: .15s;
-	background: $default;
+	background: $light;
 	box-shadow: 0 10px 20px rgba(0, 0, 0, .4);
 
 	svg {
@@ -286,7 +288,7 @@ button.btn-Icon:hover {
 	height: 100%;
 	left: 33%;
 	padding: 1em;
-	background: $default;
+	background: $display;
 	box-shadow: 0px 0px 20px rgba(0, 0, 0, .5);
 }
 
@@ -311,7 +313,7 @@ button.btn-Icon:hover {
 	position: relative;
 	display: flex;
 	width: 100%;
-	background: white;
+	background: $entry;
 	border-radius: 10px;
 	padding: 1em;
 	margin-bottom: 1em;
@@ -345,5 +347,55 @@ button.btn-Icon:hover {
 
 	div.data-block.last-block {
 		flex: 0 0 20%;
+	}
+}
+
+#modal {
+	background: $primary;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: 10;
+
+	.menu {
+		background: $light;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		padding: 2em;
+		width: 38.2%;
+		border-radius: .5em;
+
+		* {
+			color: $darkText;
+			border: none;
+			padding: 2px;
+			padding-left: .5em;
+			margin-bottom: .5em;
+		}
+
+		button {
+			margin-bottom: 0;
+			padding: .3em;
+			color: $lightText;
+		}
+
+		h1 {
+			font-size: 4em;
+			margin: 0 0 .25em;
+			line-height: 1;
+		}
+
+		hr {
+			border-color: $dark;
+			border-top: 0;
+			margin: 0;
+			margin-bottom: .5em;
+		}
 	}
 }
