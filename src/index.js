@@ -46,6 +46,33 @@ class Client {
 		this.state = client.State;
 		this.zip = client.Zip;
 	}
+
+	validate() {
+		let errors = [];
+		let email = this.email.match(/\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,7})+$/)[0];
+
+		if (this.name == "") {
+			errors.push("Client Name Cannot be Blank");
+		}
+
+		if (this.rate == "" || parseFloat(this.rate) == NaN) {
+			errors.push("Rate Must be a Valid Number");
+		}
+
+		if (this.contactName == "") {
+			errors.push("Must Include a Contact Name");
+		}
+
+		if (email.length < 6) {
+			errors.push("Must Include a Valid Contact Email Address");
+		}
+
+		if (this.invoiceFrequency == "") {
+			errors.push("Must Choose the Invoicing Frequency");
+		}
+
+		return errors;
+	}
 }
 
 class Project {
@@ -55,6 +82,20 @@ class Project {
 		this.name = project.Name;
 		this.rate = project.Rate;
 		this.userID = project.User_ID;
+	}
+
+	validate() {
+		let errors = [];
+
+		if (this.name == "") {
+			errors.push("Project Name Cannot be Blank");
+		}
+
+		if (this.clientID == "") {
+			errors.push("Please Select a Client");
+		}
+
+		return errors;
 	}
 }
 
@@ -73,7 +114,7 @@ class App {
 		this.clients = {};
 		this.projects = {};
 		this.sessions = {};
-		// this.getUserData(email); // <-------------------------------------------------------------------- DB CALL!!!
+		this.getUserData(email); //    <-------------------------------------------------------------------- DB INIT
 		UI.setUpEventListeners(this);
 	}
 
@@ -230,6 +271,9 @@ class App {
 			clientProjects.forEach((pKey) => {
 				let currentProject = this.projects[pKey];
 				let projectName = currentProject.name;
+				if (currentProject.rate == "") {
+					currentProject.rate = currentClient.rate;
+				}
 				currentProject.clientName = clientName;
 				currentProject.totalHours = 0;
 				currentProject.totalWages = 0;
@@ -272,10 +316,48 @@ class App {
 	}
 
 	addClient(client) {
-		// save to FireStore
-		// get FireStore's ID
+		client.userID = this.userID;
+
+		// generate new hash for ID
+		let clientID = Hash64.gen();
+
 		// add client to clients{}
-		// UI.display
+		this.clients[clientID] = client;
+
+		// save to FireStore
+		db.collection("Clients").doc(clientID).set({
+			Address: client.address,
+			City: client.city,
+			Contact: client.contactName,
+			Country: client.country,
+			Email: client.email,
+			Invoice_Frequency: client.invoiceFrequency,
+			Name: client.name,
+			Notes: client.notes,
+			Phone: client.phone,
+			Rate: client.rate,
+			State: client.state,
+			User_ID: this.userID,
+			Zip: client.zip,
+		});
+	}
+
+	addProject(project) {
+		project.userID = this.userID;
+		// generate new hash for ID
+		let projectID = Hash64.gen();
+
+		// add client to projects{}
+		this.projects[projectID] = project;
+
+		// save to FireStore
+		db.collection("Projects").doc(projectID).set({
+			Name: project.name,
+			Description: project.description,
+			Rate: project.rate,
+			User_ID: this.userID,
+			Client_ID: project.clientID,
+		});
 	}
 }
 
@@ -317,17 +399,124 @@ class UI {
 
 		DOM.body.insertAdjacentElement("beforeend", menu);
 
+		// grab the form type
+		let type = template.split(">")[0].trim();
+		type = type.substr(4, type.length - 6);
+
+		if (type == "PROJECT") {
+			let clientDD = document.querySelector("#client-ID");
+			let appClients = Object.keys(app.clients);
+
+			appClients.forEach((cli) => {
+				let option = document.createElement("option");
+				option.value = cli;
+				option.innerText = app.clients[cli].name;
+				clientDD.insertAdjacentElement("afterbegin", option);
+			});
+
+			let option = document.createElement("option");
+			option.value = "";
+			option.disabled = true;
+			option.hidden = true;
+			option.selected = true;
+			option.innerText = "Select Client";
+			clientDD.insertAdjacentElement("beforeend", option);
+		}
+
 		// add event listener to the freshly-generated submit button
 		document.querySelector("#submit").addEventListener("click", () => {
-			//generate new 64-bit Hash
-			let key = Hash64.gen();
-			alert(key);
+			// if the form is for a client...
+			if (type == "CLIENT") {
+				// grab and store form values
+				const FORM = {
+					clientName: document.querySelector("#client-name"),
+					clientAddress: document.querySelector("#client-address"),
+					clientCity: document.querySelector("#client-city"),
+					clientState: document.querySelector("#client-state"),
+					clientZip: document.querySelector("#client-zip"),
+					clientCountry: document.querySelector("#client-country"),
+					clientContactName: document.querySelector("#client-contact"),
+					clientEmail: document.querySelector("#client-email"),
+					clientPhone: document.querySelector("#client-phone"),
+					clientRate: document.querySelector("#client-rate"),
+					clientInvoiceFrequency: document.querySelector("#client-frequency"),
+					clientNotes: document.querySelector("#client-notes"),
+				};
 
-			// validate fields are filled out
-			// build new Client object
-			// pass the object to save it
-			// app.saveClient()
-			UI.display(app, app.clients, TEMPLATES.entries.client);
+				// build new Client object
+				const data = {
+					Address: FORM.clientAddress.value.trim(),
+					City: FORM.clientCity.value.trim(),
+					Contact: FORM.clientContactName.value.trim(),
+					Country: FORM.clientCountry.value.trim(),
+					Email: FORM.clientEmail.value.trim(),
+					Invoice_Frequency: FORM.clientInvoiceFrequency.value,
+					Name: FORM.clientName.value.trim(),
+					Notes: FORM.clientNotes.value.trim(),
+					Phone: FORM.clientPhone.value.trim(),
+					Rate: FORM.clientRate.value.trim(),
+					State: FORM.clientState.value.trim(),
+					Zip: FORM.clientZip.value.trim(),
+				};
+
+				// create new client object and validate
+				let newClient = new Client(data);
+				let errors = newClient.validate();
+
+				// Show warning if there are errors. Run if not.
+				if (errors.length > 0) {
+					// show warning
+					let message = "";
+					errors.forEach((error) => {
+						message += `• ${error}\n`;
+					});
+					alert(message);
+					// UI.message();   //  << NEED TO WRTIE FUNCTION TO HAVE NICER ALERT!!
+				}
+				else {
+					// pass the object to save it
+					app.addClient(newClient);
+					app.deriveProperties();
+					app.UI.display(app, app.clients, TEMPLATES.entries.client);
+				}
+			}
+			else if (type == "PROJECT") {
+				const FORM = {
+					projectName: document.querySelector("#project-name"),
+					projectRate: document.querySelector("#project-rate"),
+					projectDescription: document.querySelector("#project-description"),
+					projectClientID: document.querySelector("#client-ID"),
+				};
+
+				// build new project object
+				const data = {
+					Name: FORM.projectName.value.trim(),
+					Description: FORM.projectDescription.value.trim(),
+					Rate: FORM.projectRate.value.trim(),
+					Client_ID: FORM.projectClientID.value,
+				};
+
+				// create new project object and validate
+				let newProject = new Project(data);
+				let errors = newProject.validate();
+
+				// Show warning if there are errors. Run if not.
+				if (errors.length > 0) {
+					// show warning
+					let message = "";
+					errors.forEach((error) => {
+						message += `• ${error}\n`;
+					});
+					alert(message);
+					// UI.message();   // TODO: WRTIE FUNCTION TO HAVE NICER ALERT!! <----------------------
+				}
+				else {
+					// pass the object to the app to save it
+					app.addProject(newProject);
+					app.deriveProperties();
+					UI.display(app, app.projects, TEMPLATES.entries.project);
+				}
+			}
 		});
 	}
 
@@ -390,8 +579,13 @@ class Format {
 	}
 
 	static date(timestamp) {
-		let date = timestamp.toDate().toString().split(" ");
-		return `${date[0]}, ${date[1]} ${date[2]}, ${date[3]}`;
+		if (timestamp) {
+			let date = timestamp.toDate().toString().split(" ");
+			return `${date[0]}, ${date[1]} ${date[2]}, ${date[3]}`;
+		}
+		else {
+			return "-";
+		}
 	}
 
 	static time(timestamp) {

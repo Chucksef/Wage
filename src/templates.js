@@ -47,6 +47,7 @@ const TEMPLATES = {
 
 	menus: {
 		client: `
+			<!--CLIENT-->
 			<div class="menu">
 				<h1>New Client</h1>
 				<input type="text" id="client-name" placeholder="Client Name">
@@ -57,12 +58,12 @@ const TEMPLATES = {
 				<input type="text" id="client-country" placeholder="Country">
 				<h6>Contact Info</h6>
 				<input type="text" id="client-contact" placeholder="Contact Name">
-				<input type="email" id="client-email" placeholder="Contact Email">
+				<input type="text" id="client-email" placeholder="Contact Email">
 				<input type="text" id="client-phone" placeholder="Contact Phone">
 				<h6>Details</h6>
 				<input type="text" id="client-rate" placeholder="Hourly Rate">
 				<select id="client-frequency">
-					<option value="none" selected disabled hidden>Invoice Frequency</option>
+					<option value="" selected disabled hidden>Select Invoice Frequency</option>
 					<option value="weekly">Weekly</option>
 					<option value="bi-weekly">Bi-Weekly</option>
 					<option value="monthly">Monthly</option>
@@ -73,6 +74,7 @@ const TEMPLATES = {
 		`,
 
 		project: `
+			<!--PROJECT-->
 			<div class="menu">
 				<h1>New Project</h1>
 				<input type="text" id="project-name" placeholder="Name">

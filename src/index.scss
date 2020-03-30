@@ -375,6 +375,11 @@ button.btn-Icon:hover {
 			margin-bottom: .5em;
 		}
 
+		input::placeholder,
+		textarea::placeholder {
+			opacity: .5;
+		}
+
 		input:focus,
 		select:focus,
 		textarea:focus {
