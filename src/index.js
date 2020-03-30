@@ -114,7 +114,7 @@ class App {
 		this.clients = {};
 		this.projects = {};
 		this.sessions = {};
-		// this.getUserData(email); //    <-------------------------------------------------------------------- DB INIT
+		this.getUserData(email); //    <-------------------------------------------------------------------- DB INIT
 		UI.setUpEventListeners(this);
 	}
 
@@ -423,6 +423,12 @@ class UI {
 			clientDD.insertAdjacentElement("beforeend", option);
 		}
 
+		// add event listener to the freshly-generated back button
+
+		document.querySelector("#back").addEventListener("click", () => {
+			UI.clear();
+		});
+
 		// add event listener to the freshly-generated submit button
 		document.querySelector("#submit").addEventListener("click", () => {
 			// if the form is for a client...
@@ -477,7 +483,7 @@ class UI {
 					// pass the object to save it
 					app.addClient(newClient);
 					app.deriveProperties();
-					app.UI.display(app, app.clients, TEMPLATES.entries.client);
+					UI.display(app, app.clients, TEMPLATES.entries.client);
 				}
 			}
 			else if (type == "PROJECT") {
