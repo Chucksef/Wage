@@ -67,9 +67,7 @@ const TEMPLATES = {
 					<option value="bi-weekly">Bi-Weekly</option>
 					<option value="monthly">Monthly</option>
 				</select>
-				<hr>
 				<textarea id="client-notes" placeholder="Notes"></textarea>
-				<hr>
 				<button type="button" class="btn-block" id="submit">Add Client</button>
 			</div>
 		`,
@@ -84,7 +82,6 @@ const TEMPLATES = {
 				</select>
 				<h6>Details</h6>
 				<input type="text" id="project-rate" placeholder="Project Hourly Rate">
-				<hr>
 				<button type="button" class="btn-block" id="submit">Add Project</button>
 			</div>
 		`,

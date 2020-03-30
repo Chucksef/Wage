@@ -32,7 +32,12 @@ h5,
 h6,
 a,
 p,
-button {
+button,
+textarea,
+input,
+select,
+option {
+	font-size: 1em;
 	font-weight: 300;
 	font-family: "Bellota Text", cursive;
 	color: $entry;
@@ -343,6 +348,10 @@ button.btn-Icon:hover {
 	height: 100vh;
 	z-index: 10;
 
+	.menu::-webkit-scrollbar {
+		display: none;
+	}
+
 	.menu {
 		background: $light;
 		text-align: center;
@@ -351,25 +360,64 @@ button.btn-Icon:hover {
 		padding: 2em;
 		width: 38.2%;
 		border-radius: .5em;
+		max-height: calc(100% - 2em);
+		overflow-y: auto;
+		overflow-y: -moz-scrollbars-none;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
 
 		* {
 			color: $dark-control;
 			border: none;
-			padding: 2px;
-			padding-left: .5em;
+			padding: .3em;
+			padding-left: 1em;
 			margin-bottom: .5em;
+		}
+
+		input:focus,
+		select:focus,
+		textarea:focus {
+			outline: 2px solid $light-control;
+			outline-offset: 1px;
+		}
+
+		*::selection {
+			background: $primary;
+			color: white;
+		}
+
+		select {
+			padding-left: .7em;
 		}
 
 		button {
 			margin-bottom: 0;
 			padding: .3em;
-			color: $light-control;
+			color: $dark-control;
+			border: 1px solid $dark-control;
+		}
+
+		button:hover {
+			color: $light;
+			background: $dark-control;
 		}
 
 		h1 {
+			padding: 0 0 .25em;
 			font-size: 4em;
 			margin: 0 0 .25em;
 			line-height: 1;
+			margin: 0;
+		}
+
+		h6 {
+			font-size: 1em;
+			margin: 0.1em 0 0 0;
+		}
+
+		textarea {
+			min-height: 5em;
+			resize: vertical;
 		}
 
 		hr {

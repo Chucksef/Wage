@@ -72,7 +72,7 @@ class App {
 		this.clients = {};
 		this.projects = {};
 		this.sessions = {};
-		this.getUserData(email);
+		//this.getUserData(email);  // <-------------------------------------------------------------------- DB CALL!!!
 		UI.setUpEventListeners(this);
 	}
 
