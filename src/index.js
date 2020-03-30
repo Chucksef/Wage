@@ -114,7 +114,7 @@ class App {
 		this.clients = {};
 		this.projects = {};
 		this.sessions = {};
-		this.getUserData(email); //    <-------------------------------------------------------------------- DB INIT
+		// this.getUserData(email); //    <-------------------------------------------------------------------- DB INIT
 		UI.setUpEventListeners(this);
 	}
 

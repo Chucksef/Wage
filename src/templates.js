@@ -70,6 +70,22 @@ const TEMPLATES = {
 				</select>
 				<textarea id="client-notes" placeholder="Notes"></textarea>
 				<button type="button" class="btn-block" id="submit">Add Client</button>
+				<button type="button" class="btn-icon" id="back">
+					<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+						viewBox="0 0 318 318" style="enable-background:new 0 0 318 318;" xml:space="preserve">
+					<g>
+						<path class="st0" d="M315,159c0,41.2-15.9,78.6-42,106.5C244.5,296,204,315,159,315s-85.5-19-114-49.5C18.9,237.6,3,200.2,3,159
+							C3,72.8,72.8,3,159,3S315,72.8,315,159z"/>
+						<g>
+							<g>
+								<g>
+									<polygon class="st1" points="283,143 283,175 131.7,175 131.7,214.8 35,159 131.7,103.2 131.7,143 				"/>
+								</g>
+							</g>
+						</g>
+					</g>
+					</svg>				
+				</button>
 			</div>
 		`,
 
@@ -85,6 +101,22 @@ const TEMPLATES = {
 				<h6>Details</h6>
 				<input type="text" id="project-rate" placeholder="Project Hourly Rate">
 				<button type="button" class="btn-block" id="submit">Add Project</button>
+				<button type="button" class="btn-icon" id="back">
+					<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+						viewBox="0 0 318 318" style="enable-background:new 0 0 318 318;" xml:space="preserve">
+					<g>
+						<path class="st0" d="M315,159c0,41.2-15.9,78.6-42,106.5C244.5,296,204,315,159,315s-85.5-19-114-49.5C18.9,237.6,3,200.2,3,159
+							C3,72.8,72.8,3,159,3S315,72.8,315,159z"/>
+						<g>
+							<g>
+								<g>
+									<polygon class="st1" points="283,143 283,175 131.7,175 131.7,214.8 35,159 131.7,103.2 131.7,143 				"/>
+								</g>
+							</g>
+						</g>
+					</g>
+					</svg>				
+				</button>
 			</div>
 		`,
 	},

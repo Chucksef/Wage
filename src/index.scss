@@ -146,6 +146,16 @@ button.btn-dark:hover {
 
 button:focus {
 	outline: none;
+	color: $dark;
+	background: $light-control;
+	border-color: $light-control;
+}
+
+button.btn-dark:focus {
+	outline: none;
+	color: $light;
+	background: $dark-control;
+	border-color: $dark-control;
 }
 
 /* MAIN SITE STRUCTURE */
@@ -185,32 +195,15 @@ button:focus {
 	}
 }
 
-#user-buttons {
-	position: absolute;
-	right: 0;
-	top: 1em;
-	padding: 0;
-}
-
-button.btn-Icon {
-	position: relative;
-	right: -1.5em;
+button.btn-icon {
 	border-radius: 100%;
 	border: none;
-	padding: 0;
-	margin: 0;
-	outline: none;
-	transition: .075s;
-	background: $light;
-	box-shadow: 0 10px 20px rgba(0, 0, 0, .4);
 	height: 3em;
 	width: 3em;
+	padding: 0;
 
 	svg {
-		path,
-		circle {
-			transition: .075s;
-		}
+		padding: 0;
 
 		.st0 {
 			fill: none;
@@ -233,8 +226,8 @@ button.btn-Icon {
 	}
 }
 
-button.btn-Icon:hover {
-	background: $entry;
+button.btn-icon:hover {
+	background: transparent;
 
 	svg {
 		.st0 {
@@ -247,6 +240,38 @@ button.btn-Icon:hover {
 		.st2 {
 			fill: $primary;
 			stroke: $primary;
+		}
+	}
+}
+
+button.btn-icon:focus {
+	background: transparent;
+}
+
+// specifically the User Icon buttons...
+
+#user-buttons {
+	position: absolute;
+	right: 0;
+	top: 1em;
+	padding: 0;
+
+	button.btn-icon {
+		position: relative;
+		right: -1.5em;
+		border: none;
+		margin: 0;
+		outline: none;
+		border: none;
+		transition: .075s;
+		background: $light;
+		box-shadow: 0 10px 20px rgba(0, 0, 0, .4);
+
+		svg {
+			path,
+			circle {
+				transition: .075s;
+			}
 		}
 	}
 }
@@ -354,6 +379,7 @@ button.btn-Icon:hover {
 	}
 
 	.menu {
+		position: relative;
 		background: $light;
 		text-align: center;
 		display: flex;
@@ -368,7 +394,7 @@ button.btn-Icon:hover {
 		scrollbar-width: none;
 		-ms-overflow-style: none;
 
-		* {
+		*:not(svg):not(button) {
 			color: $dark-control;
 			border: none;
 			padding: .3em 1em;
@@ -396,19 +422,25 @@ button.btn-Icon:hover {
 			padding-left: .7em;
 		}
 
-		button {
+		button:not(.btn-icon) {
 			margin-bottom: 0;
 			padding: .3em;
 			color: $dark-control;
 			border: 1px solid $dark-control;
 		}
 
-		button:hover {
+		button:not(.btn-icon):hover {
 			color: $light;
 			background: $dark-control;
 		}
 
-		h1 {
+		button.btn-icon {
+			position: absolute;
+			top: calc(2em * .8);
+			left: calc(2em * .8);
+		}
+
+		h1:not(button) {
 			padding: 0 0 .25em;
 			font-size: 4em;
 			margin: 0 0 .25em;
