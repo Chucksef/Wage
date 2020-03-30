@@ -1,5 +1,6 @@
 import "./index.scss";
 import { TEMPLATES } from "./templates.js";
+import { Hash64 } from "./hash64.js";
 
 let firebaseConfig = {
 	apiKey: "AIzaSyBCblfryZE9C1r2opb9PdzF4o1oK8lDiNM",
@@ -72,7 +73,7 @@ class App {
 		this.clients = {};
 		this.projects = {};
 		this.sessions = {};
-		//this.getUserData(email);  // <-------------------------------------------------------------------- DB CALL!!!
+		// this.getUserData(email); // <-------------------------------------------------------------------- DB CALL!!!
 		UI.setUpEventListeners(this);
 	}
 
@@ -315,7 +316,13 @@ class UI {
 		menu.innerHTML = template;
 
 		DOM.body.insertAdjacentElement("beforeend", menu);
+
+		// add event listener to the freshly-generated submit button
 		document.querySelector("#submit").addEventListener("click", () => {
+			//generate new 64-bit Hash
+			let key = Hash64.gen();
+			alert(key);
+
 			// validate fields are filled out
 			// build new Client object
 			// pass the object to save it
@@ -325,21 +332,24 @@ class UI {
 	}
 
 	static setUpEventListeners(app) {
-		DOM.filters.addEventListener("click", function(e) {
-			let target = e.target;
-			let buttons = DOM.filters.querySelectorAll("button");
-			buttons.forEach((button) => {
-				button.classList.remove("selected");
-			});
-			target.classList.add("selected");
-		});
-
 		// Add Main Control Event Listeners
 		DOM.btn_NewClient.addEventListener("click", function() {
 			UI.menu(app, TEMPLATES.menus.client);
 		});
 		DOM.btn_NewProject.addEventListener("click", function() {
 			UI.menu(app, TEMPLATES.menus.project);
+		});
+
+		// Add Event listeners to Highlight clicked Filter Buttons
+		DOM.filters.addEventListener("click", function(e) {
+			let target = e.target;
+			if (target.tagName == "BUTTON") {
+				let buttons = DOM.filters.querySelectorAll("button");
+				buttons.forEach((button) => {
+					button.classList.remove("selected");
+				});
+				target.classList.add("selected");
+			}
 		});
 
 		// Add Filter Event Listeners

@@ -299,6 +299,7 @@ button.btn-Icon:hover {
 	position: relative;
 	display: flex;
 	width: 100%;
+	min-height: 5.5em;
 	background: $entry;
 	border-radius: 10px;
 	padding: 1em;
@@ -359,6 +360,7 @@ button.btn-Icon:hover {
 		flex-direction: column;
 		padding: 2em;
 		width: 38.2%;
+		min-width: 25em;
 		border-radius: .5em;
 		max-height: calc(100% - 2em);
 		overflow-y: auto;
@@ -369,8 +371,7 @@ button.btn-Icon:hover {
 		* {
 			color: $dark-control;
 			border: none;
-			padding: .3em;
-			padding-left: 1em;
+			padding: .3em 1em;
 			margin-bottom: .5em;
 		}
 
