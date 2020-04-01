@@ -376,7 +376,7 @@ class App {
 		});
 	}
 
-	getCPSObject(id) {
+	getObject(id) {
 		// check all of app's cps key arrays for the element's ID...
 		if (this.clientKeys.includes(id)) {
 			// the element was a client. Return it.
@@ -393,69 +393,72 @@ class App {
 
 		return null;
 	}
+
+	getChildren(object) {
+		if (object.type == "client") {
+			return object.projectKeys;
+		}
+		else if (object.type == "project") {
+			return object.sessionKeys;
+		}
+		else {
+			return [];
+		}
+	}
 }
 
 class UI {
-	static addEntry(app, entry, target) {
+	static addEntry(app, entry, destination) {
 		// add event listener to each entry)
 		entry.addEventListener("click", () => {
-			let cps = app.getCPSObject(entry.id);
-			UI.toggleExpand(entry, cps.type);
-			UI.showCPSChildren(app, entry, cps);
+			let object = app.getObject(entry.id);
+			UI.toggleExpand(app, entry, object);
 		});
 
 		// add element to DOM
-		target.appendChild(entry);
+		destination.appendChild(entry);
 	}
 
-	static toggleExpand(target, type) {
+	static toggleExpand(app, target, object) {
 		target.classList.toggle("expanded");
 		// if target is expanded...
 		if (target.classList.contains("expanded")) {
 			// create a new element with class="childContainer"
 			let childContainer = document.createElement("div");
-			childContainer.innerHTML = "<p>HEY EVERYONE!</p>";
-			if (type == "client") {
+			if (object.type == "client") {
 				childContainer.classList.add("childProjects");
 			}
-			else if (type == "project") {
+			else if (object.type == "project") {
 				childContainer.classList.add("childSessions");
 			}
 
-			// place it AFTER the END of the expanded target
+			// place childContainer AFTER END of the expanded target
 			target.insertAdjacentElement("afterend", childContainer);
+
+			// fill childContainer with children
+			let children = app.getChildren(object);
+			UI.showChildren(app, children, childContainer);
 		}
 		else {
+			// if it's not expanded, remove all children shit
 			target.nextSibling.remove();
 		}
 	}
 
-	static showCPSChildren(app, entry, cps) {
-		// show cps element
+	static showChildren(app, children, destination) {
+		children.forEach((childKey) => {
+			// grab the data for this object key
+			let childObj = app.getObject(childKey);
+			// create a new element to append later
+			let childElem = document.createElement("div");
+			childElem.id = childKey;
+			childElem.classList.add("entry");
 
-		// create new element
+			// use the child Object to generate the element's HTML
+			childElem.innerHTML = Format.template(app, childObj);
 
-		// figure out if this is a client, project, or session
-		if (cps.type == "client") {
-			// iterate over child projects
-			cps.projectKeys.forEach((pKey) => {
-				let currentProject = app.projects[pKey];
-				let entry = document.createElement("div");
-				entry.classList.add("entry");
-				entry.id = pKey;
-
-				// replace fields in template with corresponding data
-				entry.innerHTML = Format.template(app, currentProject);
-
-				UI.addEntry(app, entry, domChildContainer);
-			});
-			// add content for each project
-		}
-		else if (cps.type == "project") {
-		}
-		else if (cps.type == "session") {
-		}
-		// show sub cps elements beneath parent
+			UI.addEntry(app, childElem, destination);
+		});
 	}
 
 	static reset() {

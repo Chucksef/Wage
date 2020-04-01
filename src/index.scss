@@ -333,6 +333,13 @@ button.btn-icon:focus {
 	cursor: pointer;
 	transition: .2s;
 	transition-property: color, background;
+	/* TEXT SELECTION */
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none;
 
 	* {
 		text-align: center;
@@ -388,7 +395,9 @@ button.btn-icon:focus {
 	}
 }
 
-.children {
+.children,
+.childProjects,
+.childSessions {
 	background: $primary;
 	min-height: 3em;
 	margin: -1em 1em 1em;
