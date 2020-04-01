@@ -400,6 +400,7 @@ class UI {
 		// add event listener to each entry)
 		entry.addEventListener("click", () => {
 			let cps = app.getCPSObject(entry.id);
+			UI.toggleExpand(entry, cps.type);
 			UI.showCPSChildren(app, entry, cps);
 		});
 
@@ -407,19 +408,32 @@ class UI {
 		target.appendChild(entry);
 	}
 
-	static showCPSChildren(app, entry, cps) {
-		// clear readout
-		UI.reset();
+	static toggleExpand(target, type) {
+		target.classList.toggle("expanded");
+		// if target is expanded...
+		if (target.classList.contains("expanded")) {
+			// create a new element with class="childContainer"
+			let childContainer = document.createElement("div");
+			childContainer.innerHTML = "<p>HEY EVERYONE!</p>";
+			if (type == "client") {
+				childContainer.classList.add("childProjects");
+			}
+			else if (type == "project") {
+				childContainer.classList.add("childSessions");
+			}
 
+			// place it AFTER the END of the expanded target
+			target.insertAdjacentElement("afterend", childContainer);
+		}
+		else {
+			target.nextSibling.remove();
+		}
+	}
+
+	static showCPSChildren(app, entry, cps) {
 		// show cps element
-		entry.classList.add("selected");
-		UI.addEntry(app, entry, DOM.readout);
 
 		// create new element
-		let children = document.createElement("div");
-		children.classList.add("children");
-		DOM.readout.appendChild(children);
-		let childrenReadout = DOM.readout.querySelector(".children");
 
 		// figure out if this is a client, project, or session
 		if (cps.type == "client") {
@@ -433,7 +447,7 @@ class UI {
 				// replace fields in template with corresponding data
 				entry.innerHTML = Format.template(app, currentProject);
 
-				UI.addEntry(app, entry, childrenReadout);
+				UI.addEntry(app, entry, domChildContainer);
 			});
 			// add content for each project
 		}

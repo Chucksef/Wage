@@ -332,6 +332,7 @@ button.btn-icon:focus {
 	margin-bottom: 1em;
 	cursor: pointer;
 	transition: .2s;
+	transition-property: color, background;
 
 	* {
 		text-align: center;
@@ -367,7 +368,7 @@ button.btn-icon:focus {
 
 // SELECTED ENTRY & CHILDREN...
 
-.entry.selected {
+.entry.expanded {
 	background: $primary;
 	border-bottom: 2px solid $light;
 
@@ -390,11 +391,11 @@ button.btn-icon:focus {
 .children {
 	background: $primary;
 	min-height: 3em;
-	margin: -1em 1em;
+	margin: -1em 1em 1em;
 	border-bottom-right-radius: 20px;
 	border-bottom-left-radius: 20px;
 	padding: 1em;
-	padding-bottom: 1px;
+	padding-bottom: 0px;
 	overflow: hidden;
 }
 
