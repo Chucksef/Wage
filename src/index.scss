@@ -14,6 +14,8 @@ $success: #28a745;
 $warning: #ffc107;
 $danger: #dc3545;
 
+/* ANIMATIONS */
+
 /* VARIOUS BASIC STYLES */
 
 * {
@@ -395,17 +397,44 @@ button.btn-icon:focus {
 	}
 }
 
-.children,
-.childProjects,
-.childSessions {
+.childProjects {
 	background: $primary;
-	min-height: 3em;
-	margin: -1em 1em 1em;
+	margin: -1em 1em 2em;
 	border-bottom-right-radius: 20px;
 	border-bottom-left-radius: 20px;
 	padding: 1em;
 	padding-bottom: 0px;
 	overflow: hidden;
+
+	.entry.expanded {
+		background: $dark;
+		border-bottom: 2px solid $primary;
+
+		div h3,
+		div h4,
+		div h6,
+		div p {
+			color: white;
+		}
+
+		div.data-block {
+			border-left: 1px solid $light;
+		}
+
+		div.data-block.first-block {
+			border-left: none;
+		}
+	}
+
+	.childSessions {
+		background: $dark;
+		margin: -1em 1em 2em;
+		border-bottom-right-radius: 20px;
+		border-bottom-left-radius: 20px;
+		padding: 1em;
+		padding-bottom: 0px;
+		overflow: hidden;
+	}
 }
 
 #modal {
