@@ -23,10 +23,10 @@ const DOM = {
 	controls: document.querySelector("#controls"),
 
 	filters: document.querySelector("#filters"),
-
 	btn_Clients: document.querySelector("#btn-Clients"),
 	btn_Projects: document.querySelector("#btn-Projects"),
 	btn_Sessions: document.querySelector("#btn-Sessions"),
+
 	btn_NewClient: document.querySelector("#btn-NewClient"),
 	btn_NewProject: document.querySelector("#btn-NewProject"),
 };
@@ -168,7 +168,8 @@ class App {
 			this.deriveProperties();
 
 			// and then display a list of clients as default...
-			UI.display(this, this.clients, TEMPLATES.entries.client);
+			UI.display(this, this.clients);
+			DOM.btn_Clients.classList.add("selected");
 		});
 	}
 
@@ -255,6 +256,9 @@ class App {
 			let clientName = currentClient.name;
 			currentClient.totalHours = 0;
 			currentClient.totalWages = 0;
+			currentClient.type = "client";
+			currentClient.template = TEMPLATES.entries.client;
+			currentClient.id = cKey;
 
 			// build an array of the client's projects
 			let clientProjects = [];
@@ -279,6 +283,9 @@ class App {
 					currentProject.rate = currentClient.rate;
 				}
 				currentProject.clientName = clientName;
+				currentProject.type = "project";
+				currentProject.template = TEMPLATES.entries.project;
+				currentProject.id = pKey;
 				currentProject.totalHours = 0;
 				currentProject.totalWages = 0;
 
@@ -299,6 +306,9 @@ class App {
 					let currentSession = this.sessions[sKey];
 					currentSession.clientName = clientName;
 					currentSession.projectName = projectName;
+					currentSession.type = "session";
+					currentSession.template = TEMPLATES.entries.session;
+					currentSession.id = sKey;
 					currentSession.duration =
 						this.getDuration(currentSession.clockOut, currentSession.clockIn) - currentSession.breaks;
 
@@ -366,8 +376,8 @@ class App {
 		});
 	}
 
-	getCLSObject(id) {
-		// check all of app's CLS key arrays for the element's ID...
+	getCPSObject(id) {
+		// check all of app's cps key arrays for the element's ID...
 		if (this.clientKeys.includes(id)) {
 			// the element was a client. Return it.
 			return this.clients[id];
@@ -386,28 +396,74 @@ class App {
 }
 
 class UI {
-	static addEntry(app, entry) {
+	static addEntry(app, entry, target) {
 		// add event listener to each entry)
 		entry.addEventListener("click", () => {
-			let cls = app.getCLSObject(entry.id);
-			UI.showElement(cls);
+			let cps = app.getCPSObject(entry.id);
+			UI.showCPSChildren(app, entry, cps);
 		});
 
 		// add element to DOM
-		DOM.readout.appendChild(entry);
+		target.appendChild(entry);
 	}
 
-	static clear() {
+	static showCPSChildren(app, entry, cps) {
+		// clear readout
+		UI.reset();
+
+		// show cps element
+		entry.classList.add("selected");
+		UI.addEntry(app, entry, DOM.readout);
+
+		// create new element
+		let children = document.createElement("div");
+		children.classList.add("children");
+		DOM.readout.appendChild(children);
+		let childrenReadout = DOM.readout.querySelector(".children");
+
+		// figure out if this is a client, project, or session
+		if (cps.type == "client") {
+			// iterate over child projects
+			cps.projectKeys.forEach((pKey) => {
+				let currentProject = app.projects[pKey];
+				let entry = document.createElement("div");
+				entry.classList.add("entry");
+				entry.id = pKey;
+
+				// replace fields in template with corresponding data
+				entry.innerHTML = Format.template(app, currentProject);
+
+				UI.addEntry(app, entry, childrenReadout);
+			});
+			// add content for each project
+		}
+		else if (cps.type == "project") {
+		}
+		else if (cps.type == "session") {
+		}
+		// show sub cps elements beneath parent
+	}
+
+	static reset() {
+		// get and clear any menus
 		let menu = document.querySelector("#modal");
 		if (menu) {
 			menu.remove();
 		}
 
+		//clear filter button selection
+		let buttons = DOM.filters.querySelectorAll("button");
+
+		buttons.forEach((button) => {
+			button.classList.remove("selected");
+		});
+
+		// clear the actual readout
 		DOM.readout.innerHTML = "";
 	}
 
-	static display(app, data, template) {
-		UI.clear();
+	static display(app, data, target = DOM.readout) {
+		UI.reset();
 
 		Object.keys(data).forEach((key) => {
 			let current = data[key];
@@ -417,9 +473,9 @@ class UI {
 			current.id = key;
 
 			// replace fields in template with corresponding data
-			entry.innerHTML = Format.template(app, current, template);
+			entry.innerHTML = Format.template(app, current);
 
-			UI.addEntry(app, entry);
+			UI.addEntry(app, entry, target);
 		});
 	}
 
@@ -457,7 +513,7 @@ class UI {
 		// add event listener to the freshly-generated back button
 
 		document.querySelector("#back").addEventListener("click", () => {
-			UI.clear();
+			UI.reset();
 			UI.display(app, app.clients, TEMPLATES.entries.client);
 		});
 
@@ -581,16 +637,16 @@ class UI {
 
 		// Add Filter Event Listeners
 		DOM.btn_Clients.addEventListener("click", function() {
-			UI.clear();
-			UI.display(app, app.clients, TEMPLATES.entries.client);
+			UI.reset();
+			UI.display(app, app.clients);
 		});
 		DOM.btn_Projects.addEventListener("click", function() {
-			UI.clear();
-			UI.display(app, app.projects, TEMPLATES.entries.project);
+			UI.reset();
+			UI.display(app, app.projects);
 		});
 		DOM.btn_Sessions.addEventListener("click", function() {
-			UI.clear();
-			UI.display(app, app.sessions, TEMPLATES.entries.session);
+			UI.reset();
+			UI.display(app, app.sessions);
 		});
 	}
 }
@@ -642,7 +698,9 @@ class Format {
 		return `${hours}:${minutes} ${ampm}`;
 	}
 
-	static template(app, data, temp) {
+	static template(app, data) {
+		let temp = data.template;
+
 		if (temp.includes("%name")) {
 			temp = temp.replace(/%name/g, data.name);
 		}

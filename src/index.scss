@@ -102,6 +102,7 @@ button {
 	padding: .3em;
 	transition: .075s;
 	outline: none;
+	cursor: pointer;
 }
 
 button.btn-dark {
@@ -329,6 +330,8 @@ button.btn-icon:focus {
 	border-radius: 10px;
 	padding: 1em;
 	margin-bottom: 1em;
+	cursor: pointer;
+	transition: .2s;
 
 	* {
 		text-align: center;
@@ -360,6 +363,39 @@ button.btn-icon:focus {
 	div.data-block.last-block {
 		flex: 0 0 20%;
 	}
+}
+
+// SELECTED ENTRY & CHILDREN...
+
+.entry.selected {
+	background: $primary;
+	border-bottom: 2px solid $light;
+
+	div h3,
+	div h4,
+	div h6,
+	div p {
+		color: white;
+	}
+
+	div.data-block {
+		border-left: 1px solid $light;
+	}
+
+	div.data-block.first-block {
+		border-left: none;
+	}
+}
+
+.children {
+	background: $primary;
+	min-height: 3em;
+	margin: -1em 1em;
+	border-bottom-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	padding: 1em;
+	padding-bottom: 1px;
+	overflow: hidden;
 }
 
 #modal {
