@@ -245,12 +245,12 @@ class App {
 
 	deriveProperties() {
 		// set up initial arrays of each object type's keys for checking...
-		let clientKeys = Object.keys(this.clients);
-		let projectKeys = Object.keys(this.projects);
-		let sessionKeys = Object.keys(this.sessions);
+		this.clientKeys = Object.keys(this.clients);
+		this.projectKeys = Object.keys(this.projects);
+		this.sessionKeys = Object.keys(this.sessions);
 
 		// Take each client one at a time ...
-		clientKeys.forEach((cKey) => {
+		this.clientKeys.forEach((cKey) => {
 			let currentClient = this.clients[cKey];
 			let clientName = currentClient.name;
 			currentClient.totalHours = 0;
@@ -258,15 +258,19 @@ class App {
 
 			// build an array of the client's projects
 			let clientProjects = [];
-			projectKeys.forEach((pKey) => {
+			this.projectKeys.forEach((pKey) => {
 				if (this.projects[pKey].clientID == cKey) {
 					clientProjects.push(pKey);
 				}
 			});
 
+			// add an array of all project to keys to each client
+			currentClient.projectKeys = clientProjects;
+
 			// store the projects' total wages and hours for use by the client eventually
 			let projectsHours = 0;
 			let projectsWages = 0;
+
 			// take each of the client's projects ...
 			clientProjects.forEach((pKey) => {
 				let currentProject = this.projects[pKey];
@@ -280,11 +284,13 @@ class App {
 
 				// build an array of the project's sessions
 				let projectSessions = [];
-				sessionKeys.forEach((sKey) => {
+				this.sessionKeys.forEach((sKey) => {
 					if (this.sessions[sKey].projectID == pKey) {
 						projectSessions.push(sKey);
 					}
 				});
+
+				currentProject.sessionKeys = projectSessions;
 
 				// store the sessions' total hours for use by the project eventually
 				let sessionsHours = 0;
@@ -319,7 +325,7 @@ class App {
 		client.userID = this.userID;
 
 		// generate new hash for ID
-		let clientID = Hash64.gen();
+		let clientID = Hash64.gen(30);
 
 		// add client to clients{}
 		this.clients[clientID] = client;
@@ -345,7 +351,7 @@ class App {
 	addProject(project) {
 		project.userID = this.userID;
 		// generate new hash for ID
-		let projectID = Hash64.gen();
+		let projectID = Hash64.gen(30);
 
 		// add client to projects{}
 		this.projects[projectID] = project;
@@ -359,11 +365,35 @@ class App {
 			Client_ID: project.clientID,
 		});
 	}
+
+	getCLSObject(id) {
+		// check all of app's CLS key arrays for the element's ID...
+		if (this.clientKeys.includes(id)) {
+			// the element was a client. Return it.
+			return this.clients[id];
+		}
+		else if (this.projectKeys.includes(id)) {
+			// the element was a project. Return it.
+			return this.projects[id];
+		}
+		else if (this.sessionKeys.includes(id)) {
+			// the element was a session. Return it.
+			return this.sessions[id];
+		}
+
+		return null;
+	}
 }
 
 class UI {
-	static addEntry(entry) {
-		//add element to DOM
+	static addEntry(app, entry) {
+		// add event listener to each entry)
+		entry.addEventListener("click", () => {
+			let cls = app.getCLSObject(entry.id);
+			UI.showElement(cls);
+		});
+
+		// add element to DOM
 		DOM.readout.appendChild(entry);
 	}
 
@@ -372,6 +402,7 @@ class UI {
 		if (menu) {
 			menu.remove();
 		}
+
 		DOM.readout.innerHTML = "";
 	}
 
@@ -388,7 +419,7 @@ class UI {
 			// replace fields in template with corresponding data
 			entry.innerHTML = Format.template(app, current, template);
 
-			UI.addEntry(entry);
+			UI.addEntry(app, entry);
 		});
 	}
 
@@ -427,6 +458,7 @@ class UI {
 
 		document.querySelector("#back").addEventListener("click", () => {
 			UI.clear();
+			UI.display(app, app.clients, TEMPLATES.entries.client);
 		});
 
 		// add event listener to the freshly-generated submit button
