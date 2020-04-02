@@ -377,6 +377,7 @@ class App {
 	}
 
 	getObject(id) {
+		// takes an ID string and returns the object associated with it
 		// check all of app's cps key arrays for the element's ID...
 		if (this.clientKeys.includes(id)) {
 			// the element was a client. Return it.
@@ -395,6 +396,7 @@ class App {
 	}
 
 	getChildren(object) {
+		// takes a single object and returns an array of child keys
 		if (object.type == "client") {
 			return object.projectKeys;
 		}
@@ -421,6 +423,7 @@ class UI {
 
 	static toggleExpand(app, target, object) {
 		target.classList.toggle("expanded");
+
 		// if target is expanded...
 		if (target.classList.contains("expanded")) {
 			// create a new element with class="childContainer"
@@ -438,6 +441,7 @@ class UI {
 			// fill childContainer with children
 			let children = app.getChildren(object);
 			UI.showChildren(app, children, childContainer);
+			Animator.expand(childContainer, 0.25);
 		}
 		else {
 			// if it's not expanded, remove all children shit
@@ -751,6 +755,51 @@ class Format {
 
 		return temp;
 	}
+}
+
+class Animator {
+	static expand(element, time) {
+		// set maxHeight by getting the 'auto' height of the element
+		element.style.height = "auto";
+		let maxHeight = parseFloat(window.getComputedStyle(element).height);
+		let interval = 5;
+
+		// calculate the magnitude the height should increase each step
+		let stepCount = time * 1000 / interval;
+		let stepMagnitude_height = maxHeight / stepCount;
+		let stepMagnitude_padding = 1 / stepCount;
+
+		// set the initial state of the element
+		element.style.height = 0;
+		element.style.padding = "0 1em";
+		element.style.marginBottom = "1em";
+
+		// start the animation
+		let i = setInterval(animate, interval);
+
+		// actual animation loop
+		function animate() {
+			// grab the current height
+			let currentHeight = parseFloat(element.style.height);
+			let currentPadding = parseFloat(element.style.paddingBottom);
+			let currentMargin = parseFloat(element.style.marginBottom);
+
+			// check if the
+			if (currentHeight >= maxHeight - 1) {
+				element.style.height = "auto";
+				element.style.paddingBottom = "0";
+				element.style.marginBottom = "2em";
+				clearInterval(i);
+			}
+			else {
+				element.style.height = `${currentHeight + stepMagnitude_height}px`;
+				element.style.padding = `${currentPadding + stepMagnitude_padding}em 1em`;
+				element.style.marginBottom = `${currentMargin + stepMagnitude_padding}em`;
+			}
+		}
+	}
+
+	static collapse(element, time) {}
 }
 
 let main = new App("chucksef@gmail.com");
