@@ -412,10 +412,12 @@ class App {
 class UI {
 	static addEntry(app, entry, destination) {
 		// add event listener to each entry)
-		entry.addEventListener("click", () => {
-			let object = app.getObject(entry.id);
-			UI.toggleExpand(app, entry, object);
-		});
+		if (entry.type != "session") {
+			entry.addEventListener("click", () => {
+				let object = app.getObject(entry.id);
+				UI.toggleExpand(app, entry, object);
+			});
+		}
 
 		// add element to DOM
 		destination.appendChild(entry);
@@ -456,6 +458,7 @@ class UI {
 			// create a new element to append later
 			let childElem = document.createElement("div");
 			childElem.id = childKey;
+			childElem.type = childObj.type;
 			childElem.classList.add("entry");
 
 			// use the child Object to generate the element's HTML
