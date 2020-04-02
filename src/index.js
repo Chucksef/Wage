@@ -114,7 +114,7 @@ class App {
 		this.clients = {};
 		this.projects = {};
 		this.sessions = {};
-		this.clockedIn = false;
+		this.activeSession = null;
 		this.getUserData(email); //    <-------------------------------------------------------------------- DB INIT
 		UI.setUpEventListeners(this);
 	}
@@ -408,6 +408,25 @@ class App {
 			return [];
 		}
 	}
+
+	clockIn(id) {
+		// check if already clocked in
+		if (this.activeSession != null) {
+			alert("already clocked in.\n\nPlease clock out of your current project and try again.");
+		}
+		else {
+			let activeProject = this.getObject(id);
+			this.activeSession = {
+				Breaks: 0,
+				Clock_In: firebase.firestore.Timestamp.now(),
+				Clock_Out: null,
+				Project_ID: activeProject.id,
+				User_ID: this.userID,
+			};
+		}
+	}
+
+	clockOut(id) {}
 }
 
 class UI {
@@ -454,7 +473,8 @@ class UI {
 				clock.classList.add("btn-large", "btn-block");
 				clock.id = "clock-in";
 				clock.addEventListener("click", () => {
-					//STUFF RUNS HERE
+					let projectID = clock.parentNode.previousSibling.id;
+					app.clockIn(projectID);
 				});
 				clock.innerText = "Clock In";
 

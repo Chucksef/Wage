@@ -3,7 +3,7 @@ const TEMPLATES = {
 		client: `
 			<div class="data-block first-block">
 				<h6 class="tag">Client</h6>
-				<h3>%name</h1>
+				<h3>%name</h3>
 			</div>
 			<div class="data-block">
 				<p>Last Session:</p>
