@@ -114,6 +114,7 @@ class App {
 		this.clients = {};
 		this.projects = {};
 		this.sessions = {};
+		this.clockedIn = false;
 		this.getUserData(email); //    <-------------------------------------------------------------------- DB INIT
 		UI.setUpEventListeners(this);
 	}
@@ -447,6 +448,17 @@ class UI {
 			}
 			else if (object.type == "project") {
 				childContainer.classList.add("childSessions");
+
+				// add a "Clock In" Button to the top of the list of sessions
+				let clock = document.createElement("button");
+				clock.classList.add("btn-large", "btn-block");
+				clock.id = "clock-in";
+				clock.addEventListener("click", () => {
+					//STUFF RUNS HERE
+				});
+				clock.innerText = "Clock In";
+
+				childContainer.insertAdjacentElement("afterbegin", clock);
 			}
 
 			// place childContainer AFTER END of the expanded target

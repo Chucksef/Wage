@@ -97,7 +97,7 @@ button {
 	color: $light-control;
 	border: 1px solid $light-control;
 	background: rgba(0, 0, 0, 0);
-	border-radius: 20px;
+	border-radius: 10px;
 	font-weight: 300;
 	font-size: 1.25em;
 	line-height: 1;
@@ -126,9 +126,9 @@ button.btn-block {
 
 button.btn-large {
 	font-size: 2.25em;
-	padding: 1em;
+	height: 88px;
 	font-weight: 300;
-	margin: 0;
+	margin: 0 0 16px 0;
 }
 
 button.btn-inline {
@@ -181,6 +181,7 @@ button.btn-dark:focus {
 	background: $dark;
 	box-shadow: 2px 0px 25px rgba(0, 0, 0, .5);
 	padding: 1em;
+	padding-bottom: 0;
 
 	#header {
 		position: relative;
@@ -193,7 +194,7 @@ button.btn-dark:focus {
 
 	#timer {
 		position: absolute;
-		bottom: 1em;
+		bottom: 0;
 		width: calc(100% - 2em);
 	}
 }
@@ -368,7 +369,7 @@ button.btn-icon:focus {
 
 	div.data-block.first-block .tag {
 		text-align: center;
-		border-radius: 8px;
+		border-radius: 5px;
 		background: white;
 		color: $dark-control;
 		position: absolute;
@@ -478,7 +479,7 @@ button.btn-icon:focus {
 		padding: 2em;
 		width: 38.2%;
 		min-width: 25em;
-		border-radius: .5em;
+		border-radius: 10px;
 		max-height: calc(100% - 2em);
 		overflow-y: auto;
 		overflow-y: -moz-scrollbars-none;
