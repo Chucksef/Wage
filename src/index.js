@@ -424,8 +424,20 @@ class UI {
 	}
 
 	static toggleExpand(app, target, object) {
-		target.classList.toggle("expanded");
+		// get all selected elements on the whole document
+		let allSelecteds = document.querySelectorAll(".expanded");
+		allSelecteds.forEach((elem) => {
+			if (elem.type == target.type && elem != target) {
+				// animate the drawer closing
+				Animator.collapse(elem.nextSibling, 0.15);
 
+				// de-select all elements matching clicked element's type
+				elem.classList.toggle("expanded");
+			}
+		});
+
+		// toggle expanded class of target
+		target.classList.toggle("expanded");
 		// if target is expanded...
 		if (target.classList.contains("expanded")) {
 			// create a new element with class="childContainer"
@@ -443,11 +455,11 @@ class UI {
 			// fill childContainer with children
 			let children = app.getChildren(object);
 			UI.showChildren(app, children, childContainer);
-			Animator.expand(childContainer, 0.25);
+			Animator.expand(childContainer, 0.2);
 		}
 		else {
 			// if it's not expanded, remove all children shit
-			target.nextSibling.remove();
+			Animator.collapse(target.nextSibling, 0.2);
 		}
 	}
 
@@ -805,7 +817,42 @@ class Animator {
 		}
 	}
 
-	static collapse(element, time) {}
+	static collapse(element, time) {
+		let maxHeight = parseFloat(window.getComputedStyle(element).height);
+		let interval = 5;
+
+		// calculate the magnitude the height should increase each step
+		let stepCount = time * 1000 / interval;
+		let stepMagnitude_height = maxHeight / stepCount;
+		let stepMagnitude_padding = 1 / stepCount;
+
+		// set the initial state of the element
+		element.style.height = maxHeight + "px";
+		// element.style.padding = "0 1em";
+		// element.style.marginBottom = "1em";
+
+		// start the animation
+		let i = setInterval(animate, interval);
+
+		// actual animation loop
+		function animate() {
+			// grab the current height
+			let currentHeight = parseFloat(element.style.height);
+			let currentPadding = parseFloat(element.style.paddingTop);
+			let currentMargin = parseFloat(element.style.marginBottom);
+
+			// check if the
+			if (currentHeight <= stepMagnitude_height) {
+				element.remove();
+				clearInterval(i);
+			}
+			else {
+				element.style.height = `${currentHeight - stepMagnitude_height}px`;
+				element.style.padding = `${currentPadding - stepMagnitude_padding}em 1em`;
+				element.style.marginBottom = `${currentMargin - stepMagnitude_padding}em`;
+			}
+		}
+	}
 }
 
 let main = new App("chucksef@gmail.com");

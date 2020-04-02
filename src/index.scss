@@ -370,14 +370,20 @@ button.btn-icon:focus {
 		text-align: center;
 		border-radius: 8px;
 		background: white;
-		color: black;
+		color: $dark-control;
 		position: absolute;
 		left: 0em;
 		width: 5em;
 		font-size: .85em;
 		padding: .1em .5em;
-		border: 0.5px solid rgba(0, 0, 0, 0.15);
+		border: .75px solid $light-control;
+		transition: .15s;
 		transform: translate(-14px) rotate(-90deg);
+	}
+
+	div.data-block.first-block .tag:hover {
+		color: white;
+		background: $light-control;
 	}
 
 	div.data-block.last-block {
