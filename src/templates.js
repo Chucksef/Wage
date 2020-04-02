@@ -2,6 +2,7 @@ const TEMPLATES = {
 	entries: {
 		client: `
 			<div class="data-block first-block">
+				<h6 class="tag">Client</h6>
 				<h3>%name</h1>
 			</div>
 			<div class="data-block">
@@ -16,8 +17,8 @@ const TEMPLATES = {
 
 		project: `
 			<div class="data-block first-block">
+				<h6 class="tag">Project</h6>
 				<h4>%name</h4>
-				<h6>&nbsp&nbsp%clientName</h6>
 			</div>
 			<div class="data-block">
 				<p>Last Session:</p>
@@ -31,12 +32,12 @@ const TEMPLATES = {
 
 		session: `
 			<div class="data-block first-block">
-				<h4>%clientName</h4>
-				<h6>&nbsp&nbsp%projectName</h6>
+				<h6 class="tag">Session</h6>
+				<h4>%date</h4>
 			</div>
 			<div class="data-block">
-				<p>%duration</p>
-				<p>%date</p>
+				<p>Time: %duration</p>
+				<p>Breaks: %breaks</p>
 			</div>
 			<div class="data-block last-block">
 				<p>%clockIn</p>

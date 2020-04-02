@@ -738,10 +738,13 @@ class Format {
 			temp = temp.replace(/%rate/g, `${Format.dollars(data.rate)} / hr`);
 		}
 		if (temp.includes("%totalHours")) {
-			temp = temp.replace(/%totalHours/g, `${data.totalHours} hours`);
+			temp = temp.replace(/%totalHours/g, `${data.totalHours} hrs`);
 		}
 		if (temp.includes("%duration")) {
-			temp = temp.replace(/%duration/g, `${data.duration} hours`);
+			temp = temp.replace(/%duration/g, `${data.duration} hrs`);
+		}
+		if (temp.includes("%breaks")) {
+			temp = temp.replace(/%breaks/g, `${data.breaks} hrs`);
 		}
 		if (temp.includes("%date")) {
 			temp = temp.replace(/%date/g, Format.date(data.clockOut));

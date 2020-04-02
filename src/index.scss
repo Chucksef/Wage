@@ -330,7 +330,7 @@ button.btn-icon:focus {
 	min-height: 5.5em;
 	background: $entry;
 	border-radius: 10px;
-	padding: 1em;
+	padding: .5em;
 	margin-bottom: 1em;
 	cursor: pointer;
 	transition: .2s;
@@ -366,8 +366,18 @@ button.btn-icon:focus {
 		flex: 0 0 50%;
 	}
 
-	div.data-block.first-block * {
-		text-align: left;
+	div.data-block.first-block .tag {
+		text-align: center;
+		border-radius: 8px;
+		background: white;
+		color: black;
+		position: absolute;
+		left: 0em;
+		width: 5em;
+		font-size: .85em;
+		padding: .1em .5em;
+		border: 0.5px solid rgba(0, 0, 0, 0.15);
+		transform: translate(-14px) rotate(-90deg);
 	}
 
 	div.data-block.last-block {
