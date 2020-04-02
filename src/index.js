@@ -531,7 +531,7 @@ class UI {
 
 		document.querySelector("#back").addEventListener("click", () => {
 			UI.reset();
-			UI.display(app, app.clients, TEMPLATES.entries.client);
+			UI.display(app, app.clients);
 		});
 
 		// add event listener to the freshly-generated submit button
