@@ -455,6 +455,7 @@ class App {
 			this.activeSession = hash;
 			this.sessions[hash] = new Session(tempSession);
 			this.sessions[hash].template = TEMPLATES.entries.session;
+			this.sessions[hash].id = hash;
 
 			// 3) save session to db
 			db.collection("Sessions").doc(hash).set({
@@ -470,7 +471,18 @@ class App {
 		}
 	}
 
-	clockOut(id) {}
+	clockOut(id) {
+		// stop the timer
+		clearInterval(this.timer);
+		this.activeSession = null;
+
+		// write to the db creating a timestamp for the Clock_Out property
+		db.collection("Sessions").doc(id).update({
+			Clock_Out: firebase.firestore.Timestamp.now(),
+		});
+
+		UI.hideClock();
+	}
 }
 
 class UI {
@@ -773,6 +785,9 @@ class UI {
 		clock.classList.add("btn-block");
 		clock.id = "clock";
 		clock.innerHTML = TEMPLATES.clock;
+		clock.addEventListener("click", () => {
+			app.clockOut(session.id);
+		});
 
 		DOM.timer.insertAdjacentElement("beforeend", clock);
 
@@ -804,9 +819,7 @@ class UI {
 		}
 	}
 
-	static hideClock() {
-		clearInterval(app.timer);
-	}
+	static hideClock() {}
 }
 
 class Format {
