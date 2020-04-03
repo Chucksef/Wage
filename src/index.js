@@ -535,6 +535,7 @@ class UI {
 					clock.addEventListener("click", () => {
 						let projectID = clock.parentNode.previousSibling.id;
 						app.clockIn(projectID);
+						clock.remove();
 					});
 					clock.innerText = "Clock In";
 
@@ -819,7 +820,9 @@ class UI {
 		}
 	}
 
-	static hideClock() {}
+	static hideClock() {
+		document.querySelector("#clock").remove();
+	}
 }
 
 class Format {
