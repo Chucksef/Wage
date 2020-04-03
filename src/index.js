@@ -211,6 +211,9 @@ class App {
 
 			// iterate through all the values in projectSessions...
 			for (let x of projectSessions) {
+				if (x == null) {
+					continue;
+				}
 				if (x.seconds > highestVal) {
 					highestVal = x.seconds;
 					ts = x;
@@ -234,6 +237,9 @@ class App {
 
 			// iterate through all the values in projectSessions...
 			for (let x of projectSessions) {
+				if (x == null) {
+					continue;
+				}
 				if (x.seconds > highestVal) {
 					highestVal = x.seconds;
 					timestamp = x;
@@ -331,7 +337,12 @@ class App {
 	}
 
 	getDuration(clockOut, clockIn) {
-		return Math.floor((clockOut.seconds - clockIn.seconds) / 60) / 60; // rounds down to the minute, then returns fraction of hour (eliminates the need to worry about seconds)
+		if (clockOut != null) {
+			return Math.floor((clockOut.seconds - clockIn.seconds) / 60) / 60; // rounds down to the minute, then returns fraction of hour (eliminates the need to worry about seconds)
+		}
+		else {
+			return 0;
+		}
 	}
 
 	addClient(client) {
@@ -780,24 +791,29 @@ class Format {
 			return `${date[0]}, ${date[1]} ${date[2]}, ${date[3]}`;
 		}
 		else {
-			return "-";
+			return "Active";
 		}
 	}
 
 	static time(timestamp) {
-		let time = timestamp.toDate().toString().split(" ")[4].split(":");
-		let hours = parseInt(time[0]);
-		let minutes = time[1];
-		let ampm = "AM";
+		if (timestamp) {
+			let time = timestamp.toDate().toString().split(" ")[4].split(":");
+			let hours = parseInt(time[0]);
+			let minutes = time[1];
+			let ampm = "AM";
 
-		if (hours > 11) {
-			ampm = "PM";
-		}
-		if (hours > 12) {
-			hours = hours - 12;
-		}
+			if (hours > 11) {
+				ampm = "PM";
+			}
+			if (hours > 12) {
+				hours = hours - 12;
+			}
 
-		return `${hours}:${minutes} ${ampm}`;
+			return `${hours}:${minutes} ${ampm}`;
+		}
+		else {
+			return "clock running...";
+		}
 	}
 
 	static template(app, data) {
