@@ -15,7 +15,7 @@ let firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+//firebase.analytics();
 const db = firebase.firestore();
 
 const DOM = {
@@ -254,6 +254,12 @@ class App {
 	}
 
 	deriveProperties() {
+		/* 
+			deriveProperties() will iterate through all data tied to a user
+			and assign, process, and pull out any needed values, allowing
+			the rest of the app to function as expected
+		*/
+
 		// set up initial arrays of each object type's keys for checking...
 		this.clientKeys = Object.keys(this.clients);
 		this.projectKeys = Object.keys(this.projects);
@@ -313,6 +319,10 @@ class App {
 				// take each session associated with ^ ...
 				projectSessions.forEach((sKey) => {
 					let currentSession = this.sessions[sKey];
+					// assign the active session if clockOut is null
+					if (currentSession.clockOut == null) {
+						this.activeSession = sKey;
+					}
 					currentSession.clientName = clientName;
 					currentSession.projectName = projectName;
 					currentSession.type = "session";
@@ -443,6 +453,7 @@ class App {
 			this.activeSession = hash;
 			alert(`saving new session: ${hash}`);
 			this.sessions[hash] = new Session(tempSession);
+			this.sessions[hash].template = TEMPLATES.entries.session;
 
 			// 3) save session to db
 			db.collection("Sessions").doc(hash).set({
@@ -500,24 +511,22 @@ class UI {
 			else if (object.type == "project") {
 				childContainer.classList.add("childSessions");
 
-				// add a "Clock In" Button to the top of the list of sessions
-				let clock = document.createElement("button");
-				clock.classList.add("btn-large", "btn-block");
-				clock.id = "clock-in";
+				// If activeSession is blank...
+				if (app.activeSession == null) {
+					// add a "Clock In" Button to the top of the list of sessions
+					let clock = document.createElement("button");
+					clock.classList.add("btn-large", "btn-block");
+					clock.id = "clock-in";
 
-				// CLICK Clock-In button
-				clock.addEventListener("click", () => {
-					let projectID = clock.parentNode.previousSibling.id;
-					if (app.activeSession == null) {
+					// CLICK Clock-In button
+					clock.addEventListener("click", () => {
+						let projectID = clock.parentNode.previousSibling.id;
 						app.clockIn(projectID);
-					}
-					else {
-						app.clockOut(projectID);
-					}
-				});
-				clock.innerText = "Clock In";
+					});
+					clock.innerText = "Clock In";
 
-				childContainer.insertAdjacentElement("afterbegin", clock);
+					childContainer.insertAdjacentElement("afterbegin", clock);
+				}
 			}
 
 			// place childContainer AFTER END of the expanded target
