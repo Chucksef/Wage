@@ -31,3 +31,13 @@ At the current stage of development (planning), we can anticipate that it would 
   * Webpack
   * No JS or CSS frameworks used
   * Google Fonts
+
+## Current TODO List
+
+  * Unit rounding
+  * Timer Confirmation Menu (delete? save? edit times? add breaks?)
+  * Animations for Timer
+  * Remove Unused filters
+  * Make timer font-size dynamic
+  * Fix new Sessions not populating under Projects unless page refreshed
+  * Sort by last clocked in
