@@ -22,6 +22,7 @@ const DOM = {
 	body: document.querySelector("body"),
 	readout: document.querySelector("#readout"),
 	controls: document.querySelector("#controls"),
+	sidebar: document.querySelector("#sidebar"),
 
 	filters: document.querySelector("#filters"),
 	btn_Clients: document.querySelector("#btn-Clients"),
@@ -416,14 +417,33 @@ class App {
 			alert("already clocked in.\n\nPlease clock out of your current project and try again.");
 		}
 		else {
+			// 1) generate session
 			let activeProject = this.getObject(id);
-			this.activeSession = {
+			let tempSession = {
 				Breaks: 0,
 				Clock_In: firebase.firestore.Timestamp.now(),
 				Clock_Out: null,
 				Project_ID: activeProject.id,
 				User_ID: this.userID,
 			};
+
+			// 2) save session to model
+			let hash = Hash64.gen(30); // use Hash64 generate a new hash for the session
+			this.activeSession = hash;
+			alert(`saving new session: ${hash}`);
+			this.sessions[hash] = new Session(tempSession);
+
+			// 3) save session to db
+			db.collection("Sessions").doc(hash).set({
+				Breaks: tempSession.Breaks,
+				Clock_In: tempSession.Clock_In,
+				Clock_Out: tempSession.Clock_Out,
+				Project_ID: tempSession.Project_ID,
+				User_ID: tempSession.User_ID,
+			});
+
+			// 4) display running clock
+			UI.showClock(this, this.sessions[hash]);
 		}
 	}
 
@@ -473,9 +493,16 @@ class UI {
 				let clock = document.createElement("button");
 				clock.classList.add("btn-large", "btn-block");
 				clock.id = "clock-in";
+
+				// CLICK Clock-In button
 				clock.addEventListener("click", () => {
 					let projectID = clock.parentNode.previousSibling.id;
-					app.clockIn(projectID);
+					if (app.activeSession == null) {
+						app.clockIn(projectID);
+					}
+					else {
+						app.clockOut(projectID);
+					}
 				});
 				clock.innerText = "Clock In";
 
@@ -718,6 +745,12 @@ class UI {
 			UI.display(app, app.sessions);
 		});
 	}
+
+	static showClock(app, session) {
+		alert("showing clock");
+	}
+
+	static hideClock() {}
 }
 
 class Format {
