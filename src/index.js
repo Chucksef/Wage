@@ -23,9 +23,10 @@ const DOM = {
 	readout: document.querySelector("#readout"),
 	controls: document.querySelector("#controls"),
 	sidebar: document.querySelector("#sidebar"),
+	timer: document.querySelector("#timer"),
 
 	filters: document.querySelector("#filters"),
-	btn_Clients: document.querySelector("#btn-Clients"),
+	btn_Clients: document.querySelector("#btn-clients"),
 	btn_Projects: document.querySelector("#btn-Projects"),
 	btn_Sessions: document.querySelector("#btn-Sessions"),
 
@@ -322,6 +323,7 @@ class App {
 					// assign the active session if clockOut is null
 					if (currentSession.clockOut == null) {
 						this.activeSession = sKey;
+						UI.showClock(this, this.sessions[sKey]);
 					}
 					currentSession.clientName = clientName;
 					currentSession.projectName = projectName;
@@ -451,7 +453,6 @@ class App {
 			// 2) save session to model
 			let hash = Hash64.gen(30); // use Hash64 generate a new hash for the session
 			this.activeSession = hash;
-			alert(`saving new session: ${hash}`);
 			this.sessions[hash] = new Session(tempSession);
 			this.sessions[hash].template = TEMPLATES.entries.session;
 
@@ -767,10 +768,45 @@ class UI {
 	}
 
 	static showClock(app, session) {
-		alert("showing clock");
+		// build clock element
+		let clock = document.createElement("button");
+		clock.classList.add("btn-block");
+		clock.id = "clock";
+		clock.innerHTML = TEMPLATES.clock;
+
+		DOM.timer.insertAdjacentElement("beforeend", clock);
+
+		// grab the 3 output fields in the clock element
+		let clockTime = DOM.timer.querySelector("h3");
+		let clockClient = DOM.timer.querySelector("h6");
+		let clockProject = DOM.timer.querySelector("p");
+
+		// fill in the project name
+		clockProject.innerText = app.projects[session.projectID].name;
+		clockClient.innerText = app.clients[app.projects[session.projectID].clientID].name;
+
+		app.timer = setInterval(updateTime, 1000);
+
+		function updateTime() {
+			// get current time in seconds
+			let now = new Date();
+			let jsTime = now.getTime().toString();
+			jsTime = parseInt(jsTime.substr(0, jsTime.length - 3));
+
+			// calculate difference in time since session was created and now
+			let deltaTime = jsTime - session.clockIn.seconds;
+
+			// format difference to HH:MM:SS
+			let hhmmss = Format.secondsToHours(deltaTime);
+
+			// update element
+			clockTime.innerText = hhmmss;
+		}
 	}
 
-	static hideClock() {}
+	static hideClock() {
+		clearInterval(app.timer);
+	}
 }
 
 class Format {
@@ -821,11 +857,17 @@ class Format {
 			return `${hours}:${minutes} ${ampm}`;
 		}
 		else {
-			return "clock running...";
+			return "Job Active";
 		}
 	}
 
 	static template(app, data) {
+		/*
+			Format.template takes an app and a CPS object (with a 
+			.template property) and returns a template-string
+			with all of its fields correctly filled in.
+		*/
+
 		let temp = data.template;
 
 		if (temp.includes("%name")) {
@@ -863,6 +905,29 @@ class Format {
 		}
 
 		return temp;
+	}
+
+	static secondsToHours(sec) {
+		let hh = Math.floor(sec / 3600);
+		let mm = Math.floor((sec - hh * 3600) / 60);
+		let ss = sec - (hh * 3600 + mm * 60);
+
+		return `${Format.padZeroes(hh, 2)}:${Format.padZeroes(mm, 2)}:${Format.padZeroes(ss, 2)}`;
+	}
+
+	static padZeroes(num, desiredLength) {
+		let currentLength = num.toString().length;
+		if (currentLength >= desiredLength) {
+			return num;
+		}
+		else {
+			let digitsNeeded = desiredLength - currentLength;
+			let string = num.toString();
+			for (let i = 0; i < digitsNeeded; i++) {
+				string = `0${string}`;
+			}
+			return string;
+		}
 	}
 }
 

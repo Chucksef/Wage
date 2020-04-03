@@ -121,6 +121,13 @@ const TEMPLATES = {
 			</div>
 		`,
 	},
+
+	clock: `
+		<h3>00:00:00</h3>
+		<hr>
+		<h6>%clientName</h6>
+		<p>%projectName</p>
+	`,
 };
 
 export { TEMPLATES };

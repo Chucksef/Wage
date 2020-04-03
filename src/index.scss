@@ -72,6 +72,7 @@ h2 {
 	margin: 0 auto;
 	width: 70%;
 	font-size: 1.75em;
+	line-height: 1;
 }
 
 h3 {
@@ -80,6 +81,14 @@ h3 {
 
 h4 {
 	font-size: 1.4em;
+}
+
+h5 {
+	font-size: 1.25em;
+}
+
+h6 {
+	font-size: 1.1em;
 }
 
 #logo {
@@ -196,6 +205,34 @@ button.btn-dark:focus {
 		position: absolute;
 		bottom: 0;
 		width: calc(100% - 2em);
+	}
+
+	#clock {
+		margin: 0;
+		margin-bottom: -1em;
+		padding: 1em;
+		padding-bottom: 2.5em;
+
+		* {
+			margin: 0;
+			color: $light-control;
+			border-color: $light-control;
+		}
+
+		h3 {
+			font-size: 2.75em;
+			color: white;
+			font-weight: 700;
+		}
+
+		h6 {
+			font-size: 1.15em;
+			font-weight: 500;
+		}
+
+		hr {
+			margin: .5em 0;
+		}
 	}
 }
 
