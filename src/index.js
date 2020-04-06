@@ -222,8 +222,7 @@ class App {
 			}
 
 			return ts;
-		}
-		else if (projectKeys.includes(entry.id)) {
+		} else if (projectKeys.includes(entry.id)) {
 			let projectSessions = [];
 			sessionKeys.forEach((key) => {
 				let sess = this.sessions[key];
@@ -248,8 +247,7 @@ class App {
 			}
 
 			return timestamp;
-		}
-		else {
+		} else {
 			return this.sessions[entry.id].clockOut;
 		}
 	}
@@ -351,8 +349,7 @@ class App {
 	getDuration(clockOut, clockIn) {
 		if (clockOut != null) {
 			return Math.floor((clockOut.seconds - clockIn.seconds) / 60) / 60; // rounds down to the minute, then returns fraction of hour (eliminates the need to worry about seconds)
-		}
-		else {
+		} else {
 			return 0;
 		}
 	}
@@ -408,12 +405,10 @@ class App {
 		if (this.clientKeys.includes(id)) {
 			// the element was a client. Return it.
 			return this.clients[id];
-		}
-		else if (this.projectKeys.includes(id)) {
+		} else if (this.projectKeys.includes(id)) {
 			// the element was a project. Return it.
 			return this.projects[id];
-		}
-		else if (this.sessionKeys.includes(id)) {
+		} else if (this.sessionKeys.includes(id)) {
 			// the element was a session. Return it.
 			return this.sessions[id];
 		}
@@ -425,11 +420,9 @@ class App {
 		// takes a single object and returns an array of child keys
 		if (object.type == "client") {
 			return object.projectKeys;
-		}
-		else if (object.type == "project") {
+		} else if (object.type == "project") {
 			return object.sessionKeys;
-		}
-		else {
+		} else {
 			return [];
 		}
 	}
@@ -438,8 +431,7 @@ class App {
 		// check if already clocked in
 		if (this.activeSession != null) {
 			alert("already clocked in.\n\nPlease clock out of your current project and try again.");
-		}
-		else {
+		} else {
 			// 1) generate session
 			let activeProject = this.getObject(id);
 			let tempSession = {
@@ -520,8 +512,7 @@ class UI {
 			let childContainer = document.createElement("div");
 			if (object.type == "client") {
 				childContainer.classList.add("childProjects");
-			}
-			else if (object.type == "project") {
+			} else if (object.type == "project") {
 				childContainer.classList.add("childSessions");
 
 				// If activeSession is blank...
@@ -550,8 +541,7 @@ class UI {
 			let children = app.getChildren(object);
 			UI.showChildren(app, children, childContainer);
 			Animator.expand(childContainer, 0.2);
-		}
-		else {
+		} else {
 			// if it's not expanded, remove all children shit
 			Animator.collapse(target.nextSibling, 0.2);
 		}
@@ -696,15 +686,13 @@ class UI {
 					});
 					alert(message);
 					// UI.message();   //  << NEED TO WRTIE FUNCTION TO HAVE NICER ALERT!!
-				}
-				else {
+				} else {
 					// pass the object to save it
 					app.addClient(newClient);
 					app.deriveProperties();
 					UI.display(app, app.clients, TEMPLATES.entries.client);
 				}
-			}
-			else if (type == "PROJECT") {
+			} else if (type == "PROJECT") {
 				const FORM = {
 					projectName: document.querySelector("#project-name"),
 					projectRate: document.querySelector("#project-rate"),
@@ -733,8 +721,7 @@ class UI {
 					});
 					alert(message);
 					// UI.message();   // TODO: WRTIE FUNCTION TO HAVE NICER ALERT!! <----------------------
-				}
-				else {
+				} else {
 					// pass the object to the app to save it
 					app.addProject(newProject);
 					app.deriveProperties();
@@ -830,8 +817,7 @@ class Format {
 		let split = num.toString().split(".");
 		if (split.length == 1) {
 			return `$${num}.00`;
-		}
-		else {
+		} else {
 			let oldPrefix = split[0];
 			let newPrefix = "";
 			for (let i = oldPrefix.length - 1, j = 1; i >= 0; i--, j++) {
@@ -850,8 +836,7 @@ class Format {
 		if (timestamp) {
 			let date = timestamp.toDate().toString().split(" ");
 			return `${date[0]}, ${date[1]} ${date[2]}, ${date[3]}`;
-		}
-		else {
+		} else {
 			return "Active";
 		}
 	}
@@ -871,10 +856,20 @@ class Format {
 			}
 
 			return `${hours}:${minutes} ${ampm}`;
-		}
-		else {
+		} else {
 			return "Job Active";
 		}
+	}
+
+	static round(num, decimals) {
+		let zeroes = "1";
+		for (let i = 0; i < decimals; i++) {
+			zeroes += "0";
+		}
+		zeroes = parseInt(zeroes);
+
+		num = Math.round(num * zeroes);
+		return num / zeroes;
 	}
 
 	static template(app, data) {
@@ -902,10 +897,10 @@ class Format {
 			temp = temp.replace(/%rate/g, `${Format.dollars(data.rate)} / hr`);
 		}
 		if (temp.includes("%totalHours")) {
-			temp = temp.replace(/%totalHours/g, `${data.totalHours} hrs`);
+			temp = temp.replace(/%totalHours/g, `${Format.round(data.totalHours, 2)} hrs`);
 		}
 		if (temp.includes("%duration")) {
-			temp = temp.replace(/%duration/g, `${data.duration} hrs`);
+			temp = temp.replace(/%duration/g, `${Format.round(data.duration, 2)} hrs`);
 		}
 		if (temp.includes("%breaks")) {
 			temp = temp.replace(/%breaks/g, `${data.breaks} hrs`);
@@ -935,8 +930,7 @@ class Format {
 		let currentLength = num.toString().length;
 		if (currentLength >= desiredLength) {
 			return num;
-		}
-		else {
+		} else {
 			let digitsNeeded = desiredLength - currentLength;
 			let string = num.toString();
 			for (let i = 0; i < digitsNeeded; i++) {
