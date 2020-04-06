@@ -1,6 +1,7 @@
 import { Format } from "./format.js";
 import { Animator } from "./animator.js";
 import { DOM } from "../index.js";
+import { TEMPLATES } from "./template.js";
 
 class UI {
 	static addEntry(app, entry, destination) {
@@ -105,6 +106,28 @@ class UI {
 
 		// clear the actual readout
 		DOM.readout.innerHTML = "";
+	}
+
+	static zoom(app, sessionID) {
+		// reset display to all clients
+		UI.reset();
+		UI.display(app, app.clients);
+
+		let currentSession = app.sessions[sessionID];
+
+		//find the project that this session belongs to
+		let currentProject = app.projects[currentSession.projectID];
+
+		//find the client that this project belongs to
+		let currentClient = app.clients[currentProject.clientID];
+
+		//expand the client by ID
+		let clientElem = document.querySelector(`#${currentClient.id}`);
+		UI.toggleExpand(app, clientElem, currentClient);
+
+		//expand the project by ID
+		let projectElem = document.querySelector(`#${currentProject.id}`);
+		UI.toggleExpand(app, projectElem, currentProject);
 	}
 
 	static display(app, data, target = DOM.readout) {

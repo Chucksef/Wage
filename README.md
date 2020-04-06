@@ -34,9 +34,10 @@ At the current stage of development (planning), we can anticipate that it would 
 
 ## Current TODO List
 
-  * Fix new Sessions not populating under Projects unless page refreshed
+  * Sort by last clocked in
+  * Create an application method to collaspe all open clients/projects and "zoom" in to any given session
+  * Clocking in/out needs to "refresh and zoom"
   * Timer Confirmation Menu (delete? save? edit times? add breaks?)
   * Animations for Timer
   * Remove Unused filters
   * Make timer font-size dynamic
-  * Sort by last clocked in

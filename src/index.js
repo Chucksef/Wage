@@ -87,7 +87,11 @@ class App {
 			this.deriveProperties();
 
 			// and then display a list of clients as default...
-			UI.display(this, this.clients);
+			if (this.activeSession != null) {
+				UI.zoom(this, this.activeSession);
+			} else {
+				UI.display(this, this.clients);
+			}
 			DOM.btn_Clients.classList.add("selected");
 		});
 	}
@@ -392,6 +396,6 @@ class App {
 	}
 }
 
-let main = new App("chucksef@gmail.com");
+new App("chucksef@gmail.com");
 
 export { DOM };
