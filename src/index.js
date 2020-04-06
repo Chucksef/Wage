@@ -175,7 +175,7 @@ class App {
 		/* 
 			deriveProperties() will iterate through all data tied to a user
 			and assign, process, and pull out any needed values, allowing
-			the rest of the app to function as expected
+			the rest of the app to function quickly, and as expected
 		*/
 
 		// set up initial arrays of each object type's keys for checking...
@@ -192,6 +192,7 @@ class App {
 			currentClient.type = "client";
 			currentClient.template = TEMPLATES.entries.client;
 			currentClient.id = cKey;
+			// <---------------------------------- DERIVE LAST CLOCK IN TIME HERE!!
 
 			// build an array of the client's projects
 			let clientProjects = [];

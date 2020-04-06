@@ -130,19 +130,30 @@ class UI {
 		UI.toggleExpand(app, projectElem, currentProject);
 	}
 
-	static display(app, data, target = DOM.readout) {
+	static display(app, dataSet, target = DOM.readout) {
 		UI.reset();
 
-		Object.keys(data).forEach((key) => {
-			let current = data[key];
+		// build an object of key value pairs
+		let sorted = {};
+		Object.keys(dataSet).forEach((key) => {
+			// <------------------------------------------ SORT BY LAST CLOCK IN TIME HERE
+			sorted[key] = dataSet[key].lastClockedIn;
+		});
+
+		alert(JSON.stringify(sorted));
+
+		Object.keys(dataSet).forEach((key) => {
+			//
+			let current = dataSet[key];
 			let entry = document.createElement("div");
 			entry.classList.add("entry");
 			entry.id = key;
 			current.id = key;
 
-			// replace fields in template with corresponding data
+			// replace fields in template with corresponding dataSet
 			entry.innerHTML = Format.template(app, current);
 
+			// add the entry to the target container
 			UI.addEntry(app, entry, target);
 		});
 	}
