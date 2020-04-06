@@ -31,8 +31,7 @@ class Animator {
 				element.style.paddingBottom = "0";
 				element.style.marginBottom = "2em";
 				clearInterval(i);
-			}
-			else {
+			} else {
 				element.style.height = `${currentHeight + stepMagnitude_height}px`;
 				element.style.padding = `${currentPadding + stepMagnitude_padding}em 1em`;
 				element.style.marginBottom = `${currentMargin + stepMagnitude_padding}em`;
@@ -68,8 +67,7 @@ class Animator {
 			if (currentHeight <= stepMagnitude_height) {
 				element.remove();
 				clearInterval(i);
-			}
-			else {
+			} else {
 				element.style.height = `${currentHeight - stepMagnitude_height}px`;
 				element.style.padding = `${currentPadding - stepMagnitude_padding}em 1em`;
 				element.style.marginBottom = `${currentMargin - stepMagnitude_padding}em`;
