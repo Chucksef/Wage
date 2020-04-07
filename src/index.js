@@ -186,65 +186,76 @@ class App {
 		// Take each client one at a time ...
 		this.clientKeys.forEach((cKey) => {
 			let currentClient = this.clients[cKey];
-			let clientName = currentClient.name;
+
+			// set up basic client properties
+			currentClient.id = cKey;
+			currentClient.template = TEMPLATES.entries.client;
+			currentClient.type = "client";
 			currentClient.totalHours = 0;
 			currentClient.totalWages = 0;
-			currentClient.type = "client";
-			currentClient.template = TEMPLATES.entries.client;
-			currentClient.id = cKey;
-			// <---------------------------------- DERIVE LAST CLOCK IN TIME HERE!!
+			currentClient.lastAccessed = 0;
+			currentClient.projectKeys = [];
 
 			// build an array of the client's projects
-			let clientProjects = [];
 			this.projectKeys.forEach((pKey) => {
 				if (this.projects[pKey].clientID == cKey) {
-					clientProjects.push(pKey);
+					currentClient.projectKeys.push(pKey);
 				}
 			});
-
-			// add an array of all project to keys to each client
-			currentClient.projectKeys = clientProjects;
 
 			// store the projects' total wages and hours for use by the client eventually
 			let projectsHours = 0;
 			let projectsWages = 0;
 
 			// take each of the client's projects ...
-			clientProjects.forEach((pKey) => {
+			currentClient.projectKeys.forEach((pKey) => {
 				let currentProject = this.projects[pKey];
-				let projectName = currentProject.name;
+				
+				// set up basic project properties
+				currentProject.id = pKey;
+				currentProject.template = TEMPLATES.entries.project;
+				currentProject.type = "project";
+				currentProject.clientName = currentClient.name;
+				currentProject.totalHours = 0;
+				currentProject.totalWages = 0;
+				currentProject.lastAccessed = 0;
+				currentProject.sessionKeys = [];
+
+				// inherit client rate if project rate is blank
 				if (currentProject.rate == "") {
 					currentProject.rate = currentClient.rate;
 				}
-				currentProject.clientName = clientName;
-				currentProject.type = "project";
-				currentProject.template = TEMPLATES.entries.project;
-				currentProject.id = pKey;
-				currentProject.totalHours = 0;
-				currentProject.totalWages = 0;
 
 				// build an array of the project's sessions
-				let projectSessions = [];
 				this.sessionKeys.forEach((sKey) => {
 					if (this.sessions[sKey].projectID == pKey) {
-						projectSessions.push(sKey);
+						currentProject.sessionKeys.push(sKey);
 					}
 				});
 
-				currentProject.sessionKeys = projectSessions;
-
 				// store the sessions' total hours for use by the project eventually
 				let sessionsHours = 0;
-				// take each session associated with ^ ...
-				projectSessions.forEach((sKey) => {
+
+				// take each session associated with the current project ...
+				currentProject.sessionKeys.forEach((sKey) => {
 					let currentSession = this.sessions[sKey];
-					// assign the active session if clockOut is null
+
+					// if clockOut time is null...
 					if (currentSession.clockOut == null) {
+						// set the currentProject's last accessed to positive infinity
+						currentProject.lastAccessed = Number.POSITIVE_INFINITY;
+
+						// assign this session to the app's active session, and show the clock
 						this.activeSession = sKey;
 						UI.showClock(this, this.sessions[sKey]);
+
+					} else if (currentSession.clockOut.seconds > currentProject.lastAccessed) {
+						// if this time is greater than the project's current lastAccessed time, set project.lastAccessed to be equal to this time.
+						currentProject.lastAccessed = currentSession.clockOut.seconds;
 					}
-					currentSession.clientName = clientName;
-					currentSession.projectName = projectName;
+
+					currentSession.clientName = currentClient.name;
+					currentSession.projectName = currentProject.name;
 					currentSession.type = "session";
 					currentSession.template = TEMPLATES.entries.session;
 					currentSession.id = sKey;
@@ -258,10 +269,18 @@ class App {
 				currentProject.totalHours += sessionsHours; // add the sessions' total hours to the current project's total hours
 				projectsHours += currentProject.totalHours; // add the project's total hours to the projects' total hours
 				projectsWages += currentProject.totalHours * currentProject.rate;
+				
+				if (currentProject.lastAccessed > currentClient.lastAccessed) {
+					// if this time is greater than client.lastAccessed time, set client.lastAccessed to be equal to this time.
+					currentClient.lastAccessed = currentProject.lastAccessed;
+				}
+				
+				
 			});
 			//assign client.totalHours
 			currentClient.totalHours += projectsHours;
 			currentClient.totalWages += projectsWages;
+
 		});
 		// next client ...
 	}

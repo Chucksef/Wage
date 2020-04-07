@@ -133,29 +133,34 @@ class UI {
 	static display(app, dataSet, target = DOM.readout) {
 		UI.reset();
 
-		// build an object of key value pairs
-		let sorted = {};
-		Object.keys(dataSet).forEach((key) => {
-			// <------------------------------------------ SORT BY LAST CLOCK IN TIME HERE
-			sorted[key] = dataSet[key].lastClockedIn;
+		// build a sorted array from the dataSet
+		let sorted = [];
+		let keys = Object.keys(dataSet);
+		keys.forEach((key) => {
+			let currentObj = dataSet[key];
+
+			for (let i = 0; i <= sorted.length; i++) {
+				if (sorted[i] == undefined) {
+					sorted.push(currentObj);
+					i++;
+					// compare the lastAccessed properties of currentObj and the current item in the sorted array
+				} else if (currentObj.lastAccessed > sorted[i].lastAccessed) {
+					sorted.splice(i, 0, currentObj);
+					break;
+				}
+			}
+
 		});
 
-		alert(JSON.stringify(sorted));
-
-		Object.keys(dataSet).forEach((key) => {
-			//
-			let current = dataSet[key];
+		for (let i = 0; i<sorted.length; i++) {
+			let currentObj = sorted[i];
 			let entry = document.createElement("div");
 			entry.classList.add("entry");
-			entry.id = key;
-			current.id = key;
-
-			// replace fields in template with corresponding dataSet
-			entry.innerHTML = Format.template(app, current);
-
-			// add the entry to the target container
+			entry.id = currentObj.id;
+			entry.innerHTML = Format.template(app, currentObj);
 			UI.addEntry(app, entry, target);
-		});
+			
+		}
 	}
 
 	static menu(app, template) {
