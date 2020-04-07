@@ -32,9 +32,7 @@ class UI {
 
 		// toggle expanded class of target
 		target.classList.toggle("expanded");
-		// if target is expanded...
 		if (target.classList.contains("expanded")) {
-			// create a new element with class="childContainer"
 			let childContainer = document.createElement("div");
 			if (object.type == "client") {
 				childContainer.classList.add("childProjects");

@@ -245,6 +245,7 @@ class App {
 					if (currentSession.clockOut == null) {
 						// set the currentProject's last accessed to positive infinity
 						currentProject.lastAccessed = Number.POSITIVE_INFINITY;
+						currentSession.lastAccessed = Number.POSITIVE_INFINITY;
 
 						// assign this session to the app's active session, and show the clock
 						this.activeSession = sKey;
@@ -253,6 +254,9 @@ class App {
 					} else if (currentSession.clockOut.seconds > currentProject.lastAccessed) {
 						// if this time is greater than the project's current lastAccessed time, set project.lastAccessed to be equal to this time.
 						currentProject.lastAccessed = currentSession.clockOut.seconds;
+						currentSession.lastAccessed = currentSession.clockOut.seconds;
+					} else {
+						currentSession.lastAccessed = currentSession.clockOut.seconds;
 					}
 
 					currentSession.clientName = currentClient.name;

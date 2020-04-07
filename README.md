@@ -33,7 +33,6 @@ At the current stage of development (planning), we can anticipate that it would 
 
 ## Current TODO List
 
-  * Sort Projects and Sessions by lastClockedIn
   * Timer Confirmation Menu (delete? save? edit times? add breaks?)
   * Animations for Timer
   * Remove Unused filters
