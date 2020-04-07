@@ -88,6 +88,7 @@ class App {
 
 			// and then display a list of clients as default...
 			if (this.activeSession != null) {
+				UI.reset();
 				UI.zoom(this, this.activeSession);
 			} else {
 				UI.display(this, this.clients);
@@ -356,14 +357,18 @@ class App {
 	}
 
 	getChildren(object) {
-		// takes a single object and returns an array of child keys
+		let children = {};
+		// takes a single object and returns a children object
 		if (object.type == "client") {
-			return object.projectKeys;
+			object.projectKeys.forEach((key) => {
+				children[key] = this.getObject(key);
+			}) 
 		} else if (object.type == "project") {
-			return object.sessionKeys;
-		} else {
-			return [];
+			object.sessionKeys.forEach((key) => {
+				children[key] = this.getObject(key);
+			})
 		}
+		return children
 	}
 
 	clockIn(id) {

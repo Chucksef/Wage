@@ -65,7 +65,7 @@ class UI {
 
 			// fill childContainer with children
 			let children = app.getChildren(object);
-			UI.showChildren(app, children, childContainer);
+			UI.display(app, children, childContainer);
 			Animator.expand(childContainer, 0.2);
 		} else {
 			// if it's not expanded, remove all children shit
@@ -110,7 +110,6 @@ class UI {
 
 	static zoom(app, sessionID) {
 		// reset display to all clients
-		UI.reset();
 		UI.display(app, app.clients);
 
 		let currentSession = app.sessions[sessionID];
@@ -131,8 +130,6 @@ class UI {
 	}
 
 	static display(app, dataSet, target = DOM.readout) {
-		UI.reset();
-
 		// build a sorted array from the dataSet
 		let sorted = [];
 		let keys = Object.keys(dataSet);
@@ -153,10 +150,11 @@ class UI {
 		});
 
 		for (let i = 0; i<sorted.length; i++) {
-			let currentObj = sorted[i];
+			let currentObj = app.getObject(sorted[i].id);
 			let entry = document.createElement("div");
 			entry.classList.add("entry");
 			entry.id = currentObj.id;
+			entry.type = currentObj.type;
 			entry.innerHTML = Format.template(app, currentObj);
 			UI.addEntry(app, entry, target);
 			
@@ -254,6 +252,7 @@ class UI {
 					// pass the object to save it
 					app.addClient(newClient);
 					app.deriveProperties();
+					UI.reset();
 					UI.display(app, app.clients, TEMPLATES.entries.client);
 				}
 			} else if (type == "PROJECT") {
@@ -289,6 +288,7 @@ class UI {
 					// pass the object to the app to save it
 					app.addProject(newProject);
 					app.deriveProperties();
+					UI.reset();
 					UI.display(app, app.projects, TEMPLATES.entries.project);
 				}
 			}
