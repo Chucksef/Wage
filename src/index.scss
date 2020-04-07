@@ -579,6 +579,12 @@ button.btn-icon:focus {
 			margin: 0;
 		}
 
+		h3:not(button), h4:not(button), h5:not(button) {
+			margin: 0;
+			padding-top:0;
+			padding-bottom:0;
+		}
+
 		h6 {
 			font-size: 1em;
 			margin: 0.1em 0 0 0;

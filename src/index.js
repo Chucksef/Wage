@@ -25,6 +25,7 @@ const DOM = {
 
 	btn_NewClient: document.querySelector("#btn-NewClient"),
 	btn_NewProject: document.querySelector("#btn-NewProject"),
+	btn_NewSession: document.querySelector("#btn-NewSession"),
 };
 
 class App {

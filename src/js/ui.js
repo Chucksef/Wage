@@ -301,6 +301,9 @@ class UI {
 		DOM.btn_NewProject.addEventListener("click", function() {
 			UI.menu(app, TEMPLATES.menus.project);
 		});
+		DOM.btn_NewSession.addEventListener("click", function() {
+			UI.menu(app, TEMPLATES.menus.session);
+		})
 
 		// Add Event listeners to Highlight clicked Filter Buttons
 		DOM.filters.addEventListener("click", function(e) {
