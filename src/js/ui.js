@@ -95,13 +95,6 @@ class UI {
 			menu.remove();
 		}
 
-		//clear filter button selection
-		let buttons = DOM.filters.querySelectorAll("button");
-
-		buttons.forEach((button) => {
-			button.classList.remove("selected");
-		});
-
 		// clear the actual readout
 		DOM.readout.innerHTML = "";
 	}
@@ -305,31 +298,18 @@ class UI {
 			UI.menu(app, TEMPLATES.menus.session);
 		})
 
-		// Add Event listeners to Highlight clicked Filter Buttons
-		DOM.filters.addEventListener("click", function(e) {
-			let target = e.target;
-			if (target.tagName == "BUTTON") {
-				let buttons = DOM.filters.querySelectorAll("button");
-				buttons.forEach((button) => {
-					button.classList.remove("selected");
-				});
-				target.classList.add("selected");
-			}
-		});
+		// // Add Event listeners to Highlight clicked Filter Buttons
+		// DOM.filters.addEventListener("click", function(e) {
+		// 	let target = e.target;
+		// 	if (target.tagName == "BUTTON") {
+		// 		let buttons = DOM.filters.querySelectorAll("button");
+		// 		buttons.forEach((button) => {
+		// 			button.classList.remove("selected");
+		// 		});
+		// 		target.classList.add("selected");
+		// 	}
+		// });
 
-		// Add Filter Event Listeners
-		DOM.btn_Clients.addEventListener("click", function() {
-			UI.reset();
-			UI.display(app, app.clients);
-		});
-		DOM.btn_Projects.addEventListener("click", function() {
-			UI.reset();
-			UI.display(app, app.projects);
-		});
-		DOM.btn_Sessions.addEventListener("click", function() {
-			UI.reset();
-			UI.display(app, app.sessions);
-		});
 	}
 
 	static showClock(app, session) {

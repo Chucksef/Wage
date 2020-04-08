@@ -125,14 +125,16 @@ const TEMPLATES = {
 			<!--SESSION-->
 			<div class="menu">
 				<h1>Save Session</h1>
-				<h3>Client-Name</h3>
-				<h5>Project-Name</h5>
+				<h3>%clientName</h3>
+				<h5>%projectName</h5>
 				<h6>Clock In</h6>
-				<input type="date" id="session-date">
-				<input type="time" id="session-time">
+				<input type="date" id="session-clockInDate">
+				<input type="time" id="session-clockInTime">
 				<h6>Clock Out</h6>
-				<input type="date" id="session-date">
-				<input type="time" id="session-time">
+				<input type="date" id="session-clockOutDate">
+				<input type="time" id="session-clockOutTime">
+				<h6>Breaks (hours)</h6>
+				<input type="number" id="session-breaks">
 				<button type="button" class="btn-block" id="cancel">Discard Session</button>
 				<button type="button" class="btn-block" id="submit">Save Session</button>
 				<button type="button" class="btn-icon" id="back">

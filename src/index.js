@@ -18,10 +18,10 @@ const DOM = {
 	sidebar: document.querySelector("#sidebar"),
 	timer: document.querySelector("#timer"),
 
-	filters: document.querySelector("#filters"),
-	btn_Clients: document.querySelector("#btn-clients"),
-	btn_Projects: document.querySelector("#btn-Projects"),
-	btn_Sessions: document.querySelector("#btn-Sessions"),
+	// filters: document.querySelector("#filters"),
+	// btn_Clients: document.querySelector("#btn-clients"),
+	// btn_Projects: document.querySelector("#btn-Projects"),
+	// btn_Sessions: document.querySelector("#btn-Sessions"),
 
 	btn_NewClient: document.querySelector("#btn-NewClient"),
 	btn_NewProject: document.querySelector("#btn-NewProject"),
@@ -94,7 +94,6 @@ class App {
 			} else {
 				UI.display(this, this.clients);
 			}
-			DOM.btn_Clients.classList.add("selected");
 		});
 	}
 
@@ -393,6 +392,7 @@ class App {
 
 			// 2) save session to model
 			let hash = Hash64.gen(30); // use Hash64 generate a new hash for the session
+			this.sessionKeys.push(hash); // add new session's key to the sessionKeys array
 			this.activeSession = hash;
 			this.sessions[hash] = new Session(tempSession);
 			this.sessions[hash].template = TEMPLATES.entries.session;
@@ -416,13 +416,38 @@ class App {
 		// stop the timer
 		clearInterval(this.timer);
 		this.activeSession = null;
+		
+		UI.hideClock();
 
-		// write to the db creating a timestamp for the Clock_Out property
+		let now = firebase.firestore.Timestamp.now();
+		
+		// write to the db, creating a timestamp for the Clock_Out property
 		db.collection("Sessions").doc(id).update({
-			Clock_Out: firebase.firestore.Timestamp.now(),
+			Clock_Out: now,
 		});
 
-		UI.hideClock();
+		// find the cps object
+		let object = this.getObject(id);
+
+		// set clockout on cps object to timestamp
+		object.clockOut = now;
+
+		// update Menu with client and project names
+		let template = TEMPLATES.menus.session;
+		template = template.replace(/%clientName/g, object.clientName);
+		template = template.replace(/%projectName/g, object.projectName);
+		
+		// show MENU
+		UI.menu(this, template);
+
+		// update relevant MENU elements
+		let clockIndate = document.querySelector("#session-clockInDate");
+		let clockInTime = document.querySelector("#session-clockInTime");
+		let clockOutDate = document.querySelector("#session-clockOutDate");
+		let clockOutTime = document.querySelector("#session-clockOutTime");
+	}
+	
+	saveSession(id) {
 	}
 }
 

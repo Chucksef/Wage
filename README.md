@@ -37,3 +37,5 @@ At the current stage of development (planning), we can anticipate that it would 
   * Animations for Timer
   * Remove Unused filters
   * Make timer font-size dynamic
+  * Implement Users/Login/Etc
+  * 
