@@ -89,11 +89,7 @@ class UI {
 	}
 
 	static reset() {
-		// get and clear any menus
-		let menu = document.querySelector("#modal");
-		if (menu) {
-			menu.remove();
-		}
+		UI.hideMenu();
 
 		// clear the actual readout
 		DOM.readout.innerHTML = "";
@@ -284,6 +280,13 @@ class UI {
 		});
 	}
 
+	static hideMenu() {
+		let menu = document.querySelector("#modal");
+		if (menu) {
+			menu.remove();
+		}
+	}
+
 	static setUpEventListeners(app) {
 		// Add Main Control Event Listeners
 		DOM.btn_NewClient.addEventListener("click", function() {
@@ -291,9 +294,6 @@ class UI {
 		});
 		DOM.btn_NewProject.addEventListener("click", function() {
 			UI.menu(app, TEMPLATES.menus.project);
-		});
-		DOM.btn_NewSession.addEventListener("click", function() {
-			UI.menu(app, TEMPLATES.menus.session);
 		});
 
 		// // Add Event listeners to Highlight clicked Filter Buttons

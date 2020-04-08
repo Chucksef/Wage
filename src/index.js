@@ -26,7 +26,6 @@ const DOM = {
 
 	btn_NewClient: document.querySelector("#btn-NewClient"),
 	btn_NewProject: document.querySelector("#btn-NewProject"),
-	btn_NewSession: document.querySelector("#btn-NewSession"),
 };
 
 class App {
@@ -452,24 +451,66 @@ class App {
 		clockInTime.value = Format.timeForInput(object.clockIn);
 		clockOutDate.value = Format.dateForInput(object.clockOut);
 		clockOutTime.value = Format.timeForInput(object.clockOut);
+		breaks.value = 0;
 
 		// assign menu event listeners
-		document.querySelector("#cancel").addEventListener("click", function() {});
+		document.querySelector("#cancel").addEventListener("click", function() {
+			db.collection("Sessions").doc(id).delete();
+			UI.hideMenu();
+		});
 
 		document.querySelector("#submit").addEventListener("click", function() {
 			let changed = false;
+
+			// return to default value for breaks if no input
+			if (breaks.value == "") {
+				breaks.value = 0;
+			}
+
 			if (
 				clockInDate.value !== Format.dateForInput(object.clockIn) ||
 				clockInTime.value !== Format.timeForInput(object.clockIn) ||
 				clockOutDate.value !== Format.dateForInput(object.clockOut) ||
-				clockOutTime.value !== Format.timeForInput(object.clockOut)
+				clockOutTime.value !== Format.timeForInput(object.clockOut) ||
+				breaks.value != 0
 			) {
 				changed = true;
 			}
 
-			alert(`Has any item changed?\n\n${changed}`);
-			// if so, write changes to the db
-			// if not, just close the menu
+			if (changed == true) {
+				// if so, parse the entered values to use in generating a new timestamp
+				let newDateIn = clockInDate.value.split("-");
+				let newTimeIn = clockInTime.value.split(":");
+				let newDateOut = clockOutDate.value.split("-");
+				let newTimeOut = clockOutTime.value.split(":");
+
+				// set date values
+				let newYearIn = newDateIn[0];
+				let newMonthIn = newDateIn[1] - 1;
+				let newDayIn = newDateIn[2];
+				let newYearOut = newDateOut[0];
+				let newMonthOut = newDateOut[1] - 1;
+				let newDayOut = newDateOut[2];
+
+				// set time values
+				let newHoursIn = newTimeIn[0];
+				let newMinsIn = newTimeIn[1];
+				let newHoursOut = newTimeOut[0];
+				let newMinsOut = newTimeOut[1];
+
+				// if so, generate new timestamps with the updated times
+				let newStampIn = new Date(newYearIn, newMonthIn, newDayIn, newHoursIn, newMinsIn, 0, 0);
+				let newStampOut = new Date(newYearOut, newMonthOut, newDayOut, newHoursOut, newMinsOut, 0, 0);
+
+				// and then write the changes to the db
+				db.collection("Sessions").doc(id).update({
+					Clock_In: newStampIn,
+					Clock_Out: newStampOut,
+					Breaks: parseFloat(breaks.value),
+				});
+			} else {
+				UI.hideMenu();
+			}
 		});
 	}
 
