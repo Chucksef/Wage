@@ -27,6 +27,18 @@ class Format {
 		}
 	}
 
+	static dateForInput(timestamp) {
+		let date = timestamp.toDate().toString().split(" ");
+		return `${date[3]}-${Format.getMonthNumber(date[1])}-${date[2]}`;
+	}
+
+	static timeForInput(timestamp) {
+		let time = timestamp.toDate().toString().split(" ")[4].split(":");
+		let hours = parseInt(time[0]);
+		let minutes = time[1];
+		return `${hours}:${minutes}`;
+	}
+
 	static time(timestamp) {
 		if (timestamp) {
 			let time = timestamp.toDate().toString().split(" ")[4].split(":");
@@ -123,6 +135,60 @@ class Format {
 				string = `0${string}`;
 			}
 			return string;
+		}
+	}
+
+	static getMonthNumber(string) {
+		string = string.toLowerCase();
+		switch (string) {
+			case "jan":
+			case "january":
+				return Format.padZeroes(1, 2);
+				break;
+			case "feb":
+			case "february":
+				return Format.padZeroes(2, 2);
+				break;
+			case "mar":
+			case "march":
+				return Format.padZeroes(3, 2);
+				break;
+			case "apr":
+			case "april":
+				return Format.padZeroes(4, 2);
+				break;
+			case "may":
+				return Format.padZeroes(5, 2);
+				break;
+			case "jun":
+			case "june":
+				return Format.padZeroes(6, 2);
+				break;
+			case "jul":
+			case "july":
+				return Format.padZeroes(7, 2);
+				break;
+			case "aug":
+			case "august":
+				return Format.padZeroes(8, 2);
+				break;
+			case "sep":
+			case "sept":
+			case "september":
+				return Format.padZeroes(9, 2);
+				break;
+			case "oct":
+			case "october":
+				return "10";
+				break;
+			case "nov":
+			case "november":
+				return "11";
+				break;
+			case "dec":
+			case "december":
+				return "12";
+				break;
 		}
 	}
 }

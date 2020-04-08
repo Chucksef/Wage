@@ -134,7 +134,7 @@ const TEMPLATES = {
 				<input type="date" id="session-clockOutDate">
 				<input type="time" id="session-clockOutTime">
 				<h6>Breaks (hours)</h6>
-				<input type="number" id="session-breaks">
+				<input type="number" id="session-breaks" placeholder="0 (hours)">
 				<button type="button" class="btn-block" id="cancel">Discard Session</button>
 				<button type="button" class="btn-block" id="submit">Save Session</button>
 				<button type="button" class="btn-icon" id="back">
@@ -154,7 +154,7 @@ const TEMPLATES = {
 					</svg>				
 				</button>
 			</div>
-		`
+		`,
 	},
 
 	clock: `

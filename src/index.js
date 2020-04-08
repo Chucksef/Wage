@@ -5,6 +5,7 @@ import { Client } from "./js/client.js";
 import { Project } from "./js/project.js";
 import { Session } from "./js/session.js";
 import { UI } from "./js/ui.js";
+import { Format } from "./js/format.js";
 import { firebaseConfig } from "./js/firebase.js";
 
 // Initialize Firebase
@@ -211,7 +212,7 @@ class App {
 			// take each of the client's projects ...
 			currentClient.projectKeys.forEach((pKey) => {
 				let currentProject = this.projects[pKey];
-				
+
 				// set up basic project properties
 				currentProject.id = pKey;
 				currentProject.template = TEMPLATES.entries.project;
@@ -250,7 +251,6 @@ class App {
 						// assign this session to the app's active session, and show the clock
 						this.activeSession = sKey;
 						UI.showClock(this, this.sessions[sKey]);
-
 					} else if (currentSession.clockOut.seconds > currentProject.lastAccessed) {
 						// if this time is greater than the project's current lastAccessed time, set project.lastAccessed to be equal to this time.
 						currentProject.lastAccessed = currentSession.clockOut.seconds;
@@ -274,18 +274,15 @@ class App {
 				currentProject.totalHours += sessionsHours; // add the sessions' total hours to the current project's total hours
 				projectsHours += currentProject.totalHours; // add the project's total hours to the projects' total hours
 				projectsWages += currentProject.totalHours * currentProject.rate;
-				
+
 				if (currentProject.lastAccessed > currentClient.lastAccessed) {
 					// if this time is greater than client.lastAccessed time, set client.lastAccessed to be equal to this time.
 					currentClient.lastAccessed = currentProject.lastAccessed;
 				}
-				
-				
 			});
 			//assign client.totalHours
 			currentClient.totalHours += projectsHours;
 			currentClient.totalWages += projectsWages;
-
 		});
 		// next client ...
 	}
@@ -366,13 +363,13 @@ class App {
 		if (object.type == "client") {
 			object.projectKeys.forEach((key) => {
 				children[key] = this.getObject(key);
-			}) 
+			});
 		} else if (object.type == "project") {
 			object.sessionKeys.forEach((key) => {
 				children[key] = this.getObject(key);
-			})
+			});
 		}
-		return children
+		return children;
 	}
 
 	clockIn(id) {
@@ -395,8 +392,11 @@ class App {
 			this.sessionKeys.push(hash); // add new session's key to the sessionKeys array
 			this.activeSession = hash;
 			this.sessions[hash] = new Session(tempSession);
-			this.sessions[hash].template = TEMPLATES.entries.session;
-			this.sessions[hash].id = hash;
+			let sess = this.sessions[hash];
+			sess.template = TEMPLATES.entries.session;
+			sess.id = hash;
+			sess.clientName = activeProject.clientName;
+			sess.projectName = activeProject.name;
 
 			// 3) save session to db
 			db.collection("Sessions").doc(hash).set({
@@ -416,11 +416,11 @@ class App {
 		// stop the timer
 		clearInterval(this.timer);
 		this.activeSession = null;
-		
+
 		UI.hideClock();
 
 		let now = firebase.firestore.Timestamp.now();
-		
+
 		// write to the db, creating a timestamp for the Clock_Out property
 		db.collection("Sessions").doc(id).update({
 			Clock_Out: now,
@@ -436,19 +436,44 @@ class App {
 		let template = TEMPLATES.menus.session;
 		template = template.replace(/%clientName/g, object.clientName);
 		template = template.replace(/%projectName/g, object.projectName);
-		
+
 		// show MENU
 		UI.menu(this, template);
 
-		// update relevant MENU elements
-		let clockIndate = document.querySelector("#session-clockInDate");
+		// grab relevant inputs and fill with relevant values
+		let clockInDate = document.querySelector("#session-clockInDate");
 		let clockInTime = document.querySelector("#session-clockInTime");
 		let clockOutDate = document.querySelector("#session-clockOutDate");
 		let clockOutTime = document.querySelector("#session-clockOutTime");
+		let breaks = document.querySelector("#session-breaks");
+
+		//
+		clockInDate.value = Format.dateForInput(object.clockIn);
+		clockInTime.value = Format.timeForInput(object.clockIn);
+		clockOutDate.value = Format.dateForInput(object.clockOut);
+		clockOutTime.value = Format.timeForInput(object.clockOut);
+
+		// assign menu event listeners
+		document.querySelector("#cancel").addEventListener("click", function() {});
+
+		document.querySelector("#submit").addEventListener("click", function() {
+			let changed = false;
+			if (
+				clockInDate.value !== Format.dateForInput(object.clockIn) ||
+				clockInTime.value !== Format.timeForInput(object.clockIn) ||
+				clockOutDate.value !== Format.dateForInput(object.clockOut) ||
+				clockOutTime.value !== Format.timeForInput(object.clockOut)
+			) {
+				changed = true;
+			}
+
+			alert(`Has any item changed?\n\n${changed}`);
+			// if so, write changes to the db
+			// if not, just close the menu
+		});
 	}
-	
-	saveSession(id) {
-	}
+
+	saveSession(id) {}
 }
 
 new App("chucksef@gmail.com");

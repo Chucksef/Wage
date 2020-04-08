@@ -137,10 +137,9 @@ class UI {
 					break;
 				}
 			}
-
 		});
 
-		for (let i = 0; i<sorted.length; i++) {
+		for (let i = 0; i < sorted.length; i++) {
 			let currentObj = app.getObject(sorted[i].id);
 			let entry = document.createElement("div");
 			entry.classList.add("entry");
@@ -148,7 +147,6 @@ class UI {
 			entry.type = currentObj.type;
 			entry.innerHTML = Format.template(app, currentObj);
 			UI.addEntry(app, entry, target);
-			
 		}
 	}
 
@@ -296,7 +294,7 @@ class UI {
 		});
 		DOM.btn_NewSession.addEventListener("click", function() {
 			UI.menu(app, TEMPLATES.menus.session);
-		})
+		});
 
 		// // Add Event listeners to Highlight clicked Filter Buttons
 		// DOM.filters.addEventListener("click", function(e) {
@@ -309,7 +307,6 @@ class UI {
 		// 		target.classList.add("selected");
 		// 	}
 		// });
-
 	}
 
 	static showClock(app, session) {
