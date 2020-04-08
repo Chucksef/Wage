@@ -34,9 +34,9 @@ At the current stage of development (planning), we can anticipate that it would 
 ## Current TODO List
 
   * If a project has no sessions, it's erroneously listed as "Active"
-  * Timer Confirmation Menu (delete? save? edit times? add breaks?)
   * Animations for Timer
   * Remove Unused filters
   * Make timer font-size dynamic
+  * Delete Entries
+  * Update Entries
   * Implement Users/Login/Etc
-  * 
