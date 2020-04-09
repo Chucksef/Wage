@@ -39,6 +39,21 @@ class Format {
 		return `${hours}:${minutes}`;
 	}
 
+	static secondsToDateTime(secs) {
+		if (secs == Number.POSITIVE_INFINITY) {
+			return "Job Active";
+		} else if (secs == 0) {
+			return "-";
+		} else {
+			var t = new Date(secs * 1000); // Epoch
+			var day = t.getUTCDay();
+			var year = t.getUTCFullYear();
+			var month = t.getUTCMonth();
+			var date = t.getUTCDate();
+			return `${Format.getDayName(day)}, ${Format.getMonthName(month)} ${date}, ${year}`;
+		}
+	}
+
 	static time(timestamp) {
 		if (timestamp) {
 			let time = timestamp.toDate().toString().split(" ")[4].split(":");
@@ -89,7 +104,7 @@ class Format {
 			temp = temp.replace(/%projectName/g, data.projectName);
 		}
 		if (temp.includes("%lastClockedIn")) {
-			temp = temp.replace(/%lastClockedIn/g, Format.date(app.getLastDate(data)));
+			temp = temp.replace(/%lastClockedIn/g, Format.secondsToDateTime(data.lastAccessed));
 		}
 		if (temp.includes("%rate")) {
 			temp = temp.replace(/%rate/g, `${Format.dollars(data.rate)} / hr`);
@@ -189,6 +204,136 @@ class Format {
 			case "december":
 				return "12";
 				break;
+		}
+	}
+
+	static getMonthName(
+		num,
+		idx = 0 /*Optional Integer: Number that represents January*/,
+		long = false /*Optional Boolean: Return full name?*/,
+	) {
+		num -= idx;
+		switch (num) {
+			case 0:
+				if (long) {
+					return "January";
+				} else {
+					return "Jan";
+				}
+			case 1:
+				if (long) {
+					return "February";
+				} else {
+					return "Feb";
+				}
+			case 2:
+				if (long) {
+					return "March";
+				} else {
+					return "Mar";
+				}
+			case 3:
+				if (long) {
+					return "April";
+				} else {
+					return "Apr";
+				}
+			case 4:
+				return "May";
+			case 5:
+				if (long) {
+					return "June";
+				} else {
+					return "Jun";
+				}
+			case 6:
+				if (long) {
+					return "July";
+				} else {
+					return "Jul";
+				}
+			case 7:
+				if (long) {
+					return "August";
+				} else {
+					return "Aug";
+				}
+			case 8:
+				if (long) {
+					return "September";
+				} else {
+					return "Sep";
+				}
+			case 9:
+				if (long) {
+					return "October";
+				} else {
+					return "Oct";
+				}
+			case 10:
+				if (long) {
+					return "November";
+				} else {
+					return "Nov";
+				}
+			case 11:
+				if (long) {
+					return "December";
+				} else {
+					return "Dec";
+				}
+		}
+	}
+
+	static getDayName(
+		num,
+		idx = 0 /*Optional Integer: Int that represents Sunday*/,
+		long = false /*Optional Boolean: Return full name?*/,
+	) {
+		num -= idx;
+		switch (num) {
+			case 0:
+				if (long) {
+					return "Sunday";
+				} else {
+					return "Sun";
+				}
+			case 1:
+				if (long) {
+					return "Monday";
+				} else {
+					return "Mon";
+				}
+			case 2:
+				if (long) {
+					return "Tuesday";
+				} else {
+					return "Tue";
+				}
+			case 3:
+				if (long) {
+					return "Wednesday";
+				} else {
+					return "Wed";
+				}
+			case 4:
+				if (long) {
+					return "Thursday";
+				} else {
+					return "Thu";
+				}
+			case 5:
+				if (long) {
+					return "Friday";
+				} else {
+					return "Fri";
+				}
+			case 6:
+				if (long) {
+					return "Saturday";
+				} else {
+					return "Sat";
+				}
 		}
 	}
 }
