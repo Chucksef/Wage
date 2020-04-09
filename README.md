@@ -33,9 +33,7 @@ At the current stage of development (planning), we can anticipate that it would 
 
 ## Current TODO List
 
-  * If a project has no sessions, it's erroneously listed as "Active"
   * Animations for Timer
-  * Remove Unused filters
   * Make timer font-size dynamic
   * Delete Entries
   * Update Entries

@@ -459,7 +459,7 @@ class App {
 			UI.hideMenu();
 		});
 
-		document.querySelector("#submit").addEventListener("click", function() {
+		document.querySelector("#submit").addEventListener("click", () => {
 			let changed = false;
 
 			// return to default value for breaks if no input
@@ -508,13 +508,16 @@ class App {
 					Clock_Out: newStampOut,
 					Breaks: parseFloat(breaks.value),
 				});
-			} else {
-				UI.hideMenu();
 			}
+
+			UI.hideMenu();
+			this.deriveProperties();
+			UI.reset();
+			// re-load clients
+			UI.display(this, this.clients);
+			// zoom to relevant session
 		});
 	}
-
-	saveSession(id) {}
 }
 
 new App("chucksef@gmail.com");
