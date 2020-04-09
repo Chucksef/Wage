@@ -2,7 +2,7 @@ const TEMPLATES = {
 	entries: {
 		client: `
 			<div class="data-block first-block">
-				<h6 class="tag">Client</h6>
+				<div class="tag"></div>
 				<h3>%name</h3>
 			</div>
 			<div class="data-block">
@@ -17,7 +17,7 @@ const TEMPLATES = {
 
 		project: `
 			<div class="data-block first-block">
-				<h6 class="tag">Project</h6>
+				<div class="tag"></div>
 				<h4>%name</h4>
 			</div>
 			<div class="data-block">
@@ -32,7 +32,7 @@ const TEMPLATES = {
 
 		session: `
 			<div class="data-block first-block">
-				<h6 class="tag">Session</h6>
+				<div class="tag"></div>
 				<h4>%date</h4>
 			</div>
 			<div class="data-block">

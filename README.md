@@ -29,12 +29,12 @@ At the current stage of development (planning), we can anticipate that it would 
   * Firebase Auth
   * Webpack
   * No JS or CSS frameworks used
-  * Google Fonts
+  * Google Fonts & Material Icons
 
 ## Current TODO List
 
   * Delete Entries
-  * Create loading animation
+  * Create db loading animation
   * Animations for Timer
   * Make timer font-size dynamic
   * Update Entries

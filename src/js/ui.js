@@ -71,23 +71,6 @@ class UI {
 		}
 	}
 
-	static showChildren(app, children, destination) {
-		children.forEach((childKey) => {
-			// grab the data for this object key
-			let childObj = app.getObject(childKey);
-			// create a new element to append later
-			let childElem = document.createElement("div");
-			childElem.id = childKey;
-			childElem.type = childObj.type;
-			childElem.classList.add("entry");
-
-			// use the child Object to generate the element's HTML
-			childElem.innerHTML = Format.template(app, childObj);
-
-			UI.addEntry(app, childElem, destination);
-		});
-	}
-
 	static reset() {
 		UI.hideMenu();
 
@@ -142,7 +125,33 @@ class UI {
 			entry.id = currentObj.id;
 			entry.type = currentObj.type;
 			entry.innerHTML = Format.template(app, currentObj);
+			let tag = entry.querySelector(".tag");
+			tag.addEventListener("mouseenter", showControls, false);
+			// tag.addEventListener("click", showControls, false);
+			tag.addEventListener("mouseleave", hideControls, false);
 			UI.addEntry(app, entry, target);
+
+			function showControls() {
+				let deleteButton = document.createElement("button");
+				let editButton = document.createElement("button");
+
+				deleteButton.id = "delete-button";
+				editButton.id = "edit-button";
+				deleteButton.classList.add("material-icons");
+				editButton.classList.add("material-icons");
+				deleteButton.innerText = "delete";
+				editButton.innerText = "edit";
+
+				this.insertAdjacentElement("afterbegin", deleteButton);
+				this.insertAdjacentElement("afterbegin", editButton);
+			}
+
+			function hideControls() {
+				let deleteButton = this.querySelector("#delete-button");
+				let editButton = this.querySelector("#edit-button");
+				deleteButton.remove();
+				editButton.remove();
+			}
 		}
 	}
 
