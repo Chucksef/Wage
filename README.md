@@ -33,8 +33,9 @@ At the current stage of development (planning), we can anticipate that it would 
 
 ## Current TODO List
 
+  * Delete Entries
+  * Create loading animation
   * Animations for Timer
   * Make timer font-size dynamic
-  * Delete Entries
   * Update Entries
   * Implement Users/Login/Etc

@@ -135,7 +135,7 @@ button.btn-block {
 
 button.btn-large {
 	font-size: 2.25em;
-	height: 88px;
+	height: 1.75em;
 	font-weight: 300;
 	margin: 0 0 16px 0;
 }
@@ -525,6 +525,27 @@ button.btn-icon:focus {
 		scrollbar-width: none;
 		-ms-overflow-style: none;
 
+		.row {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			margin: 0;
+			padding: 0;
+
+			.col {
+				display: flex;
+				flex-direction: column;
+				width: calc(50% - .5em);
+				margin: 0;
+				padding: 0;
+			}
+		}
+
+		button.btn-icon {
+			width: 2em;
+			height: 2em;
+		}
+
 		*:not(svg):not(button) {
 			color: $dark-control;
 			border: none;
@@ -573,13 +594,15 @@ button.btn-icon:focus {
 
 		h1:not(button) {
 			padding: 0 0 .25em;
-			font-size: 4em;
+			font-size: 3em;
 			margin: 0 0 .25em;
 			line-height: 1;
 			margin: 0;
 		}
 
-		h3:not(button), h4:not(button), h5:not(button) {
+		h3:not(button),
+		h4:not(button),
+		h5:not(button) {
 			margin: 0;
 			padding: 0;
 		}
@@ -603,6 +626,12 @@ button.btn-icon:focus {
 			border-top: 0;
 			margin: 0;
 			margin-bottom: .5em;
+		}
+	}
+
+	@media only screen and (max-aspect-ratio: 1500/1080) {
+		.menu {
+			width: calc(66%);
 		}
 	}
 }
