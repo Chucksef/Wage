@@ -57,10 +57,12 @@ const TEMPLATES = {
 				<input type="text" id="client-state" placeholder="State">
 				<input type="text" id="client-zip" placeholder="Zip">
 				<input type="text" id="client-country" placeholder="Country">
+				<hr>
 				<h6>Contact Info</h6>
 				<input type="text" id="client-contact" placeholder="Contact Name">
 				<input type="text" id="client-email" placeholder="Contact Email">
 				<input type="text" id="client-phone" placeholder="Contact Phone">
+				<hr>
 				<h6>Details</h6>
 				<input type="text" id="client-rate" placeholder="Hourly Rate">
 				<select id="client-frequency">
@@ -71,22 +73,7 @@ const TEMPLATES = {
 				</select>
 				<textarea id="client-notes" placeholder="Notes"></textarea>
 				<button type="button" class="btn-block" id="submit">Add Client</button>
-				<button type="button" class="btn-icon" id="back">
-					<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-						viewBox="0 0 318 318" style="enable-background:new 0 0 318 318;" xml:space="preserve">
-					<g>
-						<path class="st0" d="M315,159c0,41.2-15.9,78.6-42,106.5C244.5,296,204,315,159,315s-85.5-19-114-49.5C18.9,237.6,3,200.2,3,159
-							C3,72.8,72.8,3,159,3S315,72.8,315,159z"/>
-						<g>
-							<g>
-								<g>
-									<polygon class="st1" points="283,143 283,175 131.7,175 131.7,214.8 35,159 131.7,103.2 131.7,143 				"/>
-								</g>
-							</g>
-						</g>
-					</g>
-					</svg>				
-				</button>
+				<button type="button" class="btn-block" id="back">Back</button>
 			</div>
 		`,
 
@@ -96,28 +83,15 @@ const TEMPLATES = {
 				<h1>New Project</h1>
 				<input type="text" id="project-name" placeholder="Name">
 				<textarea id="project-description" placeholder="Description"></textarea>
+				<hr>
 				<h6>Client</h6>
 				<select id="client-ID">
 				</select>
+				<hr>
 				<h6>Details</h6>
 				<input type="text" id="project-rate" placeholder="Project Hourly Rate">
 				<button type="button" class="btn-block" id="submit">Add Project</button>
-				<button type="button" class="btn-icon" id="back">
-					<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-						viewBox="0 0 318 318" style="enable-background:new 0 0 318 318;" xml:space="preserve">
-					<g>
-						<path class="st0" d="M315,159c0,41.2-15.9,78.6-42,106.5C244.5,296,204,315,159,315s-85.5-19-114-49.5C18.9,237.6,3,200.2,3,159
-							C3,72.8,72.8,3,159,3S315,72.8,315,159z"/>
-						<g>
-							<g>
-								<g>
-									<polygon class="st1" points="283,143 283,175 131.7,175 131.7,214.8 35,159 131.7,103.2 131.7,143 				"/>
-								</g>
-							</g>
-						</g>
-					</g>
-					</svg>				
-				</button>
+				<button type="button" class="btn-block" id="back">Back</button>
 			</div>
 		`,
 
@@ -143,7 +117,17 @@ const TEMPLATES = {
 				<input type="number" id="session-breaks" placeholder="0 (hours)">
 				<button type="button" class="btn-block" id="cancel">Discard Session</button>
 				<button type="button" class="btn-block" id="submit">Save Session</button>
-				<button type="button" class="btn-icon" id="back" style="display: none"></button>
+			</div>
+		`,
+
+		delete: `
+			<!--DELETE-->
+			<div class="menu">
+				<h3>Delete?</h3>
+				<p>Are you sure you want to delete this %type?</p>
+				<p>WARNING: Deleting an item cannot be undone!</p>
+				<button type="button" class="btn-block" id="cancel">Cancel</button>
+				<button type="button" class="btn-block" id="submit">Delete</button>
 			</div>
 		`,
 	},

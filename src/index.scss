@@ -63,7 +63,7 @@ hr {
 
 h1 {
 	margin: 0;
-	font-size: 5em;
+	font-size: 4em;
 	font-weight: 400;
 }
 
@@ -77,11 +77,11 @@ h2 {
 }
 
 h3 {
-	font-size: 2em;
+	font-size: 1.75em;
 }
 
 h4 {
-	font-size: 1.4em;
+	font-size: 1.35em;
 }
 
 h5 {
@@ -548,6 +548,11 @@ button.btn-icon:focus {
 		scrollbar-width: none;
 		-ms-overflow-style: none;
 
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
 		.row {
 			display: flex;
 			flex-direction: row;
@@ -564,16 +569,15 @@ button.btn-icon:focus {
 			}
 		}
 
-		button.btn-icon {
-			width: 2em;
-			height: 2em;
-		}
-
-		*:not(svg):not(button) {
+		* {
 			color: $dark-control;
 			border: none;
-			padding: .3em 1em;
-			margin-bottom: .5em;
+			margin-bottom: .25em;
+		}
+
+		*::selection {
+			background: $primary;
+			color: white;
 		}
 
 		input::placeholder,
@@ -584,27 +588,23 @@ button.btn-icon:focus {
 		input:focus,
 		select:focus,
 		textarea:focus {
-			outline: 2px solid $light-control;
+			outline: 2px solid $dark-control;
 			outline-offset: 1px;
-		}
-
-		*::selection {
-			background: $primary;
-			color: white;
 		}
 
 		select {
 			padding-left: .7em;
 		}
 
-		button:not(.btn-icon) {
-			margin-bottom: 0;
+		button {
 			padding: .3em;
+			margin-top: .5em;
+			margin-bottom: 0;
 			color: $dark-control;
 			border: 1px solid $dark-control;
 		}
 
-		button:not(.btn-icon):hover {
+		button:hover {
 			color: $light;
 			background: $dark-control;
 		}
@@ -615,28 +615,18 @@ button.btn-icon:focus {
 			left: calc(2em * .8);
 		}
 
-		h1:not(button) {
-			padding: 0 0 .25em;
+		h1 {
 			font-size: 3em;
-			margin: 0 0 .25em;
-			line-height: 1;
-			margin: 0;
-		}
-
-		h3:not(button),
-		h4:not(button),
-		h5:not(button) {
-			margin: 0;
-			padding: 0;
-		}
-
-		h5:not(button) {
-			padding-bottom: .5em;
 		}
 
 		h6 {
 			font-size: 1em;
-			margin: 0.1em 0 0 0;
+		}
+
+		input,
+		textarea,
+		select {
+			padding: .3em .1em;
 		}
 
 		textarea {
@@ -645,10 +635,9 @@ button.btn-icon:focus {
 		}
 
 		hr {
-			border-color: $dark;
-			border-top: 0;
-			margin: 0;
-			margin-bottom: .5em;
+			border: none;
+			border-top: 1px solid $primary;
+			margin: .25em 0;
 		}
 	}
 

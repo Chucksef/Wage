@@ -126,26 +126,33 @@ class UI {
 			entry.type = currentObj.type;
 			entry.innerHTML = Format.template(app, currentObj);
 			let tag = entry.querySelector(".tag");
+
+			// include listeners and functions to hide/show entry controls
 			tag.addEventListener("mouseenter", showControls, false);
-			// tag.addEventListener("click", showControls, false);
 			tag.addEventListener("mouseleave", hideControls, false);
 			UI.addEntry(app, entry, target);
-
+			// show the controls
 			function showControls() {
+				// add the delete button
 				let deleteButton = document.createElement("button");
-				let editButton = document.createElement("button");
-
 				deleteButton.id = "delete-button";
-				editButton.id = "edit-button";
 				deleteButton.classList.add("material-icons");
-				editButton.classList.add("material-icons");
 				deleteButton.innerText = "delete";
-				editButton.innerText = "edit";
-
 				this.insertAdjacentElement("afterbegin", deleteButton);
-				this.insertAdjacentElement("afterbegin", editButton);
-			}
+				deleteButton.addEventListener("click", () => {
+					// show the confirm menu on click
+					UI.menu(app, TEMPLATES.menus.delete);
+				});
 
+				// add the edit button
+				let editButton = document.createElement("button");
+				editButton.id = "edit-button";
+				editButton.classList.add("material-icons");
+				editButton.innerText = "edit";
+				this.insertAdjacentElement("afterbegin", editButton);
+				editButton.addEventListener("click", () => {});
+			}
+			// hide the controls
 			function hideControls() {
 				let deleteButton = this.querySelector("#delete-button");
 				let editButton = this.querySelector("#edit-button");
@@ -188,10 +195,13 @@ class UI {
 
 		// add event listener to the freshly-generated back button
 
-		document.querySelector("#back").addEventListener("click", () => {
-			UI.reset();
-			UI.display(app, app.clients);
-		});
+		let backButton = document.querySelector("#back");
+		if (backButton) {
+			backButton.addEventListener("click", () => {
+				UI.reset();
+				UI.display(app, app.clients);
+			});
+		}
 
 		// add event listener to the freshly-generated submit button
 		document.querySelector("#submit").addEventListener("click", () => {
