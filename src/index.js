@@ -518,6 +518,104 @@ class App {
 			// zoom to relevant session
 		});
 	}
+
+	deleteItem(item) {
+		let zoomTo;
+		if (item.type == "session") {
+			zoomTo = this.getObject(item.projectID);
+		} else if (item.type == "project") {
+			zoomTo = this.getObject(item.clientID);
+		}
+
+		// 2) begin the recursion on the original item
+		this.recursiveDelete(item);
+
+		// 3) zoom to the item in the CPS display
+		UI.reset();
+
+		// zoom if
+		if (zoomTo) {
+			UI.zoom(this, zoomTo.id);
+		} else {
+			UI.display(this, this.clients);
+		}
+	}
+
+	recursiveDelete(item) {
+		let id = item.id;
+		if (item.type == "session") {
+			// type is "session"
+
+			// 1) delete it from the db
+			db.collection("Sessions").doc(id).delete();
+
+			// 2) delete it from the app's list of session keys
+			let idx = this.sessionKeys.indexOf(id);
+			this.sessionKeys.splice(idx, 1);
+
+			// 3) delete it from the app's CPS model
+			delete this.sessions[id];
+
+			// 4) grab its parent and remove it as a child
+			const parent = this.getObject(item.projectID);
+			idx = parent.sessionKeys.indexOf(id);
+			parent.sessionKeys.splice(idx, 1);
+		} else if (item.type == "project") {
+			// type is "project"
+			// get an array of all session items
+			let sessionsToDelete = [];
+			item.sessionKeys.forEach((key) => {
+				sessionsToDelete.push(this.sessions[key]);
+			});
+
+			// call this function on each child
+			sessionsToDelete.forEach((session) => {
+				this.recursiveDelete(session);
+			});
+
+			// 1) delete the parent project from the db
+			db.collection("Projects").doc(id).delete();
+
+			// 2) delete it from the app's list of project keys
+			let idx = this.projectKeys.indexOf(id);
+			this.projectKeys.splice(idx, 1);
+
+			// 3) delete it from the app's CPS model
+			delete this.projects[id];
+
+			// 4) grab its parent and remove it as a child
+			const parent = this.getObject(item.clientID);
+			idx = parent.projectKeys.indexOf(id);
+			parent.projectKeys.splice(idx, 1);
+		} else {
+			// type is "client"
+			// get an array of all project items
+			let projectsToDelete = [];
+			item.projectKeys.forEach((key) => {
+				projectsToDelete.push(this.projects[key]);
+			});
+
+			// call this function on each child
+			projectsToDelete.forEach((project) => {
+				this.recursiveDelete(project);
+			});
+
+			// 1) delete the parent client from the db
+			db.collection("Clients").doc(id).delete();
+
+			// 2) delete it from the app's list of client keys
+			let idx = this.clientKeys.indexOf(id);
+			this.clientKeys.splice(idx, 1);
+
+			// 3) delete it from the app's CPS model
+			delete this.clients[id];
+		}
+
+		// delete original item
+		// iterate over childArray
+		// get the object tied to the currentKey
+		// delete the object
+	}
 }
 
 new App("chucksef@gmail.com");

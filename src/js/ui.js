@@ -2,6 +2,8 @@ import { Format } from "./format.js";
 import { Animator } from "./animator.js";
 import { DOM } from "../index.js";
 import { TEMPLATES } from "./template.js";
+import { Project } from "./project.js";
+import { Client } from "./client.js";
 
 class UI {
 	static addEntry(app, entry, destination) {
@@ -78,25 +80,48 @@ class UI {
 		DOM.readout.innerHTML = "";
 	}
 
-	static zoom(app, sessionID) {
+	static zoom(app, objectID) {
 		// reset display to all clients
 		UI.display(app, app.clients);
+		let currentSession = app.sessions[objectID];
+		let currentProject;
+		let currentClient;
 
-		let currentSession = app.sessions[sessionID];
+		// if there is a current session...
+		if (currentSession) {
+			// find the project that this session belongs to
+			currentProject = app.projects[currentSession.projectID];
+			currentClient = app.clients[currentProject.clientID];
 
-		//find the project that this session belongs to
-		let currentProject = app.projects[currentSession.projectID];
+			// expand the client by ID
+			const clientElem = document.querySelector(`#${currentClient.id}`);
+			UI.toggleExpand(app, clientElem, currentClient);
 
-		//find the client that this project belongs to
-		let currentClient = app.clients[currentProject.clientID];
+			// expand the project by ID
+			const projectElem = document.querySelector(`#${currentProject.id}`);
+			UI.toggleExpand(app, projectElem, currentProject);
+		} else {
+			// there is no session with this ID. Check if it's a project
+			currentProject = app.projects[objectID];
+			if (currentProject) {
+				currentClient = app.clients[currentProject.clientID];
 
-		//expand the client by ID
-		let clientElem = document.querySelector(`#${currentClient.id}`);
-		UI.toggleExpand(app, clientElem, currentClient);
+				// expand the client by ID
+				const clientElem = document.querySelector(`#${currentClient.id}`);
+				UI.toggleExpand(app, clientElem, currentClient);
 
-		//expand the project by ID
-		let projectElem = document.querySelector(`#${currentProject.id}`);
-		UI.toggleExpand(app, projectElem, currentProject);
+				// expand the project by ID
+				const projectElem = document.querySelector(`#${currentProject.id}`);
+				UI.toggleExpand(app, projectElem, currentProject);
+			} else {
+				// original object must be a client...
+				currentClient = app.clients[objectID];
+
+				// expand the client by ID
+				const clientElem = document.querySelector(`#${currentClient.id}`);
+				UI.toggleExpand(app, clientElem, currentClient);
+			}
+		}
 	}
 
 	static display(app, dataSet, target = DOM.readout) {
@@ -127,7 +152,10 @@ class UI {
 			entry.innerHTML = Format.template(app, currentObj);
 			let tag = entry.querySelector(".tag");
 
-			// include listeners and functions to hide/show entry controls
+			/*
+			ADD TAG CONTROL ELEMENTS
+			*/
+
 			tag.addEventListener("mouseenter", showControls, false);
 			tag.addEventListener("mouseleave", hideControls, false);
 			UI.addEntry(app, entry, target);
@@ -141,7 +169,21 @@ class UI {
 				this.insertAdjacentElement("afterbegin", deleteButton);
 				deleteButton.addEventListener("click", () => {
 					// show the confirm menu on click
-					UI.menu(app, TEMPLATES.menus.delete);
+					// replace the %type with the item type
+					let temp = TEMPLATES.menus.delete.replace(
+						/%type/g,
+						currentObj.type.charAt(0).toUpperCase() + currentObj.type.slice(1),
+					);
+
+					UI.menu(app, temp);
+					// add functionality to the menu buttons
+					document.querySelector("#cancel").addEventListener("click", () => {
+						UI.hideMenu();
+					});
+					document.querySelector("#submit").addEventListener("click", () => {
+						UI.hideMenu();
+						app.deleteItem(currentObj);
+					});
 				});
 
 				// add the edit button
@@ -150,7 +192,9 @@ class UI {
 				editButton.classList.add("material-icons");
 				editButton.innerText = "edit";
 				this.insertAdjacentElement("afterbegin", editButton);
-				editButton.addEventListener("click", () => {});
+				editButton.addEventListener("click", () => {
+					alert("editing this item");
+				});
 			}
 			// hide the controls
 			function hideControls() {
@@ -257,7 +301,7 @@ class UI {
 					app.addClient(newClient);
 					app.deriveProperties();
 					UI.reset();
-					UI.display(app, app.clients, TEMPLATES.entries.client);
+					UI.display(app, app.clients);
 				}
 			} else if (type == "PROJECT") {
 				const FORM = {
@@ -293,7 +337,7 @@ class UI {
 					app.addProject(newProject);
 					app.deriveProperties();
 					UI.reset();
-					UI.display(app, app.projects, TEMPLATES.entries.project);
+					UI.display(app, app.clients);
 				}
 			}
 		});

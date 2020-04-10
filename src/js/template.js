@@ -123,9 +123,11 @@ const TEMPLATES = {
 		delete: `
 			<!--DELETE-->
 			<div class="menu">
-				<h3>Delete?</h3>
-				<p>Are you sure you want to delete this %type?</p>
-				<p>WARNING: Deleting an item cannot be undone!</p>
+				<h3>Delete %type?</h3>
+				<p>Are you sure you want to delete this item?</p>
+				<p><b>WARNING:</b></p>
+				<p>Deleting an item cannot be undone, and doing so will</p>
+				<p>also delete any items contained within it!</p>
 				<button type="button" class="btn-block" id="cancel">Cancel</button>
 				<button type="button" class="btn-block" id="submit">Delete</button>
 			</div>
