@@ -2,7 +2,8 @@
 
 ## Introduction
 
-WAGE is a web-based timecard app designed to be equally accessible on desktop and mobile, and developed for and hosted on Firebase. The application, upon completion, will allow the user to...
+WAGE is a web-based timecard app designed to be equally accessible on desktop and mobile, and developed for and hosted on Firebase. The application, upon completion, will allow the user
+ to...
 
   * Create a User Profile;
   * Log In/Out;
@@ -33,7 +34,6 @@ At the current stage of development (planning), we can anticipate that it would 
 
 ## Current TODO List
 
-  * Delete Entries
   * Create db loading animation
   * Animations for Timer
   * Make timer font-size dynamic

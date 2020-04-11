@@ -249,7 +249,7 @@ class App {
 
 						// assign this session to the app's active session, and show the clock
 						this.activeSession = sKey;
-						UI.showClock(this, this.sessions[sKey]);
+						UI.showClock(this, this.sessions[sKey], .5, 1);
 					} else if (currentSession.clockOut.seconds > currentProject.lastAccessed) {
 						// if this time is greater than the project's current lastAccessed time, set project.lastAccessed to be equal to this time.
 						currentProject.lastAccessed = currentSession.clockOut.seconds;
@@ -407,7 +407,7 @@ class App {
 			});
 
 			// 4) display running clock
-			UI.showClock(this, this.sessions[hash]);
+			UI.showClock(this, this.sessions[hash], .5, 0);
 		}
 	}
 

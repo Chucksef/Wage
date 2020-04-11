@@ -137,7 +137,7 @@ const TEMPLATES = {
 	clock: `
 		<h3>00:00:00</h3>
 		<hr>
-		<h6>%clientName</h6>
+		<h6><b>%clientName</b></h6>
 		<p>%projectName</p>
 	`,
 };

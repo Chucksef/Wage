@@ -50,8 +50,6 @@ class Animator {
 
 		// set the initial state of the element
 		element.style.height = maxHeight + "px";
-		// element.style.padding = "0 1em";
-		// element.style.marginBottom = "1em";
 
 		// start the animation
 		let i = setInterval(animate, interval);
@@ -71,6 +69,44 @@ class Animator {
 				element.style.height = `${currentHeight - stepMagnitude_height}px`;
 				element.style.padding = `${currentPadding - stepMagnitude_padding}em 1em`;
 				element.style.marginBottom = `${currentMargin - stepMagnitude_padding}em`;
+			}
+		}
+	}
+
+	static clockIn(element, anchor="top", disp=10, time=.5, delay=1) {
+		/*
+			Animator.clockIn() takes 4 parameters: 
+			  * element		DOM ELEMENT		Absolutely or relatively positioned dom element.
+			  * anchor 		STRING			Accepted values: "top", "bottom", "left", "right".
+			  * disp 		INTEGER			How far the element will travel in pixels.
+			  * time		FLOAT			Seconds that the animaton will take to play.
+			  * delay		FLOAT			Seconds to wait before playing animation
+		*/
+		let interval = 5;
+		let stepCount = (time * 1000) / interval
+
+		// get the number of pixels the element should move each interval
+		let stepDisp = disp / stepCount;
+		let currentDisp = 0;
+		let maxDisp = Math.abs(disp);
+
+		setTimeout(run, delay*1000);
+
+		let i;
+		function run() {
+			i = setInterval(animate, interval);
+		}
+
+		// actual animation
+		function animate() {
+			let currentPos = parseFloat(window.getComputedStyle(element)[anchor]);
+
+			if (currentDisp < (maxDisp-.1) ) {
+				element.style[anchor] = `${currentPos + stepDisp}px`;
+				currentDisp += Math.abs(stepDisp);
+			} else {
+				clearInterval(i);
+				element.style[anchor] = "";
 			}
 		}
 	}

@@ -372,7 +372,7 @@ class UI {
 		// });
 	}
 
-	static showClock(app, session) {
+	static showClock(app, session, speed, delay) {
 		// build clock element
 		let clock = document.createElement("button");
 		clock.classList.add("btn-block");
@@ -382,7 +382,14 @@ class UI {
 			app.clockOut(session.id);
 		});
 
+		// add the clock to the DOM
 		DOM.timer.insertAdjacentElement("beforeend", clock);
+
+		// position and animate it
+		let mag = parseFloat(window.getComputedStyle(clock).height);
+		let offset = parseFloat(window.getComputedStyle(clock).marginBottom);
+		DOM.timer.style.bottom = `${(mag + offset) * -1 }px`;
+		Animator.clockIn(DOM.timer, "bottom", mag + offset, speed, delay);
 
 		// grab the 3 output fields in the clock element
 		let clockTime = DOM.timer.querySelector("h3");
