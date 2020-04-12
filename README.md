@@ -10,33 +10,36 @@ WAGE is a web-based timecard app designed to be equally accessible on desktop an
   * Build a portfolio of clients;
   * Assign projects to each client;
   * Log work hours on each project using a simple, intuitive interface;
-  * Export PDF (or html) invoices directly from the app;
-  * And more!
+  * And many more smaller features.
 
 ## Additional Features
 
 At the current stage of development (planning), we can anticipate that it would be nice—but not essential!—to include some additional features in the release version of WAGE. Some, but not all, of these features include...
 
-  * Drag and Drop interface controls
+  * Export PDF (or html) invoices directly from the app;
+  * Clock-In button "Transforms" into Active Session
   * Invoice scheduling/automation
   * Invoice payment tracking
   * Tax considerations
-  * Probably many more
 
 ## Technical Information
 
   * Hosted on Firebase
-  * Firestore DB
-  * Firebase Auth
+    * Firestore DB
+    * Firebase Auth
   * Webpack
-  * No JS or CSS frameworks used
+  * No JS or CSS frameworks used whatsoever
   * Google Fonts & Material Icons
+  * Some custom PNGs and SVGs created by me.
 
 ## Current TODO List
 
-  * Clocking In doesn't add an "Active" entry to the project
-  * Create db loading wait animation
   * Animations - ClockOut
+  * Create db loading wait animation
+  * Clocking In doesn't add an "Active" entry to the project
+  * Make it impossible to edit or delete an "Active" entry.
   * Make timer font-size dynamic
   * Update Entries
   * Implement Users/Login/Etc
+  * Clean up interface (simplify!!!);
+  * Entry expansion should look more like drawers opening (all sub-items anchored to bottom of container)

@@ -97,9 +97,14 @@ class UI {
 			const clientElem = document.querySelector(`#${currentClient.id}`);
 			UI.toggleExpand(app, clientElem, currentClient);
 
-			// expand the project by ID
-			const projectElem = document.querySelector(`#${currentProject.id}`);
-			UI.toggleExpand(app, projectElem, currentProject);
+			// set timeout to expand by project in .3s
+			setTimeout(expandProject, 300);
+
+			function expandProject() {
+				// expand the project by ID
+				const projectElem = document.querySelector(`#${currentProject.id}`);
+				UI.toggleExpand(app, projectElem, currentProject);
+			}
 		} else {
 			// there is no session with this ID. Check if it's a project
 			currentProject = app.projects[objectID];
@@ -110,9 +115,14 @@ class UI {
 				const clientElem = document.querySelector(`#${currentClient.id}`);
 				UI.toggleExpand(app, clientElem, currentClient);
 
-				// expand the project by ID
-				const projectElem = document.querySelector(`#${currentProject.id}`);
-				UI.toggleExpand(app, projectElem, currentProject);
+				// set timeout to expand by project in .3s
+				setTimeout(expandProject, 300);
+
+				function expandProject() {
+					// expand the project by ID
+					const projectElem = document.querySelector(`#${currentProject.id}`);
+					UI.toggleExpand(app, projectElem, currentProject);
+				}
 			} else {
 				// original object must be a client...
 				currentClient = app.clients[objectID];
