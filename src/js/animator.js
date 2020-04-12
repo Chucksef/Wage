@@ -1,3 +1,13 @@
+class Timing {
+	static ease(x, pwr) {
+		if (pwr < 0.01 || pwr > 10 ) {
+			console.error("Timing.ease() only animates for powers between 0.01 and 10.")
+			return (1 - (1 - x)**1);
+		}
+		return (1 - (1 - x)**pwr);
+	}
+}
+
 class Animator {
 	static expand(element, time) {
 		// set maxHeight by getting the 'auto' height of the element
@@ -82,13 +92,14 @@ class Animator {
 			  * time		FLOAT			Seconds that the animaton will take to play.
 			  * delay		FLOAT			Seconds to wait before playing animation
 		*/
+		// get/set variables to determine animation progress
 		let interval = 5;
 		let stepCount = (time * 1000) / interval
+		let currentStep = 1;
 
 		// get the number of pixels the element should move each interval
-		let stepDisp = disp / stepCount;
-		let currentDisp = 0;
-		let maxDisp = Math.abs(disp);
+		let startPosition = parseFloat(window.getComputedStyle(element)[anchor]);
+		let totalDisp = Math.abs(disp);
 
 		setTimeout(run, delay*1000);
 
@@ -99,14 +110,22 @@ class Animator {
 
 		// actual animation
 		function animate() {
-			let currentPos = parseFloat(window.getComputedStyle(element)[anchor]);
 
-			if (currentDisp < (maxDisp-.1) ) {
-				element.style[anchor] = `${currentPos + stepDisp}px`;
-				currentDisp += Math.abs(stepDisp);
+			if (currentStep < stepCount ) {
+				// get % of progress as expressed from 0.00 -> 1.00
+				let progress = currentStep/stepCount;
+
+				// get timing coefficient as the returned value from any Timing property using progress as the argument.
+				let timingCoef = Timing.ease(progress, 3.5);
+
+				// get currentDisp value, which is equal to timingCoef * totalDisp
+				let currentDisp = timingCoef * totalDisp;
+
+				element.style[anchor] = `${startPosition + currentDisp}px`;
+				currentStep++;
 			} else {
 				clearInterval(i);
-				element.style[anchor] = "";
+				element.style[anchor] = `${startPosition + totalDisp}px`;
 			}
 		}
 	}

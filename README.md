@@ -34,8 +34,9 @@ At the current stage of development (planning), we can anticipate that it would 
 
 ## Current TODO List
 
-  * Create db loading animation
-  * Animations for Timer
+  * Clocking In doesn't add an "Active" entry to the project
+  * Create db loading wait animation
+  * Animations - ClockOut
   * Make timer font-size dynamic
   * Update Entries
   * Implement Users/Login/Etc
