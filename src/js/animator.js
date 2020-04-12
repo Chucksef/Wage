@@ -131,6 +131,54 @@ class Animator {
 			}
 		}
 	}
+
+	static flyOut(element, toDir="bottom", endPos, time=.5, delay=0) {
+		/*
+			Animator.flyOut() takes 4 parameters: 
+			  * element		DOM ELEMENT		Absolutely or relatively positioned dom element.
+			  * toDir 		STRING			Direction the element will fly-in from. Accepted values: "top", "bottom", "left", "right".
+			  * endPos 		INTEGER			Value of toDir (in pixels) for when the element is off screen.
+			  * time		FLOAT			Seconds that the animaton will take to play.
+			  * delay		FLOAT			Seconds to wait before playing animation
+		*/
+
+		// get/set variables to determine animation progress
+		let interval = 5;
+		let stepCount = (time * 1000) / interval
+		let currentStep = 1;
+		let startPos = parseFloat(window.getComputedStyle(element)[toDir]);
+
+		endPos *= -1;
+		let totalDisp = endPos-startPos;
+
+		setTimeout(animate, delay*1000);
+
+		let i;
+		function animate() {
+			i = setInterval(update, interval);
+		}
+
+		// actual animation
+		function update() {
+
+			if (currentStep < stepCount ) {
+				// get % of progress as expressed from 0.00 -> 1.00
+				let progress = currentStep/stepCount;
+
+				// get timing coefficient as the returned value from any Timing property using progress as the argument.
+				let timingCoef = Timing.ease(progress, 3.5);
+
+				// get currentDisp value, which is equal to timingCoef * totalDisp
+				let currentDisp = timingCoef * totalDisp;
+
+				element.style[toDir] = `${startPos + currentDisp}px`;
+				currentStep++;
+			} else {
+				clearInterval(i);
+				element.style[toDir] = `${endPos}px`;
+			}
+		}
+	}
 }
 
 export { Animator };

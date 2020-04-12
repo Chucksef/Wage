@@ -35,10 +35,11 @@ At the current stage of development (planning), we can anticipate that it would 
 ## Current TODO List
 
   * Animations - FlyOut
-  * Create db loading wait animation
+  * Fix clock hover style
   * Clocking In doesn't add an "Active" entry to the project
   * Make it impossible to edit or delete an "Active" entry.
   * Make timer font-size dynamic
+  * Create db loading wait animation
   * Update Entries
   * Implement Users/Login/Etc
   * Clean up interface (simplify!!!);

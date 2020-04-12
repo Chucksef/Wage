@@ -354,14 +354,33 @@ class UI {
 
 		// grab the actual menu and some key properties used to animate it...
 		menu = document.querySelector(".menu");
-		Animator.flyIn(menu, "bottom", 250, .5, 0) 
+
+		// calculate the value that will put the menu offscreen...
+		let parHeight = parseFloat(window.getComputedStyle(menu.parentNode).height);
+		let menuHeight = parseFloat(window.getComputedStyle(menu).height);
+		let mag = menuHeight + (parHeight-menuHeight)/2;
+
+		// animate the menu
+		Animator.flyIn(menu, "bottom", mag, .5, 0) 
 		
 	}
 
 	static hideMenu() {
-		let menu = document.querySelector("#modal");
-		if (menu) {
-			menu.remove();
+		let modal = document.querySelector("#modal");
+		let menu = document.querySelector(".menu");
+		
+		if (modal) {
+			let parHeight = parseFloat(window.getComputedStyle(menu.parentNode).height);
+			let menuHeight = parseFloat(window.getComputedStyle(menu).height);
+			let mag = menuHeight + (parHeight-menuHeight)/2;
+
+			Animator.flyOut(menu, "bottom", mag, .5, 0);
+
+			setTimeout(remove, 500);
+		}
+		
+		function remove() {
+			modal.remove();
 		}
 	}
 
@@ -400,10 +419,12 @@ class UI {
 		// add the clock to the DOM
 		DOM.timer.insertAdjacentElement("beforeend", clock);
 
-		// position and animate it
+		// get total value for when the window will be out of screen
 		let mag = parseFloat(window.getComputedStyle(clock).height);
-		let offset = parseFloat(window.getComputedStyle(clock).marginBottom);
-		Animator.flyIn(DOM.timer, "bottom", mag + offset, speed, delay);
+		mag += parseFloat(window.getComputedStyle(clock).marginBottom);
+
+		// call animation
+		Animator.flyIn(DOM.timer, "bottom", mag, speed, delay);
 
 		// grab the 3 output fields in the clock element
 		let clockTime = DOM.timer.querySelector("h3");
