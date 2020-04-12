@@ -407,7 +407,7 @@ class App {
 			});
 
 			// 4) display running clock
-			UI.showClock(this, this.sessions[hash], .75, 0);
+			UI.showClock(this, this.sessions[hash], .75);
 		}
 	}
 

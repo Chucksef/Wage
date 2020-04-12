@@ -222,7 +222,7 @@ class UI {
 		menu.innerHTML = template;
 
 		DOM.body.insertAdjacentElement("beforeend", menu);
-
+		
 		// grab the form type
 		let type = template.split(">")[0].trim();
 		type = type.substr(4, type.length - 6);
@@ -351,6 +351,11 @@ class UI {
 				}
 			}
 		});
+
+		// grab the actual menu and some key properties used to animate it...
+		menu = document.querySelector(".menu");
+		Animator.flyIn(menu, "bottom", 250, .5, 0) 
+		
 	}
 
 	static hideMenu() {
@@ -398,8 +403,7 @@ class UI {
 		// position and animate it
 		let mag = parseFloat(window.getComputedStyle(clock).height);
 		let offset = parseFloat(window.getComputedStyle(clock).marginBottom);
-		DOM.timer.style.bottom = `${(mag + offset) * -1 }px`;
-		Animator.clockIn(DOM.timer, "bottom", mag + offset, speed, delay);
+		Animator.flyIn(DOM.timer, "bottom", mag + offset, speed, delay);
 
 		// grab the 3 output fields in the clock element
 		let clockTime = DOM.timer.querySelector("h3");

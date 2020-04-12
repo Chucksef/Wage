@@ -83,33 +83,35 @@ class Animator {
 		}
 	}
 
-	static clockIn(element, anchor="top", disp=10, time=.5, delay=1) {
+	static flyIn(element, fromDir="bottom", startPos, time=.5, delay=0) {
 		/*
-			Animator.clockIn() takes 4 parameters: 
+			Animator.flyIn() takes 4 parameters: 
 			  * element		DOM ELEMENT		Absolutely or relatively positioned dom element.
-			  * anchor 		STRING			Accepted values: "top", "bottom", "left", "right".
-			  * disp 		INTEGER			How far the element will travel in pixels.
+			  * fromDir 	STRING			Direction the element will fly-in from. Accepted values: "top", "bottom", "left", "right".
+			  * startPos 	INTEGER			Value of fromDir (in pixels) for when the element is off screen.
 			  * time		FLOAT			Seconds that the animaton will take to play.
 			  * delay		FLOAT			Seconds to wait before playing animation
 		*/
+
 		// get/set variables to determine animation progress
 		let interval = 5;
 		let stepCount = (time * 1000) / interval
 		let currentStep = 1;
+		let endPos = parseFloat(window.getComputedStyle(element)[fromDir]);
+		element.style[fromDir] = `${startPos * -1}px`;
 
-		// get the number of pixels the element should move each interval
-		let startPosition = parseFloat(window.getComputedStyle(element)[anchor]);
-		let totalDisp = Math.abs(disp);
+		startPos *= -1;
+		let totalDisp = endPos-startPos;
 
-		setTimeout(run, delay*1000);
+		setTimeout(animate, delay*1000);
 
 		let i;
-		function run() {
-			i = setInterval(animate, interval);
+		function animate() {
+			i = setInterval(update, interval);
 		}
 
 		// actual animation
-		function animate() {
+		function update() {
 
 			if (currentStep < stepCount ) {
 				// get % of progress as expressed from 0.00 -> 1.00
@@ -121,11 +123,11 @@ class Animator {
 				// get currentDisp value, which is equal to timingCoef * totalDisp
 				let currentDisp = timingCoef * totalDisp;
 
-				element.style[anchor] = `${startPosition + currentDisp}px`;
+				element.style[fromDir] = `${startPos + currentDisp}px`;
 				currentStep++;
 			} else {
 				clearInterval(i);
-				element.style[anchor] = `${startPosition + totalDisp}px`;
+				element.style[fromDir] = `${endPos}px`;
 			}
 		}
 	}

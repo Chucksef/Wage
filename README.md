@@ -34,7 +34,7 @@ At the current stage of development (planning), we can anticipate that it would 
 
 ## Current TODO List
 
-  * Animations - ClockOut
+  * Animations - FlyOut
   * Create db loading wait animation
   * Clocking In doesn't add an "Active" entry to the project
   * Make it impossible to edit or delete an "Active" entry.
