@@ -1,10 +1,18 @@
 class Timing {
-	static ease(x, pwr) {
-		if (pwr < 0.01 || pwr > 10 ) {
-			console.error("Timing.ease() only animates for powers between 0.01 and 10.")
-			return (1 - (1 - x)**1);
+	static easeOut(x, pwr) {
+		if (pwr < 1 || pwr > 15 ) {
+			console.error("Timing.easeOut() only animates for powers between 1 and 15.");
+			return 1 - (1 - x);
 		}
 		return (1 - (1 - x)**pwr);
+	}
+
+	static easeIn(x, pwr) {
+		if (pwr < 1 || pwr > 15 ) {
+			console.error("Timing.easeIn() only animates for powers between 1 and 15.");
+			return (x);
+		}
+		return x**pwr;
 	}
 }
 
@@ -118,7 +126,7 @@ class Animator {
 				let progress = currentStep/stepCount;
 
 				// get timing coefficient as the returned value from any Timing property using progress as the argument.
-				let timingCoef = Timing.ease(progress, 3.5);
+				let timingCoef = Timing.easeOut(progress, 3.5);
 
 				// get currentDisp value, which is equal to timingCoef * totalDisp
 				let currentDisp = timingCoef * totalDisp;
@@ -166,7 +174,7 @@ class Animator {
 				let progress = currentStep/stepCount;
 
 				// get timing coefficient as the returned value from any Timing property using progress as the argument.
-				let timingCoef = Timing.ease(progress, 3.5);
+				let timingCoef = Timing.easeIn(progress, 3.5);
 
 				// get currentDisp value, which is equal to timingCoef * totalDisp
 				let currentDisp = timingCoef * totalDisp;

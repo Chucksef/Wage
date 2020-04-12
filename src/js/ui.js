@@ -368,7 +368,7 @@ class UI {
 	static hideMenu() {
 		let modal = document.querySelector("#modal");
 		let menu = document.querySelector(".menu");
-		
+
 		if (modal) {
 			let parHeight = parseFloat(window.getComputedStyle(menu.parentNode).height);
 			let menuHeight = parseFloat(window.getComputedStyle(menu).height);
