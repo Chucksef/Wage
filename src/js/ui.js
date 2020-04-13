@@ -205,7 +205,7 @@ class UI {
 				editButton.addEventListener("click", () => {
 					
 					/*
-					SHOW ENTRY EDIT MENU
+					SHOW ENTRY EDIT MENU...
 					*/
 
 					let FORM;
@@ -277,7 +277,6 @@ class UI {
 							UI.hideMenu();
 							UI.zoom(app, updatedClient.id);
 						})
-
 						
 					} else if (currentObj.type == "project") {
 						UI.menu(app, TEMPLATES.menus.project);
@@ -358,37 +357,12 @@ class UI {
 
 						// add session-specific event listener
 						newSaveButton.addEventListener("click", ()=>{
+							
+							// generate new timestamps
+							let newStampIn = Format.getTimestamp(FORM.clockInDate.value, FORM.clockInTime.value);
+							let newStampOut = Format.getTimestamp(FORM.clockOutDate.value, FORM.clockOutTime.value);
+							
 							// find and update session in app CPS Model
-
-
-
-
-							let newDateIn = FORM.clockInDate.value.split("-");
-							let newTimeIn = FORM.clockInTime.value.split(":");
-							let newDateOut = FORM.clockOutDate.value.split("-");
-							let newTimeOut = FORM.clockOutTime.value.split(":");
-
-							// set date values
-							let newYearIn = newDateIn[0];
-							let newMonthIn = newDateIn[1] - 1;
-							let newDayIn = newDateIn[2];
-							let newYearOut = newDateOut[0];
-							let newMonthOut = newDateOut[1] - 1;
-							let newDayOut = newDateOut[2];
-
-							// set time values
-							let newHoursIn = newTimeIn[0];
-							let newMinsIn = newTimeIn[1];
-							let newHoursOut = newTimeOut[0];
-							let newMinsOut = newTimeOut[1];
-
-							// if so, generate new timestamps with the updated times
-							let newStampIn = new Date(newYearIn, newMonthIn, newDayIn, newHoursIn, newMinsIn, 0, 0);
-							let newStampOut = new Date(newYearOut, newMonthOut, newDayOut, newHoursOut, newMinsOut, 0, 0);
-
-
-
-
 							let updatedSession = app.sessions[currentObj.id]
 							updatedSession.clockIn = newStampIn;
 							updatedSession.clockOut = newStampOut;
@@ -401,13 +375,7 @@ class UI {
 							UI.hideMenu();
 							UI.zoom(app, updatedSession.id);
 						})
-
 					}
-
-					setTimeout(()=>{
-						console.log("");
-					}, 1000);
-					
 				});
 			}
 			// hide the controls

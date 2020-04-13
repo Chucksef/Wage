@@ -34,6 +34,7 @@ At the current stage of development (planning), we can anticipate that it would 
 
 ## Current TODO List
 
+  * Tone down clock out bullshit
   * Make Edit and Delete buttons larger
   * Replace back/submit buttons on forms with Icon buttons
   * Clocking In doesn't add an "Active" entry to the project

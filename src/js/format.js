@@ -49,7 +49,7 @@ class Format {
 		} else {
 			time = `${timestamp.toDateString()} ${timestamp.toTimeString()}`.split(" ")[4].split(":");
 		}
-		let hours = parseInt(time[0]);
+		let hours = time[0];
 		let minutes = time[1];
 		return `${hours}:${minutes}`;
 	}
@@ -355,6 +355,19 @@ class Format {
 					return "Sat";
 				}
 		}
+	}
+
+	static getTimestamp(inputDate, inputTime) {
+
+		let newDate = inputDate.split("-");
+		let newTime = inputTime.split(":");
+		let newYear = newDate[0];
+		let newMonth = newDate[1] - 1;
+		let newDay = newDate[2];
+		let newHours = newTime[0];
+		let newMins = newTime[1];
+
+		return new Date(newYear, newMonth, newDay, newHours, newMins, 0, 0);
 	}
 }
 

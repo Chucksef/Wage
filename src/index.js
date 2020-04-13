@@ -478,29 +478,9 @@ class App {
 			}
 
 			if (changed == true) {
-				// if so, parse the entered values to use in generating a new timestamp
-				let newDateIn = clockInDate.value.split("-");
-				let newTimeIn = clockInTime.value.split(":");
-				let newDateOut = clockOutDate.value.split("-");
-				let newTimeOut = clockOutTime.value.split(":");
-
-				// set date values
-				let newYearIn = newDateIn[0];
-				let newMonthIn = newDateIn[1] - 1;
-				let newDayIn = newDateIn[2];
-				let newYearOut = newDateOut[0];
-				let newMonthOut = newDateOut[1] - 1;
-				let newDayOut = newDateOut[2];
-
-				// set time values
-				let newHoursIn = newTimeIn[0];
-				let newMinsIn = newTimeIn[1];
-				let newHoursOut = newTimeOut[0];
-				let newMinsOut = newTimeOut[1];
-
-				// if so, generate new timestamps with the updated times
-				let newStampIn = new Date(newYearIn, newMonthIn, newDayIn, newHoursIn, newMinsIn, 0, 0);
-				let newStampOut = new Date(newYearOut, newMonthOut, newDayOut, newHoursOut, newMinsOut, 0, 0);
+				// if so, generate new timestamps
+				let newStampIn = Format.getTimestamp(clockInDate.value, clockInTime.value);
+				let newStampOut = Format.getTimestamp(clockOutDate.value, clockOutTime.value);
 
 				// and then write the changes to the db
 				db.collection("Sessions").doc(id).update({
