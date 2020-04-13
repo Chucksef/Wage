@@ -231,9 +231,36 @@ button.btn-dark:focus {
 			font-size: 1.15em;
 			font-weight: 500;
 		}
+		
+		h6:after {
+			content: "Clock Out";
+			font-size: 2em;
+			display: block;
+			position: absolute;
+			top: 4em;
+			left: .5em;
+			height: calc(100% - 1.5em);
+			width: calc(100% - 1.5em);
+			background: $primary;
+			transition-duration: .15s;
+			border-radius: 10px;
+			padding: .25em;
+			box-shadow: 0 .25em .75em rgba(0,0,0,.5);
+		}
 
 		hr {
 			margin: .5em 0;
+		}
+	}
+
+	#clock:hover {
+		* {
+			color: white;
+			border-color: white;
+		}
+
+		h6:after {
+			top: 1.85em;
 		}
 	}
 }
