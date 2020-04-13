@@ -248,7 +248,35 @@ class UI {
 						FORM.zip.value = currentObj.zip;
 						FORM.saveButton.innerText = "Update Client";
 
-						// replace Save Button Event Listeners
+						// replace Save Button to clear Event listeners
+						let newSaveButton = FORM.saveButton.cloneNode(true);
+						FORM.saveButton.parentNode.replaceChild(newSaveButton, FORM.saveButton);
+
+						// add client-specific event listener
+						newSaveButton.addEventListener("click", ()=>{
+
+							// find and update client in app CPS model
+							let updatedClient = app.clients[currentObj.id]
+							updatedClient.address = FORM.address.value;
+							updatedClient.city = FORM.city.value;
+							updatedClient.contactName = FORM.contactName.value;
+							updatedClient.country = FORM.country.value;
+							updatedClient.email = FORM.email.value;
+							updatedClient.invoiceFrequency = FORM.invoiceFrequency.value;
+							updatedClient.name = FORM.name.value;
+							updatedClient.notes = FORM.notes.value;
+							updatedClient.phone = FORM.phone.value;
+							updatedClient.rate = FORM.rate.value;
+							updatedClient.state = FORM.state.value;
+							updatedClient.zip = FORM.zip.value;
+							
+							// find and updated client in FireStore
+							app.updateEntry(updatedClient);
+
+							UI.reset();
+							UI.hideMenu();
+							UI.zoom(app, updatedClient.id);
+						})
 
 						
 					} else if (currentObj.type == "project") {
@@ -272,9 +300,28 @@ class UI {
 						FORM.rate.value = currentObj.rate;
 						FORM.saveButton.innerText = "Update Project";
 
-						// disable fields that shouldn't be changed
+						// replace Save Button to clear Event listeners
+						let newSaveButton = FORM.saveButton.cloneNode(true);
+						FORM.saveButton.parentNode.replaceChild(newSaveButton, FORM.saveButton);
 
-						// replace Save Button Event Listeners
+						// add project-specific event listener
+						newSaveButton.addEventListener("click", () => {
+							
+							// find and update project in app CPS Model
+							let updatedProject = app.projects[currentObj.id]
+							updatedProject.clientID = FORM.clientID.value;
+							updatedProject.description = FORM.description.value;
+							updatedProject.name = FORM.name.value;
+							updatedProject.rate = FORM.rate.value;
+
+							// find and updated project in FireStore
+							app.updateEntry(updatedProject);
+
+							UI.reset();
+							UI.hideMenu();
+							UI.zoom(app, updatedProject.id);
+						})
+
 						
 					} else {
 						// type = "session"...
@@ -305,8 +352,55 @@ class UI {
 						FORM.cancelButton.innerText = "Back";
 						FORM.saveButton.innerText = "Update Session";
 
+						// replace Save Button to clear Event listeners
+						let newSaveButton = FORM.saveButton.cloneNode(true);
+						FORM.saveButton.parentNode.replaceChild(newSaveButton, FORM.saveButton);
 
-						// replace Save Button Event Listeners
+						// add session-specific event listener
+						newSaveButton.addEventListener("click", ()=>{
+							// find and update session in app CPS Model
+
+
+
+
+							let newDateIn = FORM.clockInDate.value.split("-");
+							let newTimeIn = FORM.clockInTime.value.split(":");
+							let newDateOut = FORM.clockOutDate.value.split("-");
+							let newTimeOut = FORM.clockOutTime.value.split(":");
+
+							// set date values
+							let newYearIn = newDateIn[0];
+							let newMonthIn = newDateIn[1] - 1;
+							let newDayIn = newDateIn[2];
+							let newYearOut = newDateOut[0];
+							let newMonthOut = newDateOut[1] - 1;
+							let newDayOut = newDateOut[2];
+
+							// set time values
+							let newHoursIn = newTimeIn[0];
+							let newMinsIn = newTimeIn[1];
+							let newHoursOut = newTimeOut[0];
+							let newMinsOut = newTimeOut[1];
+
+							// if so, generate new timestamps with the updated times
+							let newStampIn = new Date(newYearIn, newMonthIn, newDayIn, newHoursIn, newMinsIn, 0, 0);
+							let newStampOut = new Date(newYearOut, newMonthOut, newDayOut, newHoursOut, newMinsOut, 0, 0);
+
+
+
+
+							let updatedSession = app.sessions[currentObj.id]
+							updatedSession.clockIn = newStampIn;
+							updatedSession.clockOut = newStampOut;
+							updatedSession.breaks = FORM.breaks.value;
+
+							// find and updated session in FireStore
+							app.updateEntry(updatedSession);
+
+							UI.reset();
+							UI.hideMenu();
+							UI.zoom(app, updatedSession.id);
+						})
 
 					}
 

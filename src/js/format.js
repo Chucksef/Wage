@@ -20,7 +20,12 @@ class Format {
 
 	static date(timestamp) {
 		if (timestamp) {
-			let date = timestamp.toDate().toString().split(" ");
+			let date;
+			if (timestamp.toDate) {
+				date = timestamp.toDate().toString().split(" ");
+			} else {
+				date = `${timestamp.toDateString()} ${timestamp.toTimeString()}`.split(" ");
+			}
 			return `${date[0]}, ${date[1]} ${date[2]}, ${date[3]}`;
 		} else {
 			return "Active";
@@ -28,12 +33,22 @@ class Format {
 	}
 
 	static dateForInput(timestamp) {
-		let date = timestamp.toDate().toString().split(" ");
+		let date;
+		if (timestamp.toDate) {
+			date = timestamp.toDate().toString().split(" ");
+		} else {
+			date = `${timestamp.toDateString()} ${timestamp.toTimeString()}`.split(" ");
+		}
 		return `${date[3]}-${Format.getMonthNumber(date[1])}-${date[2]}`;
 	}
 
 	static timeForInput(timestamp) {
-		let time = timestamp.toDate().toString().split(" ")[4].split(":");
+		let time;
+		if (timestamp.toDate) {
+			time = timestamp.toDate().toString().split(" ")[4].split(":");
+		} else {
+			time = `${timestamp.toDateString()} ${timestamp.toTimeString()}`.split(" ")[4].split(":");
+		}
 		let hours = parseInt(time[0]);
 		let minutes = time[1];
 		return `${hours}:${minutes}`;
@@ -56,7 +71,12 @@ class Format {
 
 	static time(timestamp) {
 		if (timestamp) {
-			let time = timestamp.toDate().toString().split(" ")[4].split(":");
+			let time;
+			if(timestamp.toDate) {
+				time = timestamp.toDate().toString().split(" ")[4].split(":");
+			} else {
+				time = `${timestamp.toDateString()} ${timestamp.toTimeString()}`.split(" ")[4].split(":");
+			}
 			let hours = parseInt(time[0]);
 			let minutes = time[1];
 			let ampm = "AM";

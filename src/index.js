@@ -616,6 +616,46 @@ class App {
 		// get the object tied to the currentKey
 		// delete the object
 	}
+
+	updateEntry(object) {
+		switch (object.type) {
+			case "client":
+				db.collection("Clients").doc(object.id).update({
+					Address: object.address,
+					City: object.city,
+					Contact: object.contactName,
+					Country: object.country,
+					Email: object.email,
+					Invoice_Frequency: object.invoiceFrequency,
+					Name: object.name,
+					Notes: object.notes,
+					Phone: object.phone,
+					Rate: object.rate,
+					State: object.state,
+					Zip: object.zip,
+				})
+				break;
+		
+			case "project":
+				case "client":
+				db.collection("Projects").doc(object.id).update({
+					Client_ID: object.clientID,
+					Description: object.description,
+					Name: object.name,
+					Rate: object.rate,
+				})
+				break;
+			
+			case "session":
+				case "client":
+				db.collection("Sessions").doc(object.id).update({
+					Breaks: object.breaks,
+					Clock_In: object.clockIn,
+					Clock_Out: object.clockOut,
+				})
+				break;
+		}
+	}
 }
 
 new App("chucksef@gmail.com");

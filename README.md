@@ -28,14 +28,13 @@ At the current stage of development (planning), we can anticipate that it would 
     * Firestore DB
     * Firebase Auth
   * Webpack
-  * No JS or CSS frameworks used whatsoever
+  * No JS or CSS frameworks used
   * Google Fonts & Material Icons
-  * Custom PNGs and SVGs created by me.
+  * Custom PNGs and SVGs created by me
 
 ## Current TODO List
 
-  * Update Entries
-  * Make Entry dot Menu Easier to Use
+  * Make Edit and Delete buttons larger
   * Replace back/submit buttons on forms with Icon buttons
   * Clocking In doesn't add an "Active" entry to the project
   * Clocking Out (or discarding) doesn't remove an "Active" entry from the project
