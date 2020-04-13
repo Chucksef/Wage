@@ -203,7 +203,117 @@ class UI {
 				editButton.innerText = "edit";
 				this.insertAdjacentElement("afterbegin", editButton);
 				editButton.addEventListener("click", () => {
-					alert("editing this item");
+					
+					/*
+					SHOW ENTRY EDIT MENU
+					*/
+
+					let FORM;
+					
+					// find out what kind of item this is...
+					if (currentObj.type == "client") {
+						UI.menu(app, TEMPLATES.menus.client);
+
+						// grab all the client form fields
+						FORM = {
+							title: document.querySelector(".menu h1"),
+							address: document.querySelector("#client-address"),
+							city: document.querySelector("#client-city"),
+							contactName: document.querySelector("#client-contact"),
+							country: document.querySelector("#client-country"),
+							email: document.querySelector("#client-email"),
+							invoiceFrequency: document.querySelector("#client-frequency"),
+							name: document.querySelector("#client-name"),
+							notes: document.querySelector("#client-notes"),
+							phone: document.querySelector("#client-phone"),
+							rate: document.querySelector("#client-rate"),
+							state: document.querySelector("#client-state"),
+							zip: document.querySelector("#client-zip"),
+							saveButton: document.querySelector("#submit"),
+						}
+
+						// set the form's fields to match currentObj's properties
+						FORM.title.innerText = "Edit Client";
+						FORM.address.value = currentObj.address;
+						FORM.city.value = currentObj.city;
+						FORM.contactName.value = currentObj.contactName;
+						FORM.country.value = currentObj.country;
+						FORM.email.value = currentObj.email;
+						FORM.invoiceFrequency.value = currentObj.invoiceFrequency;
+						FORM.name.value = currentObj.name;
+						FORM.notes.value = currentObj.notes;
+						FORM.phone.value = currentObj.phone;
+						FORM.rate.value = currentObj.rate;
+						FORM.state.value = currentObj.state;
+						FORM.zip.value = currentObj.zip;
+						FORM.saveButton.innerText = "Update Client";
+
+						// replace Save Button Event Listeners
+
+						
+					} else if (currentObj.type == "project") {
+						UI.menu(app, TEMPLATES.menus.project);
+						
+						// grab all the client form fields
+						FORM = {
+							title: document.querySelector(".menu h1"),
+							clientID: document.querySelector("#client-ID"),
+							description: document.querySelector("#project-description"),
+							name: document.querySelector("#project-name"),
+							rate: document.querySelector("#project-rate"),
+							saveButton: document.querySelector("#submit"),
+						}
+
+						// set the form's fields to match currentObj's properties
+						FORM.title.innerText = "Edit Project";
+						FORM.clientID.value = currentObj.clientID;
+						FORM.description.value = currentObj.description;
+						FORM.name.value = currentObj.name;
+						FORM.rate.value = currentObj.rate;
+						FORM.saveButton.innerText = "Update Project";
+
+						// disable fields that shouldn't be changed
+
+						// replace Save Button Event Listeners
+						
+					} else {
+						// type = "session"...
+						UI.menu(app, TEMPLATES.menus.session);
+
+						// grab all the client form fields
+						FORM = {
+							title: document.querySelector(".menu h1"),
+							clientName: document.querySelector(".menu h3"),
+							projectName: document.querySelector(".menu h5"),
+							breaks: document.querySelector("#session-breaks"),
+							clockInDate: document.querySelector("#session-clockInDate"),
+							clockInTime: document.querySelector("#session-clockInTime"),
+							clockOutDate: document.querySelector("#session-clockOutDate"),
+							clockOutTime: document.querySelector("#session-clockOutTime"),
+							cancelButton: document.querySelector("#cancel"),
+							saveButton: document.querySelector("#submit"),
+						}
+
+						FORM.title.innerText = "Edit Session";
+						FORM.clientName.innerText = currentObj.clientName;
+						FORM.projectName.innerText = currentObj.projectName;
+						FORM.breaks.value = currentObj.breaks;
+						FORM.clockInDate.value = Format.dateForInput(currentObj.clockIn);
+						FORM.clockInTime.value = Format.timeForInput(currentObj.clockIn);
+						FORM.clockOutDate.value = Format.dateForInput(currentObj.clockOut);
+						FORM.clockOutTime.value = Format.timeForInput(currentObj.clockOut);
+						FORM.cancelButton.innerText = "Back";
+						FORM.saveButton.innerText = "Update Session";
+
+
+						// replace Save Button Event Listeners
+
+					}
+
+					setTimeout(()=>{
+						console.log("");
+					}, 1000);
+					
 				});
 			}
 			// hide the controls
@@ -227,6 +337,7 @@ class UI {
 		let type = template.split(">")[0].trim();
 		type = type.substr(4, type.length - 6);
 
+		// populate the select client menu
 		if (type == "PROJECT") {
 			let clientDD = document.querySelector("#client-ID");
 			let appClients = Object.keys(app.clients);
@@ -245,10 +356,14 @@ class UI {
 			option.selected = true;
 			option.innerText = "Select Client";
 			clientDD.insertAdjacentElement("beforeend", option);
+		} else if (type == "SESSION") {
+			document.querySelector("#cancel").addEventListener("click", () => {
+				UI.reset();
+				UI.display(app, app.clients);
+			})
 		}
 
 		// add event listener to the freshly-generated back button
-
 		let backButton = document.querySelector("#back");
 		if (backButton) {
 			backButton.addEventListener("click", () => {
@@ -259,8 +374,10 @@ class UI {
 
 		// add event listener to the freshly-generated submit button
 		document.querySelector("#submit").addEventListener("click", () => {
+
 			// if the form is for a client...
 			if (type == "CLIENT") {
+
 				// grab and store form values
 				const FORM = {
 					clientName: document.querySelector("#client-name"),
@@ -313,6 +430,7 @@ class UI {
 					UI.reset();
 					UI.display(app, app.clients);
 				}
+
 			} else if (type == "PROJECT") {
 				const FORM = {
 					projectName: document.querySelector("#project-name"),

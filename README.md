@@ -36,6 +36,7 @@ At the current stage of development (planning), we can anticipate that it would 
 
   * Update Entries
   * Make Entry dot Menu Easier to Use
+  * Replace back/submit buttons on forms with Icon buttons
   * Clocking In doesn't add an "Active" entry to the project
   * Clocking Out (or discarding) doesn't remove an "Active" entry from the project
   * Make it impossible to edit or delete an "Active" entry.

@@ -115,8 +115,8 @@ const TEMPLATES = {
 				</div>
 				<h6>Breaks (hours)</h6>
 				<input type="number" id="session-breaks" placeholder="0 (hours)">
-				<button type="button" class="btn-block" id="cancel">Discard Session</button>
 				<button type="button" class="btn-block" id="submit">Save Session</button>
+				<button type="button" class="btn-block" id="cancel">Discard Session</button>
 			</div>
 		`,
 
