@@ -390,6 +390,11 @@ class UI {
 		menu.innerHTML = template;
 
 		DOM.body.insertAdjacentElement("beforeend", menu);
+
+		// add a hideMenu() eventListener to the modal backgroun
+		menu.addEventListener("click", ()=>{
+			UI.hideMenu();
+		})
 		
 		// grab the form type
 		let type = template.split(">")[0].trim();
@@ -425,8 +430,7 @@ class UI {
 		let backButton = document.querySelector("#back");
 		if (backButton) {
 			backButton.addEventListener("click", () => {
-				UI.reset();
-				UI.display(app, app.clients);
+				UI.hideMenu();
 			});
 		}
 
@@ -569,17 +573,13 @@ class UI {
 			UI.menu(app, TEMPLATES.menus.project);
 		});
 
-		// // Add Event listeners to Highlight clicked Filter Buttons
-		// DOM.filters.addEventListener("click", function(e) {
-		// 	let target = e.target;
-		// 	if (target.tagName == "BUTTON") {
-		// 		let buttons = DOM.filters.querySelectorAll("button");
-		// 		buttons.forEach((button) => {
-		// 			button.classList.remove("selected");
-		// 		});
-		// 		target.classList.add("selected");
-		// 	}
-		// });
+		window.addEventListener("keydown", (e)=>{
+			if(e.code == "Escape") {
+				if(document.querySelector("#modal")) {
+					UI.hideMenu();
+				}
+			}
+		})
 	}
 
 	static showClock(app, session, speed, delay) {
