@@ -5,8 +5,8 @@
 
 $primary: #ff80a2;
 $secondary: #f8c6d4;
-$light-control: #8bd8d4;
-$dark-control: #51807d;
+$lightControl: #8bd8d4;
+$darkControl: #51807d;
 $entry: #ffffff;
 $light: #fff1f1;
 $dark: #615858;
@@ -104,8 +104,8 @@ h6 {
 /* BUTTONS */
 
 button {
-	color: $light-control;
-	border: 1px solid $light-control;
+	color: $lightControl;
+	border: 1px solid $lightControl;
 	background: rgba(0, 0, 0, 0);
 	border-radius: 10px;
 	font-weight: 300;
@@ -118,8 +118,8 @@ button {
 }
 
 button.btn-dark {
-	color: $dark-control;
-	border-color: $dark-control;
+	color: $darkControl;
+	border-color: $darkControl;
 }
 
 button.btn-block {
@@ -129,8 +129,8 @@ button.btn-block {
 }
 
 #filters button.selected {
-	background: $light-control;
-	border-color: $light-control;
+	background: $lightControl;
+	border-color: $lightControl;
 	color: $entry;
 }
 
@@ -149,12 +149,12 @@ button.btn-inline {
 
 button:hover {
 	color: $dark;
-	background: $light-control;
+	background: $lightControl;
 }
 
 button.btn-dark:hover {
 	color: $light;
-	background: $dark-control;
+	background: $darkControl;
 }
 
 button:focus {
@@ -210,8 +210,8 @@ button.btn-dark:focus {
 
 		* {
 			margin: 0;
-			color: $light-control;
-			border-color: $light-control;
+			color: $lightControl;
+			border-color: $lightControl;
 		}
 
 		h3 {
@@ -236,7 +236,7 @@ button.btn-dark:focus {
 			height: calc(100% - 1.5em);
 			width: calc(100% - 1.5em);
 			color: white;
-			background: $dark-control;
+			background: $darkControl;
 			transition-duration: .15s;
 			border-radius: 10px;
 			padding: .25em;
@@ -272,19 +272,19 @@ button.btn-icon {
 
 		.st0 {
 			fill: none;
-			stroke: $dark-control;
+			stroke: $darkControl;
 			stroke-width: 10;
 			stroke-miterlimit: 10;
 		}
 		.st1 {
-			fill: $dark-control;
-			stroke: $dark-control;
+			fill: $darkControl;
+			stroke: $darkControl;
 			stroke-width: 10;
 			stroke-miterlimit: 10;
 		}
 		.st2 {
-			fill: $dark-control;
-			stroke: $dark-control;
+			fill: $darkControl;
+			stroke: $darkControl;
 			stroke-width: 10;
 			stroke-miterlimit: 10;
 		}
@@ -407,7 +407,7 @@ button.btn-icon:focus {
 
 	* {
 		text-align: center;
-		color: $dark-control;
+		color: $darkControl;
 		margin: 0;
 		margin-bottom: .1em;
 		$entry-space: nowrap;
@@ -432,15 +432,15 @@ button.btn-icon:focus {
 	div.data-block.first-block .tag {
 		content: '\2807';
 		text-align: center;
-		color: $dark-control;
+		color: $darkControl;
 		position: absolute;
 		left: 0.5em;
 		width: 1em;
 		height: 2em;
-		// border: .75px solid $light-control;
+		// border: .75px solid $lightControl;
 		border-radius: 5px;
 		transition: .15s;
-		background-image: radial-gradient(circle, $light-control 2px, transparent 2.5px);
+		background-image: radial-gradient(circle, $lightControl 2px, transparent 2.5px);
 		background-size: 100% 33.333%;
 
 		#delete-button,
@@ -455,7 +455,7 @@ button.btn-icon:focus {
 		#delete-button:hover,
 		#edit-button:hover {
 			color: white;
-			background: $dark-control;
+			background: $darkControl;
 		}
 	}
 
@@ -468,7 +468,7 @@ button.btn-icon:focus {
 		width: 100px;
 		height: calc(88px - 1em);
 		color: white;
-		background: $light-control;
+		background: $lightControl;
 		box-shadow: 0 0 10px rgba(0, 0, 0, .5);
 	}
 
@@ -562,7 +562,7 @@ button.btn-icon:focus {
 		text-align: center;
 		display: flex;
 		flex-direction: column;
-		padding: 2em;
+		padding: 1.5em;
 		width: 38.2%;
 		min-width: 25em;
 		border-radius: 10px;
@@ -576,6 +576,8 @@ button.btn-icon:focus {
 		* {
 			margin: 0;
 			padding: 0;
+			color: white;
+			border: none;
 		}
 
 		.row {
@@ -593,15 +595,43 @@ button.btn-icon:focus {
 				padding: 0;
 			}
 		}
-		
-		* {
-			color: white;
-			border: none;
-			margin-bottom: .25em;
+
+		.buttonRow {
+			display: flex;
+			justify-content: center;
+			
+			.buttons {
+				display: flex;
+				justify-content: center;
+				flex-direction: row-reverse;
+				margin: .5em 0 0;
+				padding: 0;
+				background: white;
+				border-radius: .5em;
+				padding: .5em 0;
+				box-shadow: 0 .25em .5em rgba(0,0,0,.15);
+	
+				button.btn-menu {
+					margin: 0 .25em;
+					font-size: 2em;
+					color: $lightControl;
+					border-color: $lightControl;
+				}
+	
+				button.btn-menu:hover {
+					background: $lightControl;
+					color: white;
+				}
+
+				button.btn-menu:focus {
+					border: 3px solid #8bd8d4;
+					margin: calc(0px - 2px) calc(.25em - 2px);
+				}	
+			}
 		}
 		
 		*::selection {
-			background: $light-control;
+			background: $lightControl;
 			color: white;
 		}
 		
@@ -609,23 +639,24 @@ button.btn-icon:focus {
 		textarea,
 		select {
 			padding: .3em .25em;
-			color: $dark-control
+			color: $darkControl;
+			margin: .125em 0;
 		}
 
 		select {
 			padding-left: 0;
-		}
 
-
-		select * {
-			color: $dark-control;
+			* {
+				color: white;
+				background: $lightControl;
+			}
 		}
 
 		input:focus,
 		select:focus,
 		textarea:focus {
-			outline: 2px solid $secondary;
-			outline-offset: 1px;
+			outline: 3px solid $lightControl;
+			outline-offset: -1px;
 		}
 
 		button {
@@ -648,13 +679,17 @@ button.btn-icon:focus {
 		}
 
 		h1 {
-			font-size: 3em;
+			font-size: 2.25em;
+		}
+
+		h3 {
+			font-size: 1.5em;
 		}
 
 		h6 {
-			font-size: 1em;
+			font-size: 1.25em;
+			margin: .2em 0 .1em;
 		}
-
 
 		textarea {
 			min-height: 5em;
@@ -662,9 +697,11 @@ button.btn-icon:focus {
 		}
 
 		hr {
-			border: none;
-			border-top: 1px solid white;
-			margin: .25em 0;
+			border: 1px solid $secondary;
+			height: 4px;
+			background: $secondary;
+			border-radius: 5px;
+			margin: .5em 0;
 		}
 	}
 

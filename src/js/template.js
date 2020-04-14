@@ -51,19 +51,20 @@ const TEMPLATES = {
 			<!--CLIENT-->
 			<div class="menu">
 				<h1>New Client</h1>
+				<hr>
+				<h6>Client Info</h6>
 				<input type="text" id="client-name" placeholder="Client Name">
 				<input type="text" id="client-address" placeholder="Address">
 				<input type="text" id="client-city" placeholder="City">
 				<input type="text" id="client-state" placeholder="State">
 				<input type="text" id="client-zip" placeholder="Zip">
 				<input type="text" id="client-country" placeholder="Country">
-				<hr>
+				<textarea id="client-notes" placeholder="Notes"></textarea>
 				<h6>Contact Info</h6>
 				<input type="text" id="client-contact" placeholder="Contact Name">
 				<input type="text" id="client-email" placeholder="Contact Email">
 				<input type="text" id="client-phone" placeholder="Contact Phone">
-				<hr>
-				<h6>Details</h6>
+				<h6>Payment Info</h6>
 				<input type="text" id="client-rate" placeholder="Hourly Rate">
 				<select id="client-frequency">
 					<option value="" selected disabled hidden>Select Invoice Frequency</option>
@@ -71,9 +72,13 @@ const TEMPLATES = {
 					<option value="bi-weekly">Bi-Weekly</option>
 					<option value="monthly">Monthly</option>
 				</select>
-				<textarea id="client-notes" placeholder="Notes"></textarea>
-				<button type="button" class="btn-block" id="submit">Add Client</button>
-				<button type="button" class="btn-block" id="back">Back</button>
+				<hr>
+				<div class="buttonRow">
+					<div class="buttons">
+						<button type="button" class="btn-menu material-icons" id="submit">save</button>
+						<button type="button" class="btn-menu material-icons" id="back">undo</button>
+					</div>
+				</div>
 			</div>
 		`,
 
@@ -81,17 +86,22 @@ const TEMPLATES = {
 			<!--PROJECT-->
 			<div class="menu">
 				<h1>New Project</h1>
-				<input type="text" id="project-name" placeholder="Name">
-				<textarea id="project-description" placeholder="Description"></textarea>
 				<hr>
 				<h6>Client</h6>
 				<select id="client-ID">
 				</select>
-				<hr>
 				<h6>Details</h6>
-				<input type="text" id="project-rate" placeholder="Project Hourly Rate">
-				<button type="button" class="btn-block" id="submit">Add Project</button>
-				<button type="button" class="btn-block" id="back">Back</button>
+				<input type="text" id="project-name" placeholder="Name">
+				<textarea id="project-description" placeholder="Description"></textarea>
+				<input type="text" id="project-rate" placeholder="Project Hourly Rate*">
+				<p><small>*Defaults to Client Rate if Left Blank</small></p>
+				<hr>
+				<div class="buttonRow">
+					<div class="buttons">
+						<button type="button" class="btn-menu material-icons" id="submit">save</button>
+						<button type="button" class="btn-menu material-icons" id="back">undo</button>
+					</div>
+				</div>
 			</div>
 		`,
 
@@ -101,6 +111,7 @@ const TEMPLATES = {
 				<h1>Save Session</h1>
 				<h3>%clientName</h3>
 				<h5>%projectName</h5>
+				<hr>
 				<div class="row">
 					<div class="col">
 						<h6>Clock In</h6>
@@ -115,21 +126,33 @@ const TEMPLATES = {
 				</div>
 				<h6>Breaks (hours)</h6>
 				<input type="number" id="session-breaks" placeholder="0 (hours)">
-				<button type="button" class="btn-block" id="submit">Save Session</button>
-				<button type="button" class="btn-block" id="cancel">Discard Session</button>
+				<hr>
+				<div class="buttonRow">
+					<div class="buttons">
+						<button type="button" class="btn-menu material-icons" id="submit">save</button>
+						<button type="button" class="btn-menu material-icons" id="cancel">delete_forever</button>
+						<button type="button" class="btn-menu material-icons" id="back">undo</button>
+					</div>
+				</div>
 			</div>
 		`,
 
 		delete: `
 			<!--DELETE-->
 			<div class="menu">
-				<h3>Delete %type?</h3>
+				<h1>Delete %type?</h1>
+				<hr>
 				<p>Are you sure you want to delete this item?</p>
-				<p><b>WARNING:</b></p>
+				<h3><b>WARNING:</b></h3>
 				<p>Deleting an item cannot be undone, and doing so will</p>
 				<p>also delete any items contained within it!</p>
-				<button type="button" class="btn-block" id="cancel">Cancel</button>
-				<button type="button" class="btn-block" id="submit">Delete</button>
+				<hr>
+				<div class="buttonRow">
+					<div class="buttons">
+						<button type="button" class="btn-menu material-icons" id="submit">delete_forever</button>
+						<button type="button" class="btn-menu material-icons" id="cancel">undo</button>
+					</div>
+				</div>
 			</div>
 		`,
 	},

@@ -246,7 +246,6 @@ class UI {
 						FORM.rate.value = currentObj.rate;
 						FORM.state.value = currentObj.state;
 						FORM.zip.value = currentObj.zip;
-						FORM.saveButton.innerText = "Update Client";
 
 						// replace Save Button to clear Event listeners
 						let newSaveButton = FORM.saveButton.cloneNode(true);
@@ -297,7 +296,6 @@ class UI {
 						FORM.description.value = currentObj.description;
 						FORM.name.value = currentObj.name;
 						FORM.rate.value = currentObj.rate;
-						FORM.saveButton.innerText = "Update Project";
 
 						// replace Save Button to clear Event listeners
 						let newSaveButton = FORM.saveButton.cloneNode(true);
@@ -348,8 +346,6 @@ class UI {
 						FORM.clockInTime.value = Format.timeForInput(currentObj.clockIn);
 						FORM.clockOutDate.value = Format.dateForInput(currentObj.clockOut);
 						FORM.clockOutTime.value = Format.timeForInput(currentObj.clockOut);
-						FORM.cancelButton.innerText = "Back";
-						FORM.saveButton.innerText = "Update Session";
 
 						// replace Save Button to clear Event listeners
 						let newSaveButton = FORM.saveButton.cloneNode(true);
