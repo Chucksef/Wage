@@ -425,17 +425,18 @@ class App {
 		clearInterval(this.timer);
 		this.activeSession = null;
 
+		// hide the clock
 		UI.hideClock();
 
-		let now = firebase.firestore.Timestamp.now();
-
 		// write to the db, creating a timestamp for the Clock_Out property
+		let now = firebase.firestore.Timestamp.now();
 		db.collection("Sessions").doc(id).update({
 			Clock_Out: now,
 		});
 
-		// find the cps object
-		let object = this.getObject(id);
+		// find the CPS model object & its parent project
+		const object = this.getObject(id);
+		const parentObject = this.getObject(object.projectID);
 
 		// set clockout on cps object to timestamp
 		object.clockOut = now;
@@ -446,7 +447,7 @@ class App {
 		template = template.replace(/%projectName/g, object.projectName);
 
 		// show MENU
-		UI.menu(this, template);
+		UI.menu(this, template, false);
 
 		// grab relevant inputs and fill with relevant values
 		let clockInDate = document.querySelector("#session-clockInDate");
@@ -455,7 +456,7 @@ class App {
 		let clockOutTime = document.querySelector("#session-clockOutTime");
 		let breaks = document.querySelector("#session-breaks");
 
-		//
+		// get properly formatted times
 		clockInDate.value = Format.dateForInput(object.clockIn);
 		clockInTime.value = Format.timeForInput(object.clockIn);
 		clockOutDate.value = Format.dateForInput(object.clockOut);
@@ -463,10 +464,7 @@ class App {
 		breaks.value = 0;
 
 		// assign menu event listeners
-		document.querySelector("#cancel").addEventListener("click", (e) => {
-			// stop propagation
-			e.stopPropagation();
-
+		document.querySelector("#cancel").addEventListener("click", () => {
 			// remove the session from the database
 			db.collection("Sessions").doc(id).delete();
 
@@ -478,9 +476,8 @@ class App {
 			this.sessionKeys.splice(idx, 1);
 
 			// remove the session from the project's list of keys
-			const parent = this.getObject(object.projectID);
-			idx = parent.sessionKeys.indexOf(id);
-			parent.sessionKeys.splice(idx, 1);
+			idx = parentObject.sessionKeys.indexOf(id);
+			parentObject.sessionKeys.splice(idx, 1);
 		});
 
 		document.querySelector("#submit").addEventListener("click", () => {

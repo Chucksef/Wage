@@ -408,19 +408,21 @@ class UI {
 		}
 	}
 
-	static menu(app, template) {
+	static menu(app, template, allowBack = true) {
 		let modalBG = document.createElement("div");
 		modalBG.id = "modal";
 		modalBG.innerHTML = template;
 
 		DOM.body.insertAdjacentElement("beforeend", modalBG);
 
-		// add a hideMenu() eventListener to the modal backgroun
-		modalBG.addEventListener("click", (e) => {
-			if (e.target == modalBG) {
-				UI.hideMenu();
-			}
-		});
+		if (allowBack) {
+			// add a hideMenu() eventListener to the modal background
+			modalBG.addEventListener("click", (e) => {
+				if (e.target == modalBG) {
+					UI.hideMenu();
+				}
+			});
+		}
 
 		// grab the form type
 		let type = template.split(">")[0].trim();
@@ -456,9 +458,14 @@ class UI {
 		// add event listener to the freshly-generated back button
 		let backButton = document.querySelector("#back");
 		if (backButton) {
-			backButton.addEventListener("click", () => {
-				UI.hideMenu();
-			});
+			if (allowBack) {
+				// add event listener to the freshly-generated back button
+				document.querySelector("#back").addEventListener("click", () => {
+					UI.hideMenu();
+				});
+			} else {
+				document.querySelector("#back").remove();
+			}
 		}
 
 		// add event listener to the freshly-generated submit button
@@ -594,14 +601,6 @@ class UI {
 		});
 		DOM.btn_NewProject.addEventListener("click", function() {
 			UI.menu(app, TEMPLATES.menus.project);
-		});
-
-		window.addEventListener("keydown", (e) => {
-			if (e.code == "Escape") {
-				if (document.querySelector("#modal")) {
-					UI.hideMenu();
-				}
-			}
 		});
 	}
 
