@@ -33,13 +33,14 @@ At the current stage of development (planning), we can anticipate that it would 
   * Custom PNGs and SVGs created by me
 
 ## Current TODO List
-
-  * Create db loading wait animation
-  * Clock-In/Clock-Out behavior
-    * Clocking In doesn't add an "Active" entry to the project
-    * Clocking Out needs to move to the clock out menu
+  
+  * Clock-In-Out-Behavior
     * Clocking Out (or discarding) doesn't remove an "Active" entry from the project
+    * Clocking Out needs to move to the clock out menu
+  * Session entries shouldn't cause a pointer cursor
+  * Edit/Delete shouldn't propagate to parents
   * Make timer font-size dynamic
   * Implement Users/Login/Etc
+  * Create db loading wait animation
   * Clean up interface (simplify!!!);
   * Entry expansion should look more like drawers opening (all sub-items anchored to bottom of container)

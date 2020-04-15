@@ -50,9 +50,22 @@ class UI {
 
 					// CLICK Clock-In button
 					clock.addEventListener("click", () => {
+						// clock in @ the project
 						let projectID = clock.parentNode.previousSibling.id;
 						app.clockIn(projectID);
+
+						// create and add a new "Active Session" element
+						let activeSess = document.createElement("div");
+						activeSess.classList.add("entry", "active", "trans");
+						activeSess.type = "session";
+						activeSess.innerHTML = "<h4 class='trans'>Active Session</h4>";
+						clock.parentNode.insertAdjacentElement("afterbegin", activeSess);
+
+						// remove the clock-in button
 						clock.remove();
+
+						// transition the new entry
+						activeSess.classList.remove("trans");
 					});
 					clock.innerText = "Clock In";
 
@@ -164,7 +177,12 @@ class UI {
 
 			// delete the tag element if this is THE active session
 			if (app.activeSession == currentObj.id) {
+				// remove the controls to delete/edit
 				tag.remove();
+
+				//remove the second two child-elements
+				entry.classList.add("active");
+				entry.innerHTML = "<div class='inset-border'><h4>Active Session</h4></div>";
 			}
 
 			/*
@@ -421,6 +439,7 @@ class UI {
 			clientDD.insertAdjacentElement("beforeend", option);
 		} else if (type == "SESSION") {
 			document.querySelector("#cancel").addEventListener("click", () => {
+				UI.hideMenu();
 				UI.reset();
 				UI.display(app, app.clients);
 			});

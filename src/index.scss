@@ -225,7 +225,7 @@ button.btn-dark:focus {
 			font-size: 1.15em;
 			font-weight: 500;
 		}
-		
+
 		h6:after {
 			content: "Clock Out";
 			font-size: 2em;
@@ -240,7 +240,7 @@ button.btn-dark:focus {
 			transition-duration: .15s;
 			border-radius: 10px;
 			padding: .25em;
-			box-shadow: 0 .25em .75em rgba(0,0,0,.5);
+			box-shadow: 0 .25em .75em rgba(0, 0, 0, .5);
 		}
 
 		hr {
@@ -477,6 +477,31 @@ button.btn-icon:focus {
 	}
 }
 
+.active {
+	justify-content: center;
+	align-items: center;
+	min-height: 1.75em;
+	cursor: default;
+	padding: .5em;
+	border: 1px solid white;
+	transition: 1.5s;
+
+	h4 {
+		font-size: 2.25em;
+		margin: 0;
+		transition: 1.5s;
+	}
+}
+
+.active.trans {
+	border-color: $lightControl;
+	background: $lightControl;
+
+	h4 {
+		color: white;
+	}
+}
+
 // SELECTED ENTRY & CHILDREN...
 
 .entry.expanded {
@@ -540,7 +565,7 @@ button.btn-icon:focus {
 }
 
 #modal {
-	background: rgba(255,255,255,.8);
+	background: rgba(255, 255, 255, .8);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -571,7 +596,7 @@ button.btn-icon:focus {
 		overflow-y: -moz-scrollbars-none;
 		scrollbar-width: none;
 		-ms-overflow-style: none;
-		box-shadow: 0 2em 10em rgba(0,0,0,.65);
+		box-shadow: 0 2em 10em rgba(0, 0, 0, .65);
 
 		* {
 			margin: 0;
@@ -599,7 +624,7 @@ button.btn-icon:focus {
 		.buttonRow {
 			display: flex;
 			justify-content: center;
-			
+
 			.buttons {
 				display: flex;
 				justify-content: center;
@@ -609,15 +634,15 @@ button.btn-icon:focus {
 				background: white;
 				border-radius: .5em;
 				padding: .5em 0;
-				box-shadow: 0 .25em .5em rgba(0,0,0,.15);
-	
+				box-shadow: 0 .25em .5em rgba(0, 0, 0, .15);
+
 				button.btn-menu {
 					margin: 0 .25em;
 					font-size: 2em;
 					color: $lightControl;
 					border-color: $lightControl;
 				}
-	
+
 				button.btn-menu:hover {
 					background: $lightControl;
 					color: white;
@@ -626,15 +651,15 @@ button.btn-icon:focus {
 				button.btn-menu:focus {
 					border: 3px solid #8bd8d4;
 					margin: calc(0px - 2px) calc(.25em - 2px);
-				}	
+				}
 			}
 		}
-		
+
 		*::selection {
 			background: $lightControl;
 			color: white;
 		}
-		
+
 		input,
 		textarea,
 		select {

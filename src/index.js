@@ -374,9 +374,12 @@ class App {
 	clockIn(id) {
 		// check if already clocked in
 		if (this.activeSession != null) {
-			alert("already clocked in.\n\nPlease clock out of your current project and try again.");
+			let activeProject = this.getObject(id);
+			console.error(
+				`Cannot clock in at Project ${id}. App is already clocked in at Project ${activeProject.id}.`,
+			);
 		} else {
-			// 1) generate session
+			// 1) generate session for DB
 			let activeProject = this.getObject(id);
 			let tempSession = {
 				Breaks: 0,
@@ -388,22 +391,28 @@ class App {
 
 			// 2) save session to model
 			let hash = Hash64.gen(30); // use Hash64 generate a new hash for the session
+			activeProject.sessionKeys.push(hash); // add the session key to the project's list of keys
 			this.sessionKeys.push(hash); // add new session's key to the sessionKeys array
-			this.activeSession = hash;
-			this.sessions[hash] = new Session(tempSession);
+			this.activeSession = hash; // set the active session to this session's id
+			this.sessions[hash] = new Session(tempSession); // add the session to the app's list of all sessions
+
+			//
 			let sess = this.sessions[hash];
 			sess.template = TEMPLATES.entries.session;
 			sess.id = hash;
 			sess.clientName = activeProject.clientName;
 			sess.projectName = activeProject.name;
+			sess.lastAccessed = Number.POSITIVE_INFINITY;
+			sess.type = "session";
+			sess.duration = 0;
 
 			// 3) save session to db
 			db.collection("Sessions").doc(hash).set({
-				Breaks: tempSession.Breaks,
-				Clock_In: tempSession.Clock_In,
-				Clock_Out: tempSession.Clock_Out,
-				Project_ID: tempSession.Project_ID,
-				User_ID: tempSession.User_ID,
+				Breaks: sess.breaks,
+				Clock_In: sess.clockIn,
+				Clock_Out: sess.clockOut,
+				Project_ID: sess.projectID,
+				User_ID: sess.userID,
 			});
 
 			// 4) display running clock
@@ -454,9 +463,21 @@ class App {
 		breaks.value = 0;
 
 		// assign menu event listeners
-		document.querySelector("#cancel").addEventListener("click", function() {
+		document.querySelector("#cancel").addEventListener("click", () => {
+			// remove the session from the database
 			db.collection("Sessions").doc(id).delete();
-			UI.hideMenu();
+
+			// remove the session object from the CPS model
+			delete this.sessions[id];
+
+			// remove the session key from the app's list of session keys
+			let idx = this.sessionKeys.indexOf(id);
+			this.sessionKeys.splice(idx, 1);
+
+			// remove the session from the project's list of keys
+			const parent = this.getObject(object.projectID);
+			idx = parent.sessionKeys.indexOf(id);
+			parent.sessionKeys.splice(idx, 1);
 		});
 
 		document.querySelector("#submit").addEventListener("click", () => {
