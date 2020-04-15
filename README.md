@@ -35,10 +35,8 @@ At the current stage of development (planning), we can anticipate that it would 
 ## Current TODO List
   
   * Clock-In-Out-Behavior
-    * Clocking Out (or discarding) doesn't remove an "Active" entry from the project
     * Clocking Out needs to move to the clock out menu
   * Session entries shouldn't cause a pointer cursor
-  * Edit/Delete shouldn't propagate to parents
   * Make timer font-size dynamic
   * Implement Users/Login/Etc
   * Create db loading wait animation

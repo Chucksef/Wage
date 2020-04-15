@@ -463,7 +463,10 @@ class App {
 		breaks.value = 0;
 
 		// assign menu event listeners
-		document.querySelector("#cancel").addEventListener("click", () => {
+		document.querySelector("#cancel").addEventListener("click", (e) => {
+			// stop propagation
+			e.stopPropagation();
+
 			// remove the session from the database
 			db.collection("Sessions").doc(id).delete();
 

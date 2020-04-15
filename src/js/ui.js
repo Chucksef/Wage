@@ -201,7 +201,10 @@ class UI {
 					deleteButton.classList.add("material-icons");
 					deleteButton.innerText = "delete";
 					this.insertAdjacentElement("afterbegin", deleteButton);
-					deleteButton.addEventListener("click", () => {
+					deleteButton.addEventListener("click", (e) => {
+						// stop propagation
+						e.stopPropagation();
+
 						// show the confirm menu on click
 						// replace the %type with the item type
 						let temp = TEMPLATES.menus.delete.replace(
@@ -226,10 +229,13 @@ class UI {
 					editButton.classList.add("material-icons");
 					editButton.innerText = "edit";
 					this.insertAdjacentElement("afterbegin", editButton);
-					editButton.addEventListener("click", () => {
+					editButton.addEventListener("click", (e) => {
 						/*
 						SHOW ENTRY EDIT MENU...
 						*/
+
+						// stop propagation
+						e.stopPropagation();
 
 						let FORM;
 
@@ -403,15 +409,17 @@ class UI {
 	}
 
 	static menu(app, template) {
-		let menu = document.createElement("div");
-		menu.id = "modal";
-		menu.innerHTML = template;
+		let modalBG = document.createElement("div");
+		modalBG.id = "modal";
+		modalBG.innerHTML = template;
 
-		DOM.body.insertAdjacentElement("beforeend", menu);
+		DOM.body.insertAdjacentElement("beforeend", modalBG);
 
 		// add a hideMenu() eventListener to the modal backgroun
-		menu.addEventListener("click", () => {
-			UI.hideMenu();
+		modalBG.addEventListener("click", (e) => {
+			if (e.target == modalBG) {
+				UI.hideMenu();
+			}
 		});
 
 		// grab the form type
@@ -549,7 +557,7 @@ class UI {
 		});
 
 		// grab the actual menu and some key properties used to animate it...
-		menu = document.querySelector(".menu");
+		let menu = document.querySelector(".menu");
 
 		// calculate the value that will put the menu offscreen...
 		let parHeight = parseFloat(window.getComputedStyle(menu.parentNode).height);
