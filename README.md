@@ -34,9 +34,15 @@ At the current stage of development (planning), we can anticipate that it would 
 
 ## Current TODO List
   
-  * Session entries shouldn't cause a pointer cursor
-  * Make timer font-size dynamic
-  * Implement Users/Login/Etc
-  * Create db loading wait animation
-  * Clean up interface (simplify!!!);
-  * Entry expansion should look more like drawers opening (all sub-items anchored to bottom of container)
+  * Clock Out
+    * Make delete and save session dialog re-calculate properties and zoom to saved session (or parent project)
+
+  * Users
+    * Implement Users/Login/Etc
+
+  * UI
+    * Make timer font-size dynamic
+    * Create db loading wait animation
+    * Create "blank canvas" instructions
+    * Clean up interface (simplify!!!);
+    * Entry expansion should look more like drawers opening (all sub-items anchored to bottom of container)

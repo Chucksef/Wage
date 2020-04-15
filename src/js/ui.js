@@ -175,6 +175,10 @@ class UI {
 			entry.innerHTML = Format.template(app, currentObj);
 			let tag = entry.querySelector(".tag");
 
+			if (entry.type == "session") {
+				entry.classList.add("session");
+			}
+
 			// delete the tag element if this is THE active session
 			if (app.activeSession == currentObj.id) {
 				// remove the controls to delete/edit
