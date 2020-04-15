@@ -34,11 +34,12 @@ At the current stage of development (planning), we can anticipate that it would 
 
 ## Current TODO List
 
-  * Make it impossible to edit or delete an "Active" entry
-  * Make timer font-size dynamic
-  * Clocking In doesn't add an "Active" entry to the project
-  * Clocking Out (or discarding) doesn't remove an "Active" entry from the project
   * Create db loading wait animation
+  * Clock-In/Clock-Out behavior
+    * Clocking In doesn't add an "Active" entry to the project
+    * Clocking Out needs to move to the clock out menu
+    * Clocking Out (or discarding) doesn't remove an "Active" entry from the project
+  * Make timer font-size dynamic
   * Implement Users/Login/Etc
   * Clean up interface (simplify!!!);
   * Entry expansion should look more like drawers opening (all sub-items anchored to bottom of container)

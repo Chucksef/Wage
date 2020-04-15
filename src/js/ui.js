@@ -162,224 +162,224 @@ class UI {
 			entry.innerHTML = Format.template(app, currentObj);
 			let tag = entry.querySelector(".tag");
 
+			// delete the tag element if this is THE active session
+			if (app.activeSession == currentObj.id) {
+				tag.remove();
+			}
+
 			/*
-			ADD TAG CONTROL ELEMENTS
+			ADD TAG CONTROL ELEMENTS IF THERE'S STILL A TAG ELEMENT
 			*/
 
-			tag.addEventListener("mouseenter", showControls, false);
-			tag.addEventListener("mouseleave", hideControls, false);
-			UI.addEntry(app, entry, target);
-			// show the controls
-			function showControls() {
-				// add the delete button
-				let deleteButton = document.createElement("button");
-				deleteButton.id = "delete-button";
-				deleteButton.classList.add("material-icons");
-				deleteButton.innerText = "delete";
-				this.insertAdjacentElement("afterbegin", deleteButton);
-				deleteButton.addEventListener("click", () => {
-					// show the confirm menu on click
-					// replace the %type with the item type
-					let temp = TEMPLATES.menus.delete.replace(
-						/%type/g,
-						currentObj.type.charAt(0).toUpperCase() + currentObj.type.slice(1),
-					);
+			if (tag) {
+				tag.addEventListener("mouseenter", showControls, false);
+				tag.addEventListener("mouseleave", hideControls, false);
+				UI.addEntry(app, entry, target);
+				// show the controls
+				function showControls() {
+					// add the delete button
+					let deleteButton = document.createElement("button");
+					deleteButton.id = "delete-button";
+					deleteButton.classList.add("material-icons");
+					deleteButton.innerText = "delete";
+					this.insertAdjacentElement("afterbegin", deleteButton);
+					deleteButton.addEventListener("click", () => {
+						// show the confirm menu on click
+						// replace the %type with the item type
+						let temp = TEMPLATES.menus.delete.replace(
+							/%type/g,
+							currentObj.type.charAt(0).toUpperCase() + currentObj.type.slice(1),
+						);
 
-					UI.menu(app, temp);
-					// add functionality to the menu buttons
-					document.querySelector("#cancel").addEventListener("click", () => {
-						UI.hideMenu();
+						UI.menu(app, temp);
+						// add functionality to the menu buttons
+						document.querySelector("#cancel").addEventListener("click", () => {
+							UI.hideMenu();
+						});
+						document.querySelector("#submit").addEventListener("click", () => {
+							UI.hideMenu();
+							app.deleteItem(currentObj);
+						});
 					});
-					document.querySelector("#submit").addEventListener("click", () => {
-						UI.hideMenu();
-						app.deleteItem(currentObj);
+
+					// add the edit button
+					let editButton = document.createElement("button");
+					editButton.id = "edit-button";
+					editButton.classList.add("material-icons");
+					editButton.innerText = "edit";
+					this.insertAdjacentElement("afterbegin", editButton);
+					editButton.addEventListener("click", () => {
+						/*
+						SHOW ENTRY EDIT MENU...
+						*/
+
+						let FORM;
+
+						// find out what kind of item this is...
+						if (currentObj.type == "client") {
+							UI.menu(app, TEMPLATES.menus.client);
+
+							// grab all the client form fields
+							FORM = {
+								title: document.querySelector(".menu h1"),
+								address: document.querySelector("#client-address"),
+								city: document.querySelector("#client-city"),
+								contactName: document.querySelector("#client-contact"),
+								country: document.querySelector("#client-country"),
+								email: document.querySelector("#client-email"),
+								invoiceFrequency: document.querySelector("#client-frequency"),
+								name: document.querySelector("#client-name"),
+								notes: document.querySelector("#client-notes"),
+								phone: document.querySelector("#client-phone"),
+								rate: document.querySelector("#client-rate"),
+								state: document.querySelector("#client-state"),
+								zip: document.querySelector("#client-zip"),
+								saveButton: document.querySelector("#submit"),
+							};
+
+							// set the form's fields to match currentObj's properties
+							FORM.title.innerText = "Edit Client";
+							FORM.address.value = currentObj.address;
+							FORM.city.value = currentObj.city;
+							FORM.contactName.value = currentObj.contactName;
+							FORM.country.value = currentObj.country;
+							FORM.email.value = currentObj.email;
+							FORM.invoiceFrequency.value = currentObj.invoiceFrequency;
+							FORM.name.value = currentObj.name;
+							FORM.notes.value = currentObj.notes;
+							FORM.phone.value = currentObj.phone;
+							FORM.rate.value = currentObj.rate;
+							FORM.state.value = currentObj.state;
+							FORM.zip.value = currentObj.zip;
+
+							// replace Save Button to clear Event listeners
+							let newSaveButton = FORM.saveButton.cloneNode(true);
+							FORM.saveButton.parentNode.replaceChild(newSaveButton, FORM.saveButton);
+
+							// add client-specific event listener
+							newSaveButton.addEventListener("click", () => {
+								// find and update client in app CPS model
+								let updatedClient = app.clients[currentObj.id];
+								updatedClient.address = FORM.address.value;
+								updatedClient.city = FORM.city.value;
+								updatedClient.contactName = FORM.contactName.value;
+								updatedClient.country = FORM.country.value;
+								updatedClient.email = FORM.email.value;
+								updatedClient.invoiceFrequency = FORM.invoiceFrequency.value;
+								updatedClient.name = FORM.name.value;
+								updatedClient.notes = FORM.notes.value;
+								updatedClient.phone = FORM.phone.value;
+								updatedClient.rate = FORM.rate.value;
+								updatedClient.state = FORM.state.value;
+								updatedClient.zip = FORM.zip.value;
+
+								// find and updated client in FireStore
+								app.updateEntry(updatedClient);
+
+								UI.reset();
+								UI.hideMenu();
+								UI.zoom(app, updatedClient.id);
+							});
+						} else if (currentObj.type == "project") {
+							UI.menu(app, TEMPLATES.menus.project);
+
+							// grab all the client form fields
+							FORM = {
+								title: document.querySelector(".menu h1"),
+								clientID: document.querySelector("#client-ID"),
+								description: document.querySelector("#project-description"),
+								name: document.querySelector("#project-name"),
+								rate: document.querySelector("#project-rate"),
+								saveButton: document.querySelector("#submit"),
+							};
+
+							// set the form's fields to match currentObj's properties
+							FORM.title.innerText = "Edit Project";
+							FORM.clientID.value = currentObj.clientID;
+							FORM.description.value = currentObj.description;
+							FORM.name.value = currentObj.name;
+							FORM.rate.value = currentObj.rate;
+
+							// replace Save Button to clear Event listeners
+							let newSaveButton = FORM.saveButton.cloneNode(true);
+							FORM.saveButton.parentNode.replaceChild(newSaveButton, FORM.saveButton);
+
+							// add project-specific event listener
+							newSaveButton.addEventListener("click", () => {
+								// find and update project in app CPS Model
+								let updatedProject = app.projects[currentObj.id];
+								updatedProject.clientID = FORM.clientID.value;
+								updatedProject.description = FORM.description.value;
+								updatedProject.name = FORM.name.value;
+								updatedProject.rate = FORM.rate.value;
+
+								// find and updated project in FireStore
+								app.updateEntry(updatedProject);
+
+								UI.reset();
+								UI.hideMenu();
+								UI.zoom(app, updatedProject.id);
+							});
+						} else {
+							// type = "session"...
+							UI.menu(app, TEMPLATES.menus.session);
+
+							// grab all the client form fields
+							FORM = {
+								title: document.querySelector(".menu h1"),
+								clientName: document.querySelector(".menu h3"),
+								projectName: document.querySelector(".menu h5"),
+								breaks: document.querySelector("#session-breaks"),
+								clockInDate: document.querySelector("#session-clockInDate"),
+								clockInTime: document.querySelector("#session-clockInTime"),
+								clockOutDate: document.querySelector("#session-clockOutDate"),
+								clockOutTime: document.querySelector("#session-clockOutTime"),
+								cancelButton: document.querySelector("#cancel"),
+								saveButton: document.querySelector("#submit"),
+							};
+
+							FORM.title.innerText = "Edit Session";
+							FORM.clientName.innerText = currentObj.clientName;
+							FORM.projectName.innerText = currentObj.projectName;
+							FORM.breaks.value = currentObj.breaks;
+							FORM.clockInDate.value = Format.dateForInput(currentObj.clockIn);
+							FORM.clockInTime.value = Format.timeForInput(currentObj.clockIn);
+							FORM.clockOutDate.value = Format.dateForInput(currentObj.clockOut);
+							FORM.clockOutTime.value = Format.timeForInput(currentObj.clockOut);
+
+							// replace Save Button to clear Event listeners
+							let newSaveButton = FORM.saveButton.cloneNode(true);
+							FORM.saveButton.parentNode.replaceChild(newSaveButton, FORM.saveButton);
+
+							// add session-specific event listener
+							newSaveButton.addEventListener("click", () => {
+								// generate new timestamps
+								let newStampIn = Format.getTimestamp(FORM.clockInDate.value, FORM.clockInTime.value);
+								let newStampOut = Format.getTimestamp(FORM.clockOutDate.value, FORM.clockOutTime.value);
+
+								// find and update session in app CPS Model
+								let updatedSession = app.sessions[currentObj.id];
+								updatedSession.clockIn = newStampIn;
+								updatedSession.clockOut = newStampOut;
+								updatedSession.breaks = FORM.breaks.value;
+
+								// find and updated session in FireStore
+								app.updateEntry(updatedSession);
+
+								UI.reset();
+								UI.hideMenu();
+								UI.zoom(app, updatedSession.id);
+							});
+						}
 					});
-				});
-
-				// add the edit button
-				let editButton = document.createElement("button");
-				editButton.id = "edit-button";
-				editButton.classList.add("material-icons");
-				editButton.innerText = "edit";
-				this.insertAdjacentElement("afterbegin", editButton);
-				editButton.addEventListener("click", () => {
-					
-					/*
-					SHOW ENTRY EDIT MENU...
-					*/
-
-					let FORM;
-					
-					// find out what kind of item this is...
-					if (currentObj.type == "client") {
-						UI.menu(app, TEMPLATES.menus.client);
-
-						// grab all the client form fields
-						FORM = {
-							title: document.querySelector(".menu h1"),
-							address: document.querySelector("#client-address"),
-							city: document.querySelector("#client-city"),
-							contactName: document.querySelector("#client-contact"),
-							country: document.querySelector("#client-country"),
-							email: document.querySelector("#client-email"),
-							invoiceFrequency: document.querySelector("#client-frequency"),
-							name: document.querySelector("#client-name"),
-							notes: document.querySelector("#client-notes"),
-							phone: document.querySelector("#client-phone"),
-							rate: document.querySelector("#client-rate"),
-							state: document.querySelector("#client-state"),
-							zip: document.querySelector("#client-zip"),
-							saveButton: document.querySelector("#submit"),
-						}
-
-						// set the form's fields to match currentObj's properties
-						FORM.title.innerText = "Edit Client";
-						FORM.address.value = currentObj.address;
-						FORM.city.value = currentObj.city;
-						FORM.contactName.value = currentObj.contactName;
-						FORM.country.value = currentObj.country;
-						FORM.email.value = currentObj.email;
-						FORM.invoiceFrequency.value = currentObj.invoiceFrequency;
-						FORM.name.value = currentObj.name;
-						FORM.notes.value = currentObj.notes;
-						FORM.phone.value = currentObj.phone;
-						FORM.rate.value = currentObj.rate;
-						FORM.state.value = currentObj.state;
-						FORM.zip.value = currentObj.zip;
-
-						// replace Save Button to clear Event listeners
-						let newSaveButton = FORM.saveButton.cloneNode(true);
-						FORM.saveButton.parentNode.replaceChild(newSaveButton, FORM.saveButton);
-
-						// add client-specific event listener
-						newSaveButton.addEventListener("click", ()=>{
-
-							// find and update client in app CPS model
-							let updatedClient = app.clients[currentObj.id]
-							updatedClient.address = FORM.address.value;
-							updatedClient.city = FORM.city.value;
-							updatedClient.contactName = FORM.contactName.value;
-							updatedClient.country = FORM.country.value;
-							updatedClient.email = FORM.email.value;
-							updatedClient.invoiceFrequency = FORM.invoiceFrequency.value;
-							updatedClient.name = FORM.name.value;
-							updatedClient.notes = FORM.notes.value;
-							updatedClient.phone = FORM.phone.value;
-							updatedClient.rate = FORM.rate.value;
-							updatedClient.state = FORM.state.value;
-							updatedClient.zip = FORM.zip.value;
-							
-							// find and updated client in FireStore
-							app.updateEntry(updatedClient);
-
-							UI.reset();
-							UI.hideMenu();
-							UI.zoom(app, updatedClient.id);
-						})
-						
-					} else if (currentObj.type == "project") {
-						UI.menu(app, TEMPLATES.menus.project);
-						
-						// grab all the client form fields
-						FORM = {
-							title: document.querySelector(".menu h1"),
-							clientID: document.querySelector("#client-ID"),
-							description: document.querySelector("#project-description"),
-							name: document.querySelector("#project-name"),
-							rate: document.querySelector("#project-rate"),
-							saveButton: document.querySelector("#submit"),
-						}
-
-						// set the form's fields to match currentObj's properties
-						FORM.title.innerText = "Edit Project";
-						FORM.clientID.value = currentObj.clientID;
-						FORM.description.value = currentObj.description;
-						FORM.name.value = currentObj.name;
-						FORM.rate.value = currentObj.rate;
-
-						// replace Save Button to clear Event listeners
-						let newSaveButton = FORM.saveButton.cloneNode(true);
-						FORM.saveButton.parentNode.replaceChild(newSaveButton, FORM.saveButton);
-
-						// add project-specific event listener
-						newSaveButton.addEventListener("click", () => {
-							
-							// find and update project in app CPS Model
-							let updatedProject = app.projects[currentObj.id]
-							updatedProject.clientID = FORM.clientID.value;
-							updatedProject.description = FORM.description.value;
-							updatedProject.name = FORM.name.value;
-							updatedProject.rate = FORM.rate.value;
-
-							// find and updated project in FireStore
-							app.updateEntry(updatedProject);
-
-							UI.reset();
-							UI.hideMenu();
-							UI.zoom(app, updatedProject.id);
-						})
-
-						
-					} else {
-						// type = "session"...
-						UI.menu(app, TEMPLATES.menus.session);
-
-						// grab all the client form fields
-						FORM = {
-							title: document.querySelector(".menu h1"),
-							clientName: document.querySelector(".menu h3"),
-							projectName: document.querySelector(".menu h5"),
-							breaks: document.querySelector("#session-breaks"),
-							clockInDate: document.querySelector("#session-clockInDate"),
-							clockInTime: document.querySelector("#session-clockInTime"),
-							clockOutDate: document.querySelector("#session-clockOutDate"),
-							clockOutTime: document.querySelector("#session-clockOutTime"),
-							cancelButton: document.querySelector("#cancel"),
-							saveButton: document.querySelector("#submit"),
-						}
-
-						FORM.title.innerText = "Edit Session";
-						FORM.clientName.innerText = currentObj.clientName;
-						FORM.projectName.innerText = currentObj.projectName;
-						FORM.breaks.value = currentObj.breaks;
-						FORM.clockInDate.value = Format.dateForInput(currentObj.clockIn);
-						FORM.clockInTime.value = Format.timeForInput(currentObj.clockIn);
-						FORM.clockOutDate.value = Format.dateForInput(currentObj.clockOut);
-						FORM.clockOutTime.value = Format.timeForInput(currentObj.clockOut);
-
-						// replace Save Button to clear Event listeners
-						let newSaveButton = FORM.saveButton.cloneNode(true);
-						FORM.saveButton.parentNode.replaceChild(newSaveButton, FORM.saveButton);
-
-						// add session-specific event listener
-						newSaveButton.addEventListener("click", ()=>{
-							
-							// generate new timestamps
-							let newStampIn = Format.getTimestamp(FORM.clockInDate.value, FORM.clockInTime.value);
-							let newStampOut = Format.getTimestamp(FORM.clockOutDate.value, FORM.clockOutTime.value);
-							
-							// find and update session in app CPS Model
-							let updatedSession = app.sessions[currentObj.id]
-							updatedSession.clockIn = newStampIn;
-							updatedSession.clockOut = newStampOut;
-							updatedSession.breaks = FORM.breaks.value;
-
-							// find and updated session in FireStore
-							app.updateEntry(updatedSession);
-
-							UI.reset();
-							UI.hideMenu();
-							UI.zoom(app, updatedSession.id);
-						})
-					}
-				});
-			}
-			// hide the controls
-			function hideControls() {
-				let deleteButton = this.querySelector("#delete-button");
-				let editButton = this.querySelector("#edit-button");
-				deleteButton.remove();
-				editButton.remove();
+				}
+				// hide the controls
+				function hideControls() {
+					let deleteButton = this.querySelector("#delete-button");
+					let editButton = this.querySelector("#edit-button");
+					deleteButton.remove();
+					editButton.remove();
+				}
 			}
 		}
 	}
@@ -392,10 +392,10 @@ class UI {
 		DOM.body.insertAdjacentElement("beforeend", menu);
 
 		// add a hideMenu() eventListener to the modal backgroun
-		menu.addEventListener("click", ()=>{
+		menu.addEventListener("click", () => {
 			UI.hideMenu();
-		})
-		
+		});
+
 		// grab the form type
 		let type = template.split(">")[0].trim();
 		type = type.substr(4, type.length - 6);
@@ -423,7 +423,7 @@ class UI {
 			document.querySelector("#cancel").addEventListener("click", () => {
 				UI.reset();
 				UI.display(app, app.clients);
-			})
+			});
 		}
 
 		// add event listener to the freshly-generated back button
@@ -436,10 +436,8 @@ class UI {
 
 		// add event listener to the freshly-generated submit button
 		document.querySelector("#submit").addEventListener("click", () => {
-
 			// if the form is for a client...
 			if (type == "CLIENT") {
-
 				// grab and store form values
 				const FORM = {
 					clientName: document.querySelector("#client-name"),
@@ -492,7 +490,6 @@ class UI {
 					UI.reset();
 					UI.display(app, app.clients);
 				}
-
 			} else if (type == "PROJECT") {
 				const FORM = {
 					projectName: document.querySelector("#project-name"),
@@ -538,11 +535,10 @@ class UI {
 		// calculate the value that will put the menu offscreen...
 		let parHeight = parseFloat(window.getComputedStyle(menu.parentNode).height);
 		let menuHeight = parseFloat(window.getComputedStyle(menu).height);
-		let mag = menuHeight + (parHeight-menuHeight)/2;
+		let mag = menuHeight + (parHeight - menuHeight) / 2;
 
 		// animate the menu
-		Animator.flyIn(menu, "bottom", mag, .5, 0) 
-		
+		Animator.flyIn(menu, "bottom", mag, 0.5, 0);
 	}
 
 	static hideMenu() {
@@ -552,13 +548,13 @@ class UI {
 		if (modal) {
 			let parHeight = parseFloat(window.getComputedStyle(menu.parentNode).height);
 			let menuHeight = parseFloat(window.getComputedStyle(menu).height);
-			let mag = menuHeight + (parHeight-menuHeight)/2;
+			let mag = menuHeight + (parHeight - menuHeight) / 2;
 
-			Animator.flyOut(menu, "bottom", mag, .5, 0);
+			Animator.flyOut(menu, "bottom", mag, 0.5, 0);
 
 			setTimeout(remove, 500);
 		}
-		
+
 		function remove() {
 			modal.remove();
 		}
@@ -573,13 +569,13 @@ class UI {
 			UI.menu(app, TEMPLATES.menus.project);
 		});
 
-		window.addEventListener("keydown", (e)=>{
-			if(e.code == "Escape") {
-				if(document.querySelector("#modal")) {
+		window.addEventListener("keydown", (e) => {
+			if (e.code == "Escape") {
+				if (document.querySelector("#modal")) {
 					UI.hideMenu();
 				}
 			}
-		})
+		});
 	}
 
 	static showClock(app, session, speed, delay) {

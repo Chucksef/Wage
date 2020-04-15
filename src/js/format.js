@@ -28,7 +28,7 @@ class Format {
 			}
 			return `${date[0]}, ${date[1]} ${date[2]}, ${date[3]}`;
 		} else {
-			return "Active";
+			return "Active Session";
 		}
 	}
 
@@ -72,7 +72,7 @@ class Format {
 	static time(timestamp) {
 		if (timestamp) {
 			let time;
-			if(timestamp.toDate) {
+			if (timestamp.toDate) {
 				time = timestamp.toDate().toString().split(" ")[4].split(":");
 			} else {
 				time = `${timestamp.toDateString()} ${timestamp.toTimeString()}`.split(" ")[4].split(":");
@@ -358,7 +358,6 @@ class Format {
 	}
 
 	static getTimestamp(inputDate, inputTime) {
-
 		let newDate = inputDate.split("-");
 		let newTime = inputTime.split(":");
 		let newYear = newDate[0];

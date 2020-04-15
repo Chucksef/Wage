@@ -249,7 +249,7 @@ class App {
 
 						// assign this session to the app's active session, and show the clock
 						this.activeSession = sKey;
-						UI.showClock(this, this.sessions[sKey], .75, 1);
+						UI.showClock(this, this.sessions[sKey], 0.75, 1);
 					} else if (currentSession.clockOut.seconds > currentProject.lastAccessed) {
 						// if this time is greater than the project's current lastAccessed time, set project.lastAccessed to be equal to this time.
 						currentProject.lastAccessed = currentSession.clockOut.seconds;
@@ -407,7 +407,7 @@ class App {
 			});
 
 			// 4) display running clock
-			UI.showClock(this, this.sessions[hash], .75);
+			UI.showClock(this, this.sessions[hash], 0.75);
 		}
 	}
 
@@ -590,11 +590,6 @@ class App {
 			// 3) delete it from the app's CPS model
 			delete this.clients[id];
 		}
-
-		// delete original item
-		// iterate over childArray
-		// get the object tied to the currentKey
-		// delete the object
 	}
 
 	updateEntry(object) {
@@ -613,26 +608,26 @@ class App {
 					Rate: object.rate,
 					State: object.state,
 					Zip: object.zip,
-				})
+				});
 				break;
-		
+
 			case "project":
-				case "client":
+			case "client":
 				db.collection("Projects").doc(object.id).update({
 					Client_ID: object.clientID,
 					Description: object.description,
 					Name: object.name,
 					Rate: object.rate,
-				})
+				});
 				break;
-			
+
 			case "session":
-				case "client":
+			case "client":
 				db.collection("Sessions").doc(object.id).update({
 					Breaks: object.breaks,
 					Clock_In: object.clockIn,
 					Clock_Out: object.clockOut,
-				})
+				});
 				break;
 		}
 	}
