@@ -454,8 +454,6 @@ class UI {
 		} else if (type == "SESSION") {
 			document.querySelector("#cancel").addEventListener("click", () => {
 				UI.hideMenu();
-				UI.reset();
-				UI.display(app, app.clients);
 			});
 		}
 

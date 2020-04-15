@@ -33,9 +33,6 @@ At the current stage of development (planning), we can anticipate that it would 
   * Custom PNGs and SVGs created by me
 
 ## Current TODO List
-  
-  * Clock Out
-    * Make delete and save session dialog re-calculate properties and zoom to saved session (or parent project)
 
   * Users
     * Implement Users/Login/Etc

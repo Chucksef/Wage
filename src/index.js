@@ -420,7 +420,7 @@ class App {
 		}
 	}
 
-	clockOut(id) {
+	clockOut(sessionID) {
 		// stop the timer
 		clearInterval(this.timer);
 		this.activeSession = null;
@@ -430,12 +430,12 @@ class App {
 
 		// write to the db, creating a timestamp for the Clock_Out property
 		let now = firebase.firestore.Timestamp.now();
-		db.collection("Sessions").doc(id).update({
+		db.collection("Sessions").doc(sessionID).update({
 			Clock_Out: now,
 		});
 
 		// find the CPS model object & its parent project
-		const object = this.getObject(id);
+		const object = this.getObject(sessionID);
 		const parentObject = this.getObject(object.projectID);
 
 		// set clockout on cps object to timestamp
@@ -466,18 +466,23 @@ class App {
 		// assign menu event listeners
 		document.querySelector("#cancel").addEventListener("click", () => {
 			// remove the session from the database
-			db.collection("Sessions").doc(id).delete();
+			db.collection("Sessions").doc(sessionID).delete();
 
 			// remove the session object from the CPS model
-			delete this.sessions[id];
+			delete this.sessions[sessionID];
 
 			// remove the session key from the app's list of session keys
-			let idx = this.sessionKeys.indexOf(id);
+			let idx = this.sessionKeys.indexOf(sessionID);
 			this.sessionKeys.splice(idx, 1);
 
 			// remove the session from the project's list of keys
-			idx = parentObject.sessionKeys.indexOf(id);
+			idx = parentObject.sessionKeys.indexOf(sessionID);
 			parentObject.sessionKeys.splice(idx, 1);
+
+			// manipulate the UI
+			this.deriveProperties();
+			UI.reset();
+			UI.zoom(this, parentObject.id);
 		});
 
 		document.querySelector("#submit").addEventListener("click", () => {
@@ -504,7 +509,7 @@ class App {
 				let newStampOut = Format.getTimestamp(clockOutDate.value, clockOutTime.value);
 
 				// and then write the changes to the db
-				db.collection("Sessions").doc(id).update({
+				db.collection("Sessions").doc(sessionID).update({
 					Clock_In: newStampIn,
 					Clock_Out: newStampOut,
 					Breaks: parseFloat(breaks.value),
@@ -515,7 +520,7 @@ class App {
 			this.deriveProperties();
 			UI.reset();
 			// re-load clients
-			UI.display(this, this.clients);
+			UI.zoom(this, sessionID);
 			// zoom to relevant session
 		});
 	}
