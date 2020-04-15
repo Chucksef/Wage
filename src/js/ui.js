@@ -653,7 +653,15 @@ class UI {
 	}
 
 	static hideClock() {
-		document.querySelector("#clock").remove();
+		// get the value for when the element will be out of screen
+		let mag = parseFloat(window.getComputedStyle(clock).height);
+		mag += parseFloat(window.getComputedStyle(clock).marginBottom);
+
+		Animator.flyOut(DOM.timer, "bottom", mag, 0.75);
+		setTimeout(() => {
+			document.querySelector("#clock").remove();
+			DOM.timer.style.bottom = "0";
+		}, 1000);
 	}
 }
 
