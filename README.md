@@ -34,10 +34,33 @@ At the current stage of development (planning), we can anticipate that it would 
 
 ## Current TODO List
 
-  * Users
-    * Implement Users/Login/Etc
+  * Auth Branch
+    + Remove ugly user icon
+
+    + Create Basic (not logged in) page with...
+      * Logo
+      * Tagline
+      * Sign-Up Button
+      * Sign-In Button
+      * Signing in will "open the doors" and panels slide open to reveal the actual app underneath
+
+    * Sign-Up Button
+      * Bring up Modal window
+      * Build firebase functionality
+      * Make show app
+
+    * Sign-In Button
+      * Bring up Modal window
+      * Build firebase functionality
+      * Make show app
+
+    * Add Hamburger Menu to top-left when signed in
+      * User Profile Details
+      * Invoice
+      * Log-Out
 
   * UI
+    * Let user use "Esc" to close modal windows
     * Make timer font-size dynamic
     * Create db loading wait animation
     * Create "blank canvas" instructions

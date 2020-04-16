@@ -9,4 +9,9 @@ let firebaseConfig = {
 	measurementId: "G-EH5YQD64YP",
 };
 
-export { firebaseConfig };
+// Initialize database & auth constants
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+
+export { db, auth };

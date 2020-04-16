@@ -1,6 +1,6 @@
 import { Format } from "./format.js";
 import { Animator } from "./animator.js";
-import { DOM } from "../index.js";
+import { DOM } from "./dom.js";
 import { TEMPLATES } from "./template.js";
 import { Project } from "./project.js";
 import { Client } from "./client.js";
@@ -419,9 +419,9 @@ class UI {
 		modalBG.innerHTML = template;
 
 		DOM.body.insertAdjacentElement("beforeend", modalBG);
-		setTimeout(()=>{
+		setTimeout(() => {
 			modalBG.classList.remove("transparent");
-		},1);
+		}, 1);
 
 		if (allowBack) {
 			// add a hideMenu() eventListener to the modal background
