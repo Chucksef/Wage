@@ -569,7 +569,7 @@ button.btn-icon:focus {
 }
 
 #modal {
-	background: rgba(255, 255, 255, .8);
+	background: rgba(200, 200, 200, .8);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -580,6 +580,9 @@ button.btn-icon:focus {
 	height: 100vh;
 	z-index: 10;
 	overflow: hidden;
+	opacity: 1;
+	transition: .5s;
+	transition-property: background;
 
 	.menu::-webkit-scrollbar {
 		display: none;
@@ -739,4 +742,8 @@ button.btn-icon:focus {
 			width: calc(66%);
 		}
 	}
+}
+
+#modal.transparent {
+	background: transparent;
 }

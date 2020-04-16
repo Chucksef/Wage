@@ -415,9 +415,13 @@ class UI {
 	static menu(app, template, allowBack = true) {
 		let modalBG = document.createElement("div");
 		modalBG.id = "modal";
+		modalBG.classList.add("transparent");
 		modalBG.innerHTML = template;
 
 		DOM.body.insertAdjacentElement("beforeend", modalBG);
+		setTimeout(()=>{
+			modalBG.classList.remove("transparent");
+		},1);
 
 		if (allowBack) {
 			// add a hideMenu() eventListener to the modal background
@@ -580,6 +584,7 @@ class UI {
 	static hideMenu() {
 		let modal = document.querySelector("#modal");
 		let menu = document.querySelector(".menu");
+		modal.classList.add("transparent");
 
 		if (modal) {
 			let parHeight = parseFloat(window.getComputedStyle(menu.parentNode).height);
