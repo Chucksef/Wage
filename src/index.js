@@ -4,4 +4,3 @@ import { Auth } from "./js/auth";
 import { App } from "./js/app";
 
 new Auth();
-new App("chucksef@gmail.com");
