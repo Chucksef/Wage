@@ -563,9 +563,8 @@ button.btn-icon:focus {
 	left: 0;
 	width: 100vw;
 	height: 100vh;
-	z-index: 10;
+	z-index: 100;
 	overflow: hidden;
-	opacity: 1;
 	transition: .5s;
 	transition-property: background;
 
@@ -641,8 +640,8 @@ button.btn-icon:focus {
 				}
 
 				button.btn-menu:focus {
-					border: 3px solid #8bd8d4;
-					margin: calc(0px - 2px) calc(.25em - 2px);
+					border: 2px solid #8bd8d4;
+					margin: -2px calc(.25em - 1px);
 				}
 			}
 		}

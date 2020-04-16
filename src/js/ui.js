@@ -1,9 +1,10 @@
-import { Format } from "./format.js";
-import { Animator } from "./animator.js";
-import { DOM } from "./dom.js";
-import { TEMPLATES } from "./template.js";
-import { Project } from "./project.js";
-import { Client } from "./client.js";
+import { Format } from "./format";
+import { Animator } from "./animator";
+import { DOM } from "./dom";
+import { TEMPLATES } from "./template";
+import { Project } from "./project";
+import { Client } from "./client";
+import { auth } from "./firebase";
 
 class UI {
 	static addEntry(app, entry, destination) {
@@ -603,10 +604,10 @@ class UI {
 
 	static setUpEventListeners(app) {
 		// Add Main Control Event Listeners
-		DOM.btn_NewClient.addEventListener("click", function() {
+		DOM.btn_NewClient.addEventListener("click", () => {
 			UI.menu(app, TEMPLATES.menus.client);
 		});
-		DOM.btn_NewProject.addEventListener("click", function() {
+		DOM.btn_NewProject.addEventListener("click", () => {
 			UI.menu(app, TEMPLATES.menus.project);
 		});
 	}

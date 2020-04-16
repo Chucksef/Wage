@@ -35,22 +35,22 @@ At the current stage of development (planning), we can anticipate that it would 
 ## Current TODO List
 
   * Auth Branch
-    + Remove ugly user icon
+    * ✔ Remove ugly user icon
 
-    + Create Basic (not logged in) page with...
-      * Logo
-      * Tagline
-      * Sign-Up Button
-      * Sign-In Button
+    * ✔ Create Basic (not logged in) page with...
+      * ✔ Logo
+      * ✔ Tagline
+      * ✔ Sign-Up Button
+      * ✔ Sign-In Button
       * Signing in will "open the doors" and panels slide open to reveal the actual app underneath
 
     * Sign-Up Button
-      * Bring up Modal window
+      * ✔ Bring up Modal window
       * Build firebase functionality
       * Make show app
 
     * Sign-In Button
-      * Bring up Modal window
+      * ✔ Bring up Modal window
       * Build firebase functionality
       * Make show app
 

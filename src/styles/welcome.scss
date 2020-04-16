@@ -5,7 +5,7 @@
 	position: absolute;
 	left: 0;
 	top: 0;
-	z-index: 100;
+	z-index: 10;
 	width: 100%;
 	height: 100%;
 	display: flex;
@@ -28,7 +28,7 @@
 		}
 
 		h1 {
-			font-size: calc(51.87px + 2.582vw);
+			font-size: calc(56.432px + 4.348vw);
 			margin-bottom: .15em;
 			margin-top: -.1em;
 		}

@@ -155,6 +155,41 @@ const TEMPLATES = {
 				</div>
 			</div>
 		`,
+
+		signIn: `
+			<!--SIGNIN-->
+			<div class="menu">
+				<h1>Sign In</h1>
+				<hr>
+				<input type="email" id="signIn-email" placeholder="User Email" required>
+				<input type="password" id="signIn-password" placeholder="Password" required>
+				<hr>
+				<div class="buttonRow">
+					<div class="buttons">
+						<button type="button" class="btn-menu material-icons" id="submit">check</button>
+						<button type="button" class="btn-menu material-icons" id="cancel">undo</button>
+					</div>
+				</div>
+			</div>
+		`,
+
+		signUp: `
+			<!--SIGNUP-->
+			<div class="menu">
+				<h1>Sign Up</h1>
+				<hr>
+				<input type="email" id="signUp-email" placeholder="User Email" required>
+				<input type="password" id="signUp-password" placeholder="Password" required>
+				<input type="password" id="signUp-confirmation" placeholder="Confirm Password" required>
+				<hr>
+				<div class="buttonRow">
+					<div class="buttons">
+						<button type="button" class="btn-menu material-icons" id="submit">check</button>
+						<button type="button" class="btn-menu material-icons" id="cancel">undo</button>
+					</div>
+				</div>
+			</div>
+		`,
 	},
 
 	clock: `

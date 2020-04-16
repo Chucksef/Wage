@@ -1,11 +1,11 @@
-import { TEMPLATES } from "./template.js";
-import { Hash64 } from "./hash64.js";
-import { Client } from "./client.js";
-import { Project } from "./project.js";
-import { Session } from "./session.js";
-import { UI } from "./ui.js";
-import { Format } from "./format.js";
-import { db } from "./firebase.js";
+import { TEMPLATES } from "./template";
+import { Hash64 } from "./hash64";
+import { Client } from "./client";
+import { Project } from "./project";
+import { Session } from "./session";
+import { UI } from "./ui";
+import { Format } from "./format";
+import { db } from "./firebase";
 
 class App {
 	constructor(email) {

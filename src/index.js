@@ -1,5 +1,7 @@
 import "./styles/index.scss";
 import "./styles/welcome.scss";
-import { App } from "./js/app.js";
+import { Auth } from "./js/auth";
+import { App } from "./js/app";
 
+new Auth();
 new App("chucksef@gmail.com");
