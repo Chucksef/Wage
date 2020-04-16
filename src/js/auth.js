@@ -46,9 +46,10 @@ class Auth {
 			if (password === confirmation) {
 				// create the user and log in!
 				auth.createUserWithEmailAndPassword(email, password).then((credentials) => {
-					console.log(`Successfully signed up new user: ${credentials.email}`);
+					console.log(`Successfully signed up new user: ${credentials.user.email}`);
+					new App(credentials.user.email);
 					UI.hideMenu();
-					new App(credentials.email);
+					document.querySelector("#welcome").style.display = "none";
 				});
 			} else {
 				alert("Password and Confirmation must match!");
