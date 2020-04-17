@@ -12,6 +12,7 @@ const DOM = {
 
 	btn_SignUp: document.querySelector("#btn-SignUp"),
 	btn_SignIn: document.querySelector("#btn-SignIn"),
+	btn_SignOut: document.querySelector("#btn-SignOut"),
 };
 
 export { DOM };

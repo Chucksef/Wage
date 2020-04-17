@@ -9,13 +9,15 @@ class Auth {
 	constructor() {
 		DOM.btn_SignIn.addEventListener("click", Auth.showSignInMenu);
 		DOM.btn_SignUp.addEventListener("click", Auth.showSignUpMenu);
-		
+		DOM.btn_SignOut.addEventListener("click", Auth.signOut);
+
 		// Cheeky shortcut to signing in by clicking on menu      <------------------------------------------------------------------- DELETE ME LATER!!!
 		document.querySelector(".centered").addEventListener("click", () => {
 			document.querySelector("#welcome").style.display = "none";
 			new App("iJ2DJB2YABeSFWsOwpxqU6Ve1GX2");
 		});
 	}
+
 	static showSignInMenu() {
 		UI.menu(null, TEMPLATES.menus.signIn);
 
@@ -35,7 +37,7 @@ class Auth {
 			const password = document.querySelector("#signIn-password").value;
 
 			auth.signInWithEmailAndPassword(email, password).then((cred) => {
-				console.log(`Successfully logged in user: ${cred.user.email}!`)
+				console.log(`Successfully logged in user: ${cred.user.email}!`);
 				new App(cred.user.uid);
 				UI.hideMenu();
 				document.querySelector("#welcome").style.display = "none";
@@ -76,6 +78,13 @@ class Auth {
 				alert("Password and Confirmation must match!");
 			}
 		}
+	}
+
+	static signOut() {
+		auth.signOut();
+		document.querySelector("#welcome").style.display = "flex";
+		DOM.ham.classList.remove("show");
+		UI.reset();
 	}
 }
 

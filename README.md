@@ -60,9 +60,9 @@ At the current stage of development (planning), we can anticipate that it would 
       * ✔ Log-Out
       * ✔ Clicking Hamburger Hides/Shows Hamburger Options
 
-    * Sign Out functionality
-      * Interface
-      * Signs out
+    * ✔ Sign Out functionality
+      * ✔ Interface
+      * ✔ Signs out
 
     * Profile
       * Interface

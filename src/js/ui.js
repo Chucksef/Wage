@@ -585,9 +585,9 @@ class UI {
 	static hideMenu() {
 		let modal = document.querySelector("#modal");
 		let menu = document.querySelector(".menu");
-		modal.classList.add("transparent");
 
 		if (modal) {
+			modal.classList.add("transparent");
 			let parHeight = parseFloat(window.getComputedStyle(menu.parentNode).height);
 			let menuHeight = parseFloat(window.getComputedStyle(menu).height);
 			let mag = menuHeight + (parHeight - menuHeight) / 2;
@@ -610,9 +610,9 @@ class UI {
 		DOM.btn_NewProject.addEventListener("click", () => {
 			UI.menu(app, TEMPLATES.menus.project);
 		});
-		DOM.ham.addEventListener("click", ()=> {
+		DOM.ham.addEventListener("click", () => {
 			UI.toggleHamburger();
-		})
+		});
 	}
 
 	static showClock(app, session, speed, delay) {
@@ -692,7 +692,6 @@ class UI {
 		} else {
 			DOM.hamOptions.style.height = "0px";
 		}
-
 	}
 }
 
