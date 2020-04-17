@@ -20,6 +20,7 @@ a,
 p,
 button,
 textarea,
+label,
 input,
 select,
 option {
@@ -649,6 +650,11 @@ button.btn-icon:focus {
 		*::selection {
 			background: $lightControl;
 			color: white;
+		}
+
+		label {
+			margin-top: .5em;
+			text-align: left;
 		}
 
 		input,

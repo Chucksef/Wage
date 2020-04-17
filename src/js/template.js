@@ -161,7 +161,9 @@ const TEMPLATES = {
 			<div class="menu">
 				<h1>Sign In</h1>
 				<hr>
+				<label>Email</label>
 				<input type="email" id="signIn-email" placeholder="User Email" required>
+				<label>Password</label>
 				<input type="password" id="signIn-password" placeholder="Password" required>
 				<hr>
 				<div class="buttonRow">
@@ -178,8 +180,11 @@ const TEMPLATES = {
 			<div class="menu">
 				<h1>Sign Up</h1>
 				<hr>
+				<label>Email</label>
 				<input type="email" id="signUp-email" placeholder="User Email" required>
+				<label>Password</label>
 				<input type="password" id="signUp-password" placeholder="Password" required>
+				<label>Confirm Password</label>
 				<input type="password" id="signUp-confirmation" placeholder="Confirm Password" required>
 				<hr>
 				<div class="buttonRow">

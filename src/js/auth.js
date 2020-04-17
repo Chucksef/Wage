@@ -22,7 +22,19 @@ class Auth {
 			UI.hideMenu();
 		});
 
-		submit.addEventListener("click", () => {});
+		submit.addEventListener("click", signUserIn);
+
+		function signUserIn() {
+			const email = document.querySelector("#signIn-email").value;
+			const password = document.querySelector("#signIn-password").value;
+
+			auth.signInWithEmailAndPassword(email, password).then((cred) => {
+				console.log(`Successfully logged in user: ${cred.user.email}!`)
+				new App(cred.user.uid);
+				UI.hideMenu();
+				document.querySelector("#welcome").style.display = "none";
+			});
+		}
 	}
 
 	static showSignUpMenu() {
@@ -37,7 +49,10 @@ class Auth {
 			UI.hideMenu();
 		});
 
-		submit.addEventListener("click", () => {
+		submit.addEventListener("click", signUserUp);
+
+		// checks the password for confirmation and signs the user in
+		function signUserUp() {
 			const email = document.querySelector("#signUp-email").value;
 			const password = document.querySelector("#signUp-password").value;
 			const confirmation = document.querySelector("#signUp-confirmation").value;
@@ -45,16 +60,16 @@ class Auth {
 			// check if password and confirmation match...
 			if (password === confirmation) {
 				// create the user and log in!
-				auth.createUserWithEmailAndPassword(email, password).then((credentials) => {
-					console.log(`Successfully signed up new user: ${credentials.user.email}`);
-					new App(credentials.user.email);
+				auth.createUserWithEmailAndPassword(email, password).then((cred) => {
+					console.log(`Successfully signed up new user: ${cred.user.email}!`);
+					new App(cred.user.uid);
 					UI.hideMenu();
 					document.querySelector("#welcome").style.display = "none";
 				});
 			} else {
 				alert("Password and Confirmation must match!");
 			}
-		});
+		}
 	}
 }
 

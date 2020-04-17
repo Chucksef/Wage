@@ -7,26 +7,25 @@ import { UI } from "./ui";
 import { Format } from "./format";
 import { db } from "./firebase";
 
+// BULLSHIT WAY TO CHANGE userIDs EN MASSE...
+//
+// db.collection("Sessions").where("User_ID", "==", "aZ30ququkdO2fMisBHBUVMflNBv2").get().then((snap) => {
+//     snap.forEach((session) => {
+//         db.collection("Sessions").doc(session.id).update({
+//             User_ID: "iJ2DJB2YABeSFWsOwpxqU6Ve1GX2",
+//         })
+//     });
+// });
+
 class App {
-	constructor(email) {
+	constructor(uid) {
 		this.clients = {};
 		this.projects = {};
 		this.sessions = {};
 		this.activeSession = null;
-		this.getUserData(email); //    <-------------------------------------------------------------------- DB INIT
+		this.userID = uid;
+		this.loadClients(this.userID); //    <-------------------------------------------------------------------- DB INIT
 		UI.setUpEventListeners(this);
-	}
-
-	getUserData(email) {
-		// look up user by email, return userID
-		db.collection("Users").where("Email", "==", email).get().then((usersSnap) => {
-			usersSnap.docs.forEach((user) => {
-				this.userID = user.id;
-
-				// Now use this user ID to load all CPS (Clients Projects Sessions) from the FireStore;
-				this.loadClients(this.userID);
-			});
-		});
 	}
 
 	// load all FireStore user clients into a clients{} object

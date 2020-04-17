@@ -46,13 +46,13 @@ At the current stage of development (planning), we can anticipate that it would 
 
     * Sign-Up Button
       * ✔ Bring up Modal window
-      * Build firebase functionality
-      * Make show app
+      * ✔ Build firebase functionality
+      * ✔ Make show app
 
     * Sign-In Button
       * ✔ Bring up Modal window
-      * Build firebase functionality
-      * Make show app
+      * ✔ Build firebase functionality
+      * ✔ Make show app
 
     * Add Hamburger Menu to top-left when signed in
       * User Profile Details
