@@ -610,6 +610,9 @@ class UI {
 		DOM.btn_NewProject.addEventListener("click", () => {
 			UI.menu(app, TEMPLATES.menus.project);
 		});
+		DOM.ham.addEventListener("click", ()=> {
+			UI.toggleHamburger();
+		})
 	}
 
 	static showClock(app, session, speed, delay) {
@@ -670,6 +673,26 @@ class UI {
 			document.querySelector("#clock").remove();
 			DOM.timer.style.bottom = "0";
 		}, 1000);
+	}
+
+	static toggleHamburger() {
+		DOM.ham.classList.toggle("show");
+		DOM.hamOptions.classList.toggle("show");
+
+		if (DOM.hamOptions.classList.contains("show")) {
+			DOM.hamOptions.style.height = "auto";
+			let hgt = parseFloat(window.getComputedStyle(DOM.hamOptions).height);
+			DOM.hamOptions.style.height = "0px";
+
+			setTimeout(increase, 0);
+
+			function increase() {
+				DOM.hamOptions.style.height = `${hgt}px`;
+			}
+		} else {
+			DOM.hamOptions.style.height = "0px";
+		}
+
 	}
 }
 

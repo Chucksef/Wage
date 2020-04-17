@@ -55,9 +55,18 @@ At the current stage of development (planning), we can anticipate that it would 
       * ✔ Make show app
 
     * ✔ Add Hamburger Menu to top-left when signed in
-      * User Profile Details
-      * Invoice
-      * Log-Out
+      * ✔ User Profile Details
+      * ✔ Invoice
+      * ✔ Log-Out
+      * ✔ Clicking Hamburger Hides/Shows Hamburger Options
+
+    * Sign Out functionality
+      * Interface
+      * Signs out
+
+    * Profile
+      * Interface
+      * Saves and Updates user settings
 
   * UI
     * Let user use "Esc" to close modal windows

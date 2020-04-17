@@ -4,6 +4,8 @@ const DOM = {
 	controls: document.querySelector("#controls"),
 	sidebar: document.querySelector("#sidebar"),
 	timer: document.querySelector("#timer"),
+	ham: document.querySelector("#hamburger"),
+	hamOptions: document.querySelector("#hamburger-options"),
 
 	btn_NewClient: document.querySelector("#btn-NewClient"),
 	btn_NewProject: document.querySelector("#btn-NewProject"),

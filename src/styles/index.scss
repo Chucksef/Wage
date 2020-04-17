@@ -177,6 +177,26 @@ button.btn-dark:focus {
 		position: relative;
 		top: calc(-.704vw - 6.483px);
 		
+		#hamburger-options {
+			height: 0px;
+			overflow: hidden;
+			transition: .25s;
+		}
+
+		#hamburger-options.show {
+			height: calc(3.352vw + 120.892px);
+		}
+
+		#hamburger-options:before {
+			content: "";
+			width: 100%;
+			height: 1px;
+			background: $primary;
+			display: block;
+			margin-bottom: 10px;
+			margin-top: 10px;
+		}
+
 		.row {
 			position: relative;
 			display: flex;
@@ -206,10 +226,21 @@ button.btn-dark:focus {
 					border: 1px solid $lightControl;
 					border-radius: .25vw;
 					transition: .1s;
+					-webkit-touch-callout: none; /* iOS Safari */
+					-webkit-user-select: none; /* Safari */
+					-khtml-user-select: none; /* Konqueror HTML */
+					-moz-user-select: none; /* Old versions of Firefox */
+					-ms-user-select: none; /* Internet Explorer/Edge */
+					user-select: none;
 				}
-
+				
 				#hamburger:hover {
 					color: $dark;
+					background: $lightControl;
+				}
+				
+				#hamburger.show {
+					color: white;
 					background: $lightControl;
 				}
 			}
