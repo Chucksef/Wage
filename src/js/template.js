@@ -169,6 +169,7 @@ const TEMPLATES = {
 				<div class="buttonRow">
 					<div class="buttons">
 						<button type="button" class="btn-menu material-icons" id="submit">check</button>
+						<button type="button" class="btn-menu material-icons" id="reset">lock</button>
 						<button type="button" class="btn-menu material-icons" id="cancel">undo</button>
 					</div>
 				</div>

@@ -44,20 +44,18 @@ div {
 hr {
 	border: none;
 	border-bottom: 1px solid $primary;
-	margin: 10px;
+	margin: 10px 0;
 }
 
 h1 {
-	margin: 0;
-	font-size: 4em;
-	font-weight: 400;
+    font-size: 6em;
+    font-weight: 400;
 }
 
 h2 {
 	display: block;
 	position: relative;
 	margin: 0 auto;
-	width: 70%;
 	font-size: 1.75em;
 	line-height: 1;
 }
@@ -93,7 +91,7 @@ button {
 	color: $lightControl;
 	border: 1px solid $lightControl;
 	background: rgba(0, 0, 0, 0);
-	border-radius: 10px;
+	border-radius: calc(.379vw + 2.723px);
 	font-weight: 300;
 	font-size: 1.25em;
 	line-height: 1;
@@ -110,8 +108,10 @@ button.btn-dark {
 
 button.btn-block {
 	position: relative;
-	width: 100%;
+	width: calc(100% - calc(1.061vw + 3.629px));
 	margin: .3em 0;
+	font-size: calc(.455vw + 15.264px);
+
 }
 
 #filters button.selected {
@@ -172,14 +172,57 @@ button.btn-dark:focus {
 	box-shadow: 2px 0px 25px rgba(0, 0, 0, .5);
 	padding: 1em;
 	padding-bottom: 0;
-
+	
 	#header {
 		position: relative;
-		top: -1em;
+		top: calc(-.704vw - 6.483px);
+		
+		.row {
+			position: relative;
+			display: flex;
+			
+			* {
+				position: relative;
+			}
+			
+			#wage-logo {
+				width: 60%;
+				padding-bottom: .13em;
+				margin: -5px 0;
+				font-size: calc(5.159vw + 3.047px);
+			}
+			
+			.col {
+				width: 20%;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+
+				#hamburger {
+					font-size: calc(2.273vw + 1.358px);
+					width: calc(3.03vw + 1.824px);
+					margin: 0 auto;
+					color: $lightControl;
+					border: 1px solid $lightControl;
+					border-radius: .25vw;
+					transition: .1s;
+				}
+
+				#hamburger:hover {
+					color: $dark;
+					background: $lightControl;
+				}
+			}
+		}
+
+		h2 {
+			font-size: calc(1.818vw + 5.094px);
+		}
 	}
 
 	#controls {
 		position: relative;
+		top: calc(-.704vw - 6.483px);
 	}
 
 	#timer {

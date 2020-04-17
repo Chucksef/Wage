@@ -9,6 +9,12 @@ class Auth {
 	constructor() {
 		DOM.btn_SignIn.addEventListener("click", Auth.showSignInMenu);
 		DOM.btn_SignUp.addEventListener("click", Auth.showSignUpMenu);
+		
+		// Cheeky shortcut to signing in by clicking on menu      <------------------------------------------------------------------- DELETE ME LATER!!!
+		document.querySelector(".centered").addEventListener("click", () => {
+			document.querySelector("#welcome").style.display = "none";
+			new App("iJ2DJB2YABeSFWsOwpxqU6Ve1GX2");
+		});
 	}
 	static showSignInMenu() {
 		UI.menu(null, TEMPLATES.menus.signIn);
