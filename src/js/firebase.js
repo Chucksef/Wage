@@ -11,6 +11,7 @@ let firebaseConfig = {
 
 // Initialize database & auth constants
 firebase.initializeApp(firebaseConfig);
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 const db = firebase.firestore();
 const auth = firebase.auth();
 

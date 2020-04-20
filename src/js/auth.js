@@ -8,7 +8,18 @@ import { App } from "./app";
 // listen for auth status changes
 
 auth.onAuthStateChanged(user => {
-	console.log(user);
+	if (user) {
+		let app = new App(user.uid);
+		app.user = user;
+		UI.hideMenu();
+		document.querySelector("#welcome").style.display = "none";
+	} else {
+		DOM.ham.classList.add("show");
+		DOM.hamOptions.classList.add("show");
+		UI.toggleHamburger();
+		UI.reset();
+		document.querySelector("#welcome").style.display = "flex";
+	}
 })
 
 class Auth {
@@ -19,12 +30,7 @@ class Auth {
 
 		// Cheeky shortcut to signing in by clicking on menu      <------------------------------------------------------------------- DELETE ME LATER!!!
 		document.querySelector(".centered").addEventListener("click", () => {
-			auth.signInWithEmailAndPassword("chucksef@gmail.com", "password").then((cred) => {
-				let app = new App(cred.user.uid);
-				app.user = cred.user;
-				UI.hideMenu();
-				document.querySelector("#welcome").style.display = "none";
-			});
+			auth.signInWithEmailAndPassword("chucksef@gmail.com", "password");
 		});
 	}
 
@@ -46,13 +52,7 @@ class Auth {
 			const email = document.querySelector("#signIn-email").value;
 			const password = document.querySelector("#signIn-password").value;
 
-			auth.signInWithEmailAndPassword(email, password).then((cred) => {
-				console.log(`Successfully logged in user: ${cred.user.email}!`);
-				let app = new App(cred.user.uid);
-				app.user = cred.user;
-				UI.hideMenu();
-				document.querySelector("#welcome").style.display = "none";
-			});
+			auth.signInWithEmailAndPassword(email, password);
 		}
 	}
 
@@ -79,12 +79,7 @@ class Auth {
 			// check if password and confirmation match...
 			if (password === confirmation) {
 				// create the user and log in!
-				auth.createUserWithEmailAndPassword(email, password).then((cred) => {
-					console.log(`Successfully signed up new user: ${cred.user.email}!`);
-					new App(cred.user.uid);
-					UI.hideMenu();
-					document.querySelector("#welcome").style.display = "none";
-				});
+				auth.createUserWithEmailAndPassword(email, password);
 			} else {
 				alert("Password and Confirmation must match!");
 			}
@@ -93,9 +88,6 @@ class Auth {
 
 	static signOut() {
 		auth.signOut();
-		UI.toggleHamburger();
-		UI.reset();
-		document.querySelector("#welcome").style.display = "flex";
 	}
 }
 
