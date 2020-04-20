@@ -80,8 +80,7 @@ h6 {
 	position: relative;
 	bottom: -4px;
 	left: -20%;
-	width: 25%;
-	height: auto;
+	width: calc(2.651vw + 53.242px);
 	fill: $primary;
 }
 
@@ -97,6 +96,7 @@ button {
 	line-height: 1;
 	padding: .3em;
 	transition: .075s;
+	transition-property: background, color;
 	outline: none;
 	cursor: pointer;
 }
@@ -159,8 +159,8 @@ button.btn-dark:focus {
 	top: 0;
 	height: 100vh;
 	background: $entry;
-	left: 14.6vw;
-	width: 70.8vw;
+	left: calc(19.741vw - 98.707px);
+	width: calc(60.518vw + 197.414px);
 }
 
 #sidebar {
@@ -209,7 +209,7 @@ button.btn-dark:focus {
 				width: 60%;
 				padding-bottom: .13em;
 				margin: -5px 0;
-				font-size: calc(5.159vw + 3.047px);
+				font-size: calc(4.718vw + 9.414px);
 			}
 			
 			.col {
@@ -219,13 +219,14 @@ button.btn-dark:focus {
 				justify-content: center;
 
 				#hamburger {
-					font-size: calc(2.273vw + 1.358px);
-					width: calc(3.03vw + 1.824px);
+					font-size: calc(2.113vw + 4.430px);
+					width: calc(2.887vw + 4.570px);
 					margin: 0 auto;
 					color: $lightControl;
 					border: 1px solid $lightControl;
 					border-radius: .25vw;
 					transition: .1s;
+					transition-property: color, background;
 					-webkit-touch-callout: none; /* iOS Safari */
 					-webkit-user-select: none; /* Safari */
 					-khtml-user-select: none; /* Konqueror HTML */
@@ -247,7 +248,7 @@ button.btn-dark:focus {
 		}
 
 		h2 {
-			font-size: calc(1.818vw + 5.094px);
+			font-size: calc(1.584vw + 9.587px);
 		}
 	}
 
@@ -389,6 +390,7 @@ button.btn-icon:focus {
 		outline: none;
 		border: none;
 		transition: .075s;
+		transition-property: background, color;
 		background: $light;
 		box-shadow: 0 10px 20px rgba(0, 0, 0, .4);
 
@@ -398,21 +400,6 @@ button.btn-icon:focus {
 				transition: .075s;
 			}
 		}
-	}
-}
-
-// FOR MEDIUM WIDTH SCREENS
-@media only screen and (max-aspect-ratio: 1500/1080) {
-	#main {
-		left: 0;
-		width: 100vw;
-	}
-}
-
-// MOBILE STYLING
-@media only screen and (orientation: portrait) {
-	#main {
-		background: green;
 	}
 }
 
@@ -469,7 +456,7 @@ button.btn-icon:focus {
 		text-align: center;
 		color: $darkControl;
 		margin: 0;
-		margin-bottom: .1em;
+		padding-bottom: .13em;
 		$entry-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
