@@ -196,6 +196,27 @@ const TEMPLATES = {
 				</div>
 			</div>
 		`,
+
+		user: `
+			<!--USER-->
+			<div class="menu">
+				<h1>User Profile</h1>
+				<hr>
+				<label>User Name</label>
+				<input type="text" id="user-name" placeholder="User Name" required>			
+				<label>Password</label>
+				<input type="password" id="user-password" placeholder="Password" required>
+				<label>Confirm Password</label>
+				<input type="password" id="user-confirmation" placeholder="Confirm Password" required>
+				<hr>
+				<div class="buttonRow">
+					<div class="buttons">
+						<button type="button" class="btn-menu material-icons" id="submit">check</button>
+						<button type="button" class="btn-menu material-icons" id="cancel">undo</button>
+					</div>
+				</div>
+			</div>
+		`,
 	},
 
 	clock: `

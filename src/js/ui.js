@@ -603,22 +603,17 @@ class UI {
 	}
 
 	static setUpEventListeners(app) {
-		// Add Main Control Event Listeners
-
 		// replace all the buttons with clean versions
 		DOM.ham = Utils.clearListeners(DOM.ham);
 		DOM.btn_NewClient = Utils.clearListeners(DOM.btn_NewClient);
 		DOM.btn_NewProject = Utils.clearListeners(DOM.btn_NewProject);
+		DOM.btn_User = Utils.clearListeners(DOM.btn_User);
 
-		DOM.btn_NewClient.addEventListener("click", () => {
-			UI.menu(app, TEMPLATES.menus.client);
-		});
-		DOM.btn_NewProject.addEventListener("click", () => {
-			UI.menu(app, TEMPLATES.menus.project);
-		});
-		DOM.ham.addEventListener("click", () => {
-			UI.toggleHamburger();
-		});
+		// assign listeners
+		DOM.btn_NewClient.addEventListener("click", () => UI.menu(app, TEMPLATES.menus.client));
+		DOM.btn_NewProject.addEventListener("click", () => UI.menu(app, TEMPLATES.menus.project));
+		DOM.ham.addEventListener("click", () =>	UI.toggleHamburger());
+		DOM.btn_User.addEventListener("click", () => UI.menu(app, TEMPLATES.menus.user));
 	}
 
 	static showClock(app, session, speed, delay) {
