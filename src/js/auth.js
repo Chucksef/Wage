@@ -5,6 +5,12 @@ import { Utils } from "./utils";
 import { auth } from "./firebase";
 import { App } from "./app";
 
+// listen for auth status changes
+
+auth.onAuthStateChanged(user => {
+	console.log(user);
+})
+
 class Auth {
 	constructor() {
 		DOM.btn_SignIn.addEventListener("click", Auth.showSignInMenu);
@@ -13,8 +19,12 @@ class Auth {
 
 		// Cheeky shortcut to signing in by clicking on menu      <------------------------------------------------------------------- DELETE ME LATER!!!
 		document.querySelector(".centered").addEventListener("click", () => {
-			document.querySelector("#welcome").style.display = "none";
-			new App("iJ2DJB2YABeSFWsOwpxqU6Ve1GX2");
+			auth.signInWithEmailAndPassword("chucksef@gmail.com", "password").then((cred) => {
+				let app = new App(cred.user.uid);
+				app.user = cred.user;
+				UI.hideMenu();
+				document.querySelector("#welcome").style.display = "none";
+			});
 		});
 	}
 
@@ -38,7 +48,8 @@ class Auth {
 
 			auth.signInWithEmailAndPassword(email, password).then((cred) => {
 				console.log(`Successfully logged in user: ${cred.user.email}!`);
-				new App(cred.user.uid);
+				let app = new App(cred.user.uid);
+				app.user = cred.user;
 				UI.hideMenu();
 				document.querySelector("#welcome").style.display = "none";
 			});
@@ -82,9 +93,9 @@ class Auth {
 
 	static signOut() {
 		auth.signOut();
-		document.querySelector("#welcome").style.display = "flex";
-		DOM.ham.classList.remove("show");
+		UI.toggleHamburger();
 		UI.reset();
+		document.querySelector("#welcome").style.display = "flex";
 	}
 }
 

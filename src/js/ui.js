@@ -4,7 +4,7 @@ import { DOM } from "./dom";
 import { TEMPLATES } from "./template";
 import { Project } from "./project";
 import { Client } from "./client";
-import { auth } from "./firebase";
+import { Utils } from "./utils";
 
 class UI {
 	static addEntry(app, entry, destination) {
@@ -604,6 +604,12 @@ class UI {
 
 	static setUpEventListeners(app) {
 		// Add Main Control Event Listeners
+
+		// replace all the buttons with clean versions
+		DOM.ham = Utils.clearListeners(DOM.ham);
+		DOM.btn_NewClient = Utils.clearListeners(DOM.btn_NewClient);
+		DOM.btn_NewProject = Utils.clearListeners(DOM.btn_NewProject);
+
 		DOM.btn_NewClient.addEventListener("click", () => {
 			UI.menu(app, TEMPLATES.menus.client);
 		});
@@ -684,8 +690,8 @@ class UI {
 			let hgt = parseFloat(window.getComputedStyle(DOM.hamOptions).height);
 			DOM.hamOptions.style.height = "0px";
 
-			setTimeout(increase, 0);
-
+			// wait 1 ms, then set height to calculated value
+			setTimeout(increase, 1);
 			function increase() {
 				DOM.hamOptions.style.height = `${hgt}px`;
 			}

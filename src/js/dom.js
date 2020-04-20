@@ -1,4 +1,4 @@
-const DOM = {
+let DOM = {
 	body: document.querySelector("body"),
 	readout: document.querySelector("#readout"),
 	controls: document.querySelector("#controls"),
