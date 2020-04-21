@@ -8,6 +8,7 @@ import { App } from "./app";
 // listen for auth status changes
 auth.onAuthStateChanged(user => {
 	if (user) {
+		console.log(`${JSON.stringify(user)}`);
 		let app = new App(user.uid);
 		app.user = user;
 		UI.hideMenu();
@@ -87,6 +88,27 @@ class Auth {
 
 	static signOut() {
 		auth.signOut();
+	}
+
+	
+	static updateUser(app, params) {
+		let user = auth.currentUser;
+		let credential = firebase.auth.EmailAuthProvider.credential(user.email, params.password);
+
+		user.reauthenticateWithCredential(credential).then(()=>{
+			// update the user
+			if (params.email) {
+				user.updateEmail(params.email);
+			}
+			
+			if (params.name) {
+				user.updateProfile({
+					displayName: params.name,
+				})
+			}
+		});
+
+		app.user = user;
 	}
 }
 

@@ -5,6 +5,7 @@ import { TEMPLATES } from "./template";
 import { Project } from "./project";
 import { Client } from "./client";
 import { Utils } from "./utils";
+import { Auth } from "./auth";
 
 class UI {
 	static addEntry(app, entry, destination) {
@@ -604,13 +605,14 @@ class UI {
 		DOM.ham = Utils.clearListeners(DOM.ham);
 		DOM.btn_NewClient = Utils.clearListeners(DOM.btn_NewClient);
 		DOM.btn_NewProject = Utils.clearListeners(DOM.btn_NewProject);
-		DOM.btn_User = Utils.clearListeners(DOM.btn_User);
+		DOM.btn_Profile = Utils.clearListeners(DOM.btn_Profile);
 
 		// assign listeners
 		DOM.btn_NewClient.addEventListener("click", () => UI.menu(app, TEMPLATES.menus.client));
 		DOM.btn_NewProject.addEventListener("click", () => UI.menu(app, TEMPLATES.menus.project));
 		DOM.ham.addEventListener("click", () =>	UI.toggleHamburger());
-		DOM.btn_User.addEventListener("click", () => UI.menu(app, TEMPLATES.menus.user));
+		// assign listener to Profile Button.
+		DOM.btn_Profile.addEventListener("click", () => UI.setUpUserMenu(app));
 	}
 
 	static showClock(app, session, speed, delay) {
@@ -690,6 +692,58 @@ class UI {
 		} else {
 			DOM.hamOptions.style.height = "0px";
 		}
+	}
+
+	static setUpUserMenu(app) {
+		// show the menu
+		UI.menu(app, TEMPLATES.menus.user);
+
+		let uName = document.querySelector("#user-name");
+		let uEmail = document.querySelector("#user-email");
+		let uPassword = document.querySelector("#user-password");
+
+		uName.value = app.user.displayName;
+		uEmail.value = app.user.email;
+		
+		// set up ProfileMenu buttons
+		document.querySelector("#cancel").addEventListener("click", UI.hideMenu);
+		document.querySelector("#submit").addEventListener("click", ()=>{
+			// get data from form
+			let params = {
+				name: uName.value,
+				email: uEmail.value,
+				password: uPassword.value,
+				valid: true,
+				message: "One or more errors have been encountered:\n",
+			};
+
+			// validate data
+			if (params.password == "") {
+				params.valid = false;
+				params.message += " • Please Enter Your Password\n";
+			}
+
+			if (params.email == "") {
+				params.valid = false;
+				params.message += " • Email Address Cannot be Blank\n";
+			}
+
+			if (params.name == app.user.displayName) {
+				params.name = null;
+			}
+
+			if (params.email == app.user.email) {
+				params.email = null;
+			}
+
+			// submit the update action
+			if (params.valid) {
+				Auth.updateUser(app, params);
+				UI.hideMenu();
+			} else {
+				alert(params.message);
+			}
+		});
 	}
 }
 

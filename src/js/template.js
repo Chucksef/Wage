@@ -203,11 +203,11 @@ const TEMPLATES = {
 				<h1>User Profile</h1>
 				<hr>
 				<label>User Name</label>
-				<input type="text" id="user-name" placeholder="User Name" required>			
+				<input type="text" id="user-name" placeholder="User Name" required>
+				<label>Primary Email Address</label>
+				<input type="email" id="user-email" placeholder="User Email" required>	
 				<label>Password</label>
-				<input type="password" id="user-password" placeholder="Password" required>
-				<label>Confirm Password</label>
-				<input type="password" id="user-confirmation" placeholder="Confirm Password" required>
+				<input type="password" id="user-password" placeholder="Required" required>
 				<hr>
 				<div class="buttonRow">
 					<div class="buttons">

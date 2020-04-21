@@ -69,6 +69,7 @@ At the current stage of development (planning), we can anticipate that it would 
       * Saves and Updates user settings
 
   * UI
+    * Fix mouse up triggering on modal bg
     * Let user use "Esc" to close modal windows
     * Make timer font-size dynamic
     * Create db loading wait animation
