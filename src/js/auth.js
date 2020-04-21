@@ -4,6 +4,7 @@ import { TEMPLATES } from "./template";
 import { Utils } from "./utils";
 import { auth } from "./firebase";
 import { App } from "./app";
+import { Format } from "./format";
 
 // listen for auth status changes
 auth.onAuthStateChanged(user => {
@@ -91,24 +92,29 @@ class Auth {
 	}
 
 	
-	static updateUser(app, params) {
+	static updateUser(params) {
 		let user = auth.currentUser;
 		let credential = firebase.auth.EmailAuthProvider.credential(user.email, params.password);
+		let updated = [];
 
 		user.reauthenticateWithCredential(credential).then(()=>{
 			// update the user
 			if (params.email) {
 				user.updateEmail(params.email);
+				updated.push("Email");
 			}
 			
 			if (params.name) {
 				user.updateProfile({
 					displayName: params.name,
 				})
+				updated.push("Name");
 			}
+			
+			// let the user know if this worked with a toast message
+			alert(`successfully updated ${user.displayName}'s ${Format.list(updated)}`);
 		});
 
-		app.user = user;
 	}
 }
 

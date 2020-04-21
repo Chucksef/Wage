@@ -368,6 +368,21 @@ class Format {
 
 		return new Date(newYear, newMonth, newDay, newHours, newMins, 0, 0);
 	}
+
+	static list(arr=[]) {
+		if (arr.length) {
+			if (arr.length > 2) {
+				let last = arr.splice(arr.length-1, 1);
+				return `${arr.join(", ")}, and ${last}`;
+			} else if (arr.length == 2) {
+				return `${arr[0]} and ${arr[1]}`;
+			} else if (arr.length == 1) {
+				return `${arr[0]}`;
+			} else {
+				return `NO-ITEMS-IN-LIST`;
+			}
+		}
+	}
 }
 
 export { Format };

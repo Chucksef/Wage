@@ -738,7 +738,7 @@ class UI {
 
 			// submit the update action
 			if (params.valid) {
-				Auth.updateUser(app, params);
+				Auth.updateUser(params);
 				UI.hideMenu();
 			} else {
 				alert(params.message);
