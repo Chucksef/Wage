@@ -6,7 +6,6 @@ import { auth } from "./firebase";
 import { App } from "./app";
 
 // listen for auth status changes
-
 auth.onAuthStateChanged(user => {
 	if (user) {
 		let app = new App(user.uid);

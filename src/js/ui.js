@@ -282,8 +282,7 @@ class UI {
 							FORM.zip.value = currentObj.zip;
 
 							// replace Save Button to clear Event listeners
-							let newSaveButton = FORM.saveButton.cloneNode(true);
-							FORM.saveButton.parentNode.replaceChild(newSaveButton, FORM.saveButton);
+							let newSaveButton = Utils.clearListeners(FORM.saveButton);
 
 							// add client-specific event listener
 							newSaveButton.addEventListener("click", () => {
@@ -330,8 +329,7 @@ class UI {
 							FORM.rate.value = currentObj.rate;
 
 							// replace Save Button to clear Event listeners
-							let newSaveButton = FORM.saveButton.cloneNode(true);
-							FORM.saveButton.parentNode.replaceChild(newSaveButton, FORM.saveButton);
+							let newSaveButton = Utils.clearListeners(FORM.saveButton);
 
 							// add project-specific event listener
 							newSaveButton.addEventListener("click", () => {
@@ -377,8 +375,7 @@ class UI {
 							FORM.clockOutTime.value = Format.timeForInput(currentObj.clockOut);
 
 							// replace Save Button to clear Event listeners
-							let newSaveButton = FORM.saveButton.cloneNode(true);
-							FORM.saveButton.parentNode.replaceChild(newSaveButton, FORM.saveButton);
+							let newSaveButton = Utils.clearListeners(FORM.saveButton);
 
 							// add session-specific event listener
 							newSaveButton.addEventListener("click", () => {
