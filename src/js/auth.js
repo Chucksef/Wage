@@ -30,9 +30,9 @@ class Auth {
 		DOM.btn_SignOut.addEventListener("click", Auth.signOut);
 
 		// Cheeky shortcut to signing in by clicking on menu      <------------------------------------------------------------------- DELETE ME LATER!!!
-		document.querySelector(".centered").addEventListener("click", () => {
-			auth.signInWithEmailAndPassword("chucksef@gmail.com", "password");
-		});
+		// document.querySelector(".centered").addEventListener("click", () => {
+		// 	auth.signInWithEmailAndPassword("chucksef@gmail.com", "password");
+		// });
 	}
 
 	static showSignInMenu() {
@@ -41,19 +41,42 @@ class Auth {
 		// duplicate both buttons to clear event listeners
 		const cancel = Utils.clearListeners(document.querySelector("#cancel"));
 		const submit = Utils.clearListeners(document.querySelector("#submit"));
+		const reset = Utils.clearListeners(document.querySelector("#reset"));
 
 		// assign new event listeners
-		cancel.addEventListener("click", () => {
-			UI.hideMenu();
-		});
-
+		cancel.addEventListener("click", UI.hideMenu);
 		submit.addEventListener("click", signUserIn);
+		reset.addEventListener("click", sendReset);
 
 		function signUserIn() {
 			const email = document.querySelector("#signIn-email").value;
 			const password = document.querySelector("#signIn-password").value;
 
-			auth.signInWithEmailAndPassword(email, password);
+			auth.signInWithEmailAndPassword(email, password).catch((error) => {
+				switch (error.code) {
+					case "auth/invalid-email":
+						alert(`${email} not a valid email address`);
+						break;
+					case "auth/user-not-found":
+						alert(`No user found for email: ${email}`);
+						break;
+					case "auth/wrong-password":
+						alert(`Incorrect Password`);
+						break;
+				}
+			});
+		}
+
+		function sendReset() {
+			const email = document.querySelector("#signIn-email").value;
+			if (email != "") {
+				auth.sendPasswordResetEmail(email).then(() => {
+					alert(`Sending Password Reset Email to ${email}`);
+					UI.hideMenu();
+				});
+			} else {
+				alert("Please Enter the email address for the account password you would like to reset")
+			}
 		}
 	}
 
@@ -79,10 +102,23 @@ class Auth {
 
 			// check if password and confirmation match...
 			if (password === confirmation) {
-				// create the user and log in!
-				auth.createUserWithEmailAndPassword(email, password);
+				if (password.length > 5) {
+					// create the user and log in!
+					auth.createUserWithEmailAndPassword(email, password).catch((error) => {
+						switch (error.code) {
+							case "auth/email-already-in-use":
+								alert("Cannot Create New Account:\nEmail Already In Use.")
+								break;
+							case "auth/invalid-email":
+								alert("Cannot Create New Account:\nInvalid Email Address")
+								break;
+						}
+					});
+				} else {
+					alert("Password must be 6 characters or longer");
+				}
 			} else {
-				alert("Password and Confirmation must match!");
+				alert("Password and Confirmation Must Match");
 			}
 		}
 	}

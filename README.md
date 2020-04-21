@@ -64,14 +64,14 @@ At the current stage of development (planning), we can anticipate that it would 
       * ✔ Interface
       * ✔ Signs out
 
-    * Profile
-      * Interface
-      * Saves and Updates user settings
+    * ✔ Profile
+      * ✔ Interface
+      * ✔ Saves and Updates user settings
 
   * UI
-    * Fix mouse up triggering on modal bg
+    * Tooltip system
+    * Alert system
     * Let user use "Esc" to close modal windows
-    * Make timer font-size dynamic
     * Create db loading wait animation
     * Create "blank canvas" instructions
     * Clean up interface (simplify!!!);
