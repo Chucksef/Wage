@@ -424,7 +424,7 @@ class UI {
 
 		if (allowBack) {
 			// add a hideMenu() eventListener to the modal background
-			modalBG.addEventListener("click", (e) => {
+			modalBG.addEventListener("mousedown", (e) => {
 				if (e.target == modalBG) {
 					UI.hideMenu();
 				}
