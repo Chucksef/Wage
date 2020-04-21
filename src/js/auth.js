@@ -92,7 +92,7 @@ class Auth {
 	}
 
 	
-	static updateUser(params) {
+	static updateUser(app, params) {
 		let user = auth.currentUser;
 		let credential = firebase.auth.EmailAuthProvider.credential(user.email, params.password);
 		let updated = [];
@@ -113,6 +113,7 @@ class Auth {
 			
 			// let the user know if this worked with a toast message
 			alert(`successfully updated ${user.displayName}'s ${Format.list(updated)}`);
+			app.user = user;
 		});
 
 	}
