@@ -267,8 +267,8 @@ button.btn-dark:focus {
 	#clock {
 		margin: 0;
 		margin-bottom: -1em;
-		padding: 1em;
-		padding-bottom: 2.5em;
+		padding: calc(1.1268vw + 2.3662px);
+		padding-bottom: calc(1.6142vw + 29.0074px);
 
 		* {
 			margin: 0;
@@ -278,9 +278,13 @@ button.btn-dark:focus {
 
 		h3 {
 			font-family: "Courier Prime", monospace;
-			font-size: 2.25em;
+			font-size: calc(2.2535vw + 10.7324px);
 			color: white;
 			font-weight: 400;
+		}
+
+		p {
+			font-size: calc(.7042vw + 10.479px);
 		}
 
 		h6 {
@@ -290,13 +294,13 @@ button.btn-dark:focus {
 
 		h6:after {
 			content: "Clock Out";
-			font-size: 2em;
+			font-size: calc(2.2676vw + 11.6621px);
 			display: block;
 			position: absolute;
-			top: 4em;
-			left: .5em;
+			top: calc(7.4507vw + 77.7466px);
+			left: calc(1.2394vw + 3.8035px);
 			height: calc(100% - 1.5em);
-			width: calc(100% - 1.5em);
+			width: calc(15.3345vw + 13.3276px);
 			color: white;
 			background: $darkControl;
 			transition-duration: .15s;
@@ -312,12 +316,11 @@ button.btn-dark:focus {
 
 	#clock:hover {
 		* {
-			color: white;
 			border-color: white;
 		}
 
 		h6:after {
-			top: 1.85em;
+			top: calc(4.0225vw + 24.888px);
 		}
 	}
 }

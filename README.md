@@ -35,8 +35,8 @@ At the current stage of development (planning), we can anticipate that it would 
 ## Current TODO List
 
   * UI
-    * Make clock elements fluid
     * Make "Active Session" same size as clock in button
+    * Get "Back" button on EDIT session
     * Let user use "Esc" to close modal windows
     * Create db loading wait animation
     * Create "blank canvas" instructions
