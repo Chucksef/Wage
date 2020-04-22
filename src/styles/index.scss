@@ -749,11 +749,88 @@ button.btn-icon:focus {
 			margin-bottom: 0;
 			color: white;
 			border: 1px solid white;
+			position: relative;
+
+			.tooltip{
+				visibility: hidden;
+				background-color: $dark;
+				display: inline-block;
+				color: white;
+				text-align: center;
+				padding: 7.5px;
+				border-radius: 6px;
+				position: absolute;
+				z-index: 101;
+				font-size: 16px;
+			}
+			
+			.tooltip::after {
+				content: "";
+				position: absolute;
+				border-width: 5px;
+				border-style: solid;
+			}
+
+			.left {
+				right: calc(100% + 12px);
+				top: 50%;
+				margin-top: -12.5px;
+			}
+
+			.left::after {
+				top: 50%;
+				left: 100%;
+				margin-top: -5px;
+				border-color: transparent transparent transparent $dark;
+			}
+
+			.right {
+				left: calc(100% + 12px);
+				top: 50%;
+				margin-top: -12.5px;
+			}
+
+			.right::after {
+				top: 50%;
+				right: 100%;
+				margin-top: -5px;
+				border-color: transparent $dark transparent transparent;
+			}
+
+			.top {
+				bottom: calc(100% + 12px);
+				left: 50%;
+				transform: translateX(-50%);
+			}
+
+			.top::after {
+				left: 50%;
+				top: 100%;
+				margin-left: -5px;
+				border-color: $dark transparent transparent transparent;
+			}
+
+			.bottom {
+				top: calc(100% + 12px);
+				left: 50%;
+				transform: translateX(-50%);
+			}
+
+			.bottom::after {
+				left: 50%;
+				bottom: 100%;
+				margin-left: -5px;
+				border-color: transparent transparent $dark transparent;
+			}
 		}
 
 		button:hover {
 			color: $primary;
 			background: white;
+		}
+
+		button:hover .tooltip {
+			visibility: visible;
 		}
 
 		button.btn-icon {

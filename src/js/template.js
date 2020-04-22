@@ -75,8 +75,14 @@ const TEMPLATES = {
 				<hr>
 				<div class="buttonRow">
 					<div class="buttons">
-						<button type="button" class="btn-menu material-icons" id="submit">save</button>
-						<button type="button" class="btn-menu material-icons" id="back">undo</button>
+						<button type="button" class="btn-menu material-icons" id="submit">
+							save
+							<p class="tooltip right">Save</p>
+						</button>
+						<button type="button" class="btn-menu material-icons" id="back">
+							undo
+							<p class="tooltip left">Back</p>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -98,8 +104,14 @@ const TEMPLATES = {
 				<hr>
 				<div class="buttonRow">
 					<div class="buttons">
-						<button type="button" class="btn-menu material-icons" id="submit">save</button>
-						<button type="button" class="btn-menu material-icons" id="back">undo</button>
+						<button type="button" class="btn-menu material-icons" id="submit">
+							save
+							<p class="tooltip right">Save</p>
+						</button>
+						<button type="button" class="btn-menu material-icons" id="back">
+							undo
+							<p class="tooltip left">Back</p>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -129,9 +141,18 @@ const TEMPLATES = {
 				<hr>
 				<div class="buttonRow">
 					<div class="buttons">
-						<button type="button" class="btn-menu material-icons" id="submit">save</button>
-						<button type="button" class="btn-menu material-icons" id="cancel">delete_forever</button>
-						<button type="button" class="btn-menu material-icons" id="back">undo</button>
+						<button type="button" class="btn-menu material-icons" id="submit">
+							save
+							<p class="tooltip right">Update User Profile</p>
+						</button>
+						<button type="button" class="btn-menu material-icons" id="cancel">
+							delete_forever
+							<p class="tooltip top">Back</p>
+						</button>
+						<button type="button" class="btn-menu material-icons" id="cancel">
+							undo
+							<p class="tooltip left">Back</p>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -149,8 +170,14 @@ const TEMPLATES = {
 				<hr>
 				<div class="buttonRow">
 					<div class="buttons">
-						<button type="button" class="btn-menu material-icons" id="submit">delete_forever</button>
-						<button type="button" class="btn-menu material-icons" id="cancel">undo</button>
+						<button type="button" class="btn-menu material-icons" id="submit">
+							delete_forever
+							<p class="tooltip right">Delete Forever</p>
+						</button>
+						<button type="button" class="btn-menu material-icons" id="cancel">
+							undo
+							<p class="tooltip left">Back</p>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -168,9 +195,18 @@ const TEMPLATES = {
 				<hr>
 				<div class="buttonRow">
 					<div class="buttons">
-						<button type="button" class="btn-menu material-icons" id="submit">check</button>
-						<button type="button" class="btn-menu material-icons" id="reset">lock</button>
-						<button type="button" class="btn-menu material-icons" id="cancel">undo</button>
+						<button type="button" class="btn-menu material-icons" id="submit">
+							check
+							<p class="tooltip right">Update User Profile</p>
+						</button>
+						<button type="button" class="btn-menu material-icons" id="reset">
+							lock
+							<p class="tooltip top">Reset Password</p>
+						</button>
+						<button type="button" class="btn-menu material-icons" id="cancel">
+							undo
+							<p class="tooltip left">Back</p>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -190,8 +226,14 @@ const TEMPLATES = {
 				<hr>
 				<div class="buttonRow">
 					<div class="buttons">
-						<button type="button" class="btn-menu material-icons" id="submit">check</button>
-						<button type="button" class="btn-menu material-icons" id="cancel">undo</button>
+						<button type="button" class="btn-menu material-icons" id="submit">
+							check
+							<p class="tooltip right">Create New Profile</p>
+						</button>
+						<button type="button" class="btn-menu material-icons" id="cancel">
+							undo
+							<p class="tooltip left">Back</p>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -211,8 +253,14 @@ const TEMPLATES = {
 				<hr>
 				<div class="buttonRow">
 					<div class="buttons">
-						<button type="button" class="btn-menu material-icons" id="submit">check</button>
-						<button type="button" class="btn-menu material-icons" id="cancel">undo</button>
+						<button type="button" class="btn-menu material-icons" id="submit">
+							check
+							<p class="tooltip right">Update User Profile</p>
+						</button>
+						<button type="button" class="btn-menu material-icons" id="cancel">
+							undo
+							<p class="tooltip left">Back</p>
+						</button>
 					</div>
 				</div>
 			</div>
