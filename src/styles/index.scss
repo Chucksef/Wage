@@ -411,7 +411,7 @@ button.btn-icon:focus {
 	width: 67%;
 	height: 100%;
 	left: 33%;
-	padding: 1em;
+	padding: 0 1em;
 	background: $light;
 	box-shadow: 0px 0px 20px rgba(0, 0, 0, .5);
 }
@@ -431,6 +431,10 @@ button.btn-icon:focus {
 
 #readout::-webkit-scrollbar {
 	display: none;
+}
+
+#spacer {
+	margin-bottom: 1em;
 }
 
 .entry {

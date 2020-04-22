@@ -92,7 +92,7 @@ class UI {
 		UI.hideMenu();
 
 		// clear the actual readout
-		DOM.readout.innerHTML = "";
+		DOM.readout.innerHTML = `<div id="spacer"></div>`;
 	}
 
 	static zoom(app, objectID) {
