@@ -35,9 +35,10 @@ At the current stage of development (planning), we can anticipate that it would 
 ## Current TODO List
 
   * UI
-    * Alert system
     * Let user use "Esc" to close modal windows
     * Create db loading wait animation
     * Create "blank canvas" instructions
     * Clean up interface (simplify!!!);
+    * New menus auto-focus on first entry
+    * Menus submit with "Enter"
     * Entry expansion should look more like drawers opening (all sub-items anchored to bottom of container)

@@ -6,6 +6,7 @@ let DOM = {
 	timer: document.querySelector("#timer"),
 	ham: document.querySelector("#hamburger"),
 	hamOptions: document.querySelector("#hamburger-options"),
+	toast: document.querySelector("#toast"),
 
 	btn_NewClient: document.querySelector("#btn-NewClient"),
 	btn_NewProject: document.querySelector("#btn-NewProject"),
@@ -14,6 +15,7 @@ let DOM = {
 	btn_SignIn: document.querySelector("#btn-SignIn"),
 	btn_SignOut: document.querySelector("#btn-SignOut"),
 	btn_Profile: document.querySelector("#btn-ProfileDetails"),
+	btn_CloseToast: document.querySelector("#close-toast"),
 };
 
 export { DOM };

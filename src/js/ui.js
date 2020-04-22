@@ -606,11 +606,13 @@ class UI {
 		DOM.btn_NewClient = Utils.clearListeners(DOM.btn_NewClient);
 		DOM.btn_NewProject = Utils.clearListeners(DOM.btn_NewProject);
 		DOM.btn_Profile = Utils.clearListeners(DOM.btn_Profile);
+		DOM.toast = Utils.clearListeners(DOM.toast);
 
 		// assign listeners
 		DOM.btn_NewClient.addEventListener("click", () => UI.menu(app, TEMPLATES.menus.client));
 		DOM.btn_NewProject.addEventListener("click", () => UI.menu(app, TEMPLATES.menus.project));
-		DOM.ham.addEventListener("click", () =>	UI.toggleHamburger());
+		DOM.ham.addEventListener("click", UI.toggleHamburger);
+		DOM.toast.addEventListener("click", () => UI.clearToast);
 		// assign listener to Profile Button.
 		DOM.btn_Profile.addEventListener("click", () => UI.setUpUserMenu(app));
 	}
@@ -708,9 +710,6 @@ class UI {
 		// set up ProfileMenu buttons
 		document.querySelector("#cancel").addEventListener("click", UI.hideMenu);
 		document.querySelector("#submit").addEventListener("click", ()=>{
-			// clear app toast if applicable
-			UI.clearToast(app);
-
 			// get data from form
 			let params = {
 				name: uName.value,
@@ -733,22 +732,27 @@ class UI {
 	}
 
 	static toast(message, level="alert") {
-		let toast = document.querySelector("#toast");
-		toast.classList.add(level);
-		toast.innerHTML = `
+		// clear toastTimer if needed
+		UI.clearToast();
+
+		DOM.toast.classList.add(level);
+		DOM.toast.innerHTML = `
+			<span class="material-icons" id="close-toast">clear</span>
 			<h3>${level.substring(0,1).toUpperCase()}${level.substring(1)}</h3>
 			<p>${message}</p>
 		`;
 
+		DOM.toast.addEventListener("click", UI.clearToast);
+
 		setTimeout(show,1);
-		toastTimer = setTimeout(hide,6000);
+		toastTimer = setTimeout(hide,7500);
 
 		function show() {
-			toast.classList.add("show");
+			DOM.toast.classList.add("show");
 		}
 
 		function hide() {
-			toast.classList.remove("show");
+			DOM.toast.classList.remove("show");
 		}
 	}
 
@@ -757,8 +761,7 @@ class UI {
 		clearTimeout(toastTimer);
 
 		// immediately send the current toast message away and generate a new one
-		let toast = document.querySelector("#toast");
-		toast.classList = "";
+		DOM.toast.classList.remove("show");
 	}
 }
 

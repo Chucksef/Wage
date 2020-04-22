@@ -844,6 +844,7 @@ button.btn-icon:focus {
 		}
 
 		h3 {
+			padding-top: .33em;
 			font-size: 1.5em;
 		}
 
@@ -879,6 +880,7 @@ button.btn-icon:focus {
 
 #toast {
 	position: absolute;
+	background: $alert;
     left: 50%;
     bottom: 100%;
     transform: translate(-50%, -2em);
@@ -891,7 +893,16 @@ button.btn-icon:focus {
     transition: .5s;
     transition-timing-function: ease-in-out;
 	transition-property: transform;
+	cursor: pointer;
 	
+	span {
+		position: absolute;
+		right: .5em;
+		top: .5em;
+		opacity: .5;
+		font-size: 1em;
+	}
+
 	p {
 		white-space: break-spaces;
 		padding: .25em 0 .25em;
@@ -900,7 +911,7 @@ button.btn-icon:focus {
 }
 
 #toast.show {
-	transform: translate(-50%, calc(100% + 2em));
+	transform: translate(-50%, calc(100% + 1em));
 }
 
 #toast.alert {

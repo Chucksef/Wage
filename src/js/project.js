@@ -8,6 +8,7 @@ class Project {
 	}
 
 	validate() {
+		let regNum = /^[0-9]+([.][0-9]{1,2})?$/;
 		let errors = [];
 
 		if (this.name == "") {
@@ -16,6 +17,12 @@ class Project {
 
 		if (this.clientID == "") {
 			errors.push("Please Select a Client");
+		}
+
+		if (this.rate != "") {
+			if (!regNum.test(this.rate)) {
+				errors.push("Rate must take the format: \"NN.NN\"");
+			}
 		}
 
 		return errors;
