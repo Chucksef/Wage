@@ -54,17 +54,7 @@ class Auth {
 			const password = document.querySelector("#signIn-password").value;
 
 			auth.signInWithEmailAndPassword(email, password).catch((error) => {
-				switch (error.code) {
-					case "auth/invalid-email":
-						UI.toast(`${email} not a valid email address`);
-						break;
-					case "auth/user-not-found":
-						UI.toast(`No user found for email: ${email}`);
-						break;
-					case "auth/wrong-password":
-						UI.toast(`Incorrect Password`);
-						break;
-				}
+				Utils.parseError(error.code);
 			});
 		}
 
@@ -74,14 +64,7 @@ class Auth {
 				auth.sendPasswordResetEmail(email).then(() => {
 					UI.toast(`Sending Password Reset Email to ${email}`, "success");
 				}).catch((error) => {
-					switch (error.code) {
-						case "auth/invalid-email":
-							UI.toast(`${email} not a valid email address`, "warning");
-							break;
-						case "auth/user-not-found":
-							UI.toast(`No user found for email: ${email}`);
-							break;
-					}
+					Utils.parseError(error.code);
 				});
 			} else {
 				UI.toast("Please Enter the email address for the account password you would like to reset")
@@ -122,14 +105,7 @@ class Auth {
 			} else {
 				// create the user and log in!
 				auth.createUserWithEmailAndPassword(email, password).catch((error) => {
-					switch (error.code) {
-						case "auth/email-already-in-use":
-							UI.toast("Cannot Create New Account:<br>Email Already In Use", "warning")
-							break;
-						case "auth/invalid-email":
-							UI.toast("Cannot Create New Account:<br>Invalid Email Address", "warning")
-							break;
-					}
+					Utils.parseError(error.code);
 				});
 			}
 		}
@@ -164,17 +140,7 @@ class Auth {
 			app.user = user;
 			UI.hideMenu();
 		}).catch((error) => {
-			switch (error.code) {
-				case "auth/invalid-email":
-					UI.toast(`${email} not a valid email address`);
-					break;
-				case "auth/user-not-found":
-					UI.toast(`No user found for email: ${email}`);
-					break;
-				case "auth/wrong-password":
-					UI.toast(`Incorrect Password`);
-					break;
-			}
+			Utils.parseError(error.code);
 		});
 
 	}

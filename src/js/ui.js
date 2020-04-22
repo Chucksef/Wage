@@ -716,21 +716,9 @@ class UI {
 				name: uName.value,
 				email: uEmail.value,
 				password: uPassword.value,
-				valid: true,
-				message: "One or more errors have been encountered:\n",
 			};
 
 			// validate data
-			if (params.password == "") {
-				params.valid = false;
-				params.message += " • Please Enter Your Password\n";
-			}
-
-			if (params.email == "") {
-				params.valid = false;
-				params.message += " • Email Address Cannot be Blank\n";
-			}
-
 			if (params.name == app.user.displayName) {
 				params.name = null;
 			}
@@ -740,11 +728,7 @@ class UI {
 			}
 
 			// submit the update action
-			if (params.valid) {
-				Auth.updateUser(app, params);
-			} else {
-				UI.toast(params.message, "warning");
-			}
+			Auth.updateUser(app, params);
 		});
 	}
 
@@ -774,7 +758,7 @@ class UI {
 
 		// immediately send the current toast message away and generate a new one
 		let toast = document.querySelector("#toast");
-		toast.classList.remove("show");
+		toast.classList = "";
 	}
 }
 
