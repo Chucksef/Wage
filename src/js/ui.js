@@ -520,7 +520,7 @@ class UI {
 					errors.forEach((error) => {
 						message += `• ${error}\n`;
 					});
-					alert(message);
+					UI.toast(message);
 					// UI.message();   //  << NEED TO WRTIE FUNCTION TO HAVE NICER ALERT!!
 				} else {
 					// pass the object to save it
@@ -556,7 +556,7 @@ class UI {
 					errors.forEach((error) => {
 						message += `• ${error}\n`;
 					});
-					alert(message);
+					UI.toast(message);
 					// UI.message();   // TODO: WRTIE FUNCTION TO HAVE NICER ALERT!! <----------------------
 				} else {
 					// pass the object to the app to save it
@@ -708,6 +708,9 @@ class UI {
 		// set up ProfileMenu buttons
 		document.querySelector("#cancel").addEventListener("click", UI.hideMenu);
 		document.querySelector("#submit").addEventListener("click", ()=>{
+			// clear app toast if applicable
+			UI.clearToast(app);
+
 			// get data from form
 			let params = {
 				name: uName.value,
@@ -739,11 +742,39 @@ class UI {
 			// submit the update action
 			if (params.valid) {
 				Auth.updateUser(app, params);
-				UI.hideMenu();
 			} else {
-				alert(params.message);
+				UI.toast(params.message, "warning");
 			}
 		});
+	}
+
+	static toast(message, level="alert") {
+		let toast = document.querySelector("#toast");
+		toast.classList.add(level);
+		toast.innerHTML = `
+			<h3>${level.substring(0,1).toUpperCase()}${level.substring(1)}</h3>
+			<p>${message}</p>
+		`;
+
+		setTimeout(show,1);
+		toastTimer = setTimeout(hide,6000);
+
+		function show() {
+			toast.classList.add("show");
+		}
+
+		function hide() {
+			toast.classList.remove("show");
+		}
+	}
+
+	static clearToast() {
+		// stop any timers
+		clearTimeout(toastTimer);
+
+		// immediately send the current toast message away and generate a new one
+		let toast = document.querySelector("#toast");
+		toast.classList.remove("show");
 	}
 }
 

@@ -876,3 +876,45 @@ button.btn-icon:focus {
 #modal.transparent {
 	background: transparent;
 }
+
+#toast {
+	position: absolute;
+    left: 50%;
+    bottom: 100%;
+    transform: translate(-50%, -2em);
+    display: block;
+    z-index: 150;
+    padding: 1em;
+    box-sizing: border-box;
+    border-radius: .75em;
+    box-shadow: 0 0.5em 1em rgba(0,0,0,.5);
+    transition: .5s;
+    transition-timing-function: ease-in-out;
+	transition-property: transform;
+	
+	p {
+		white-space: break-spaces;
+		padding: .25em 0 .25em;
+		line-height: 1.25;
+	}
+}
+
+#toast.show {
+	transform: translate(-50%, calc(100% + 2em));
+}
+
+#toast.alert {
+	background: $alert;
+}
+
+#toast.warning {
+	background: $warning;
+}
+
+#toast.success {
+	background: $success;
+}
+
+#toast.info {
+	background: $info;
+}

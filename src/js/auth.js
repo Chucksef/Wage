@@ -25,6 +25,7 @@ auth.onAuthStateChanged(user => {
 
 class Auth {
 	constructor() {
+		window.toastTimer = null;
 		DOM.btn_SignIn.addEventListener("click", Auth.showSignInMenu);
 		DOM.btn_SignUp.addEventListener("click", Auth.showSignUpMenu);
 		DOM.btn_SignOut.addEventListener("click", Auth.signOut);
@@ -55,13 +56,13 @@ class Auth {
 			auth.signInWithEmailAndPassword(email, password).catch((error) => {
 				switch (error.code) {
 					case "auth/invalid-email":
-						alert(`${email} not a valid email address`);
+						UI.toast(`${email} not a valid email address`);
 						break;
 					case "auth/user-not-found":
-						alert(`No user found for email: ${email}`);
+						UI.toast(`No user found for email: ${email}`);
 						break;
 					case "auth/wrong-password":
-						alert(`Incorrect Password`);
+						UI.toast(`Incorrect Password`);
 						break;
 				}
 			});
@@ -71,11 +72,19 @@ class Auth {
 			const email = document.querySelector("#signIn-email").value;
 			if (email != "") {
 				auth.sendPasswordResetEmail(email).then(() => {
-					alert(`Sending Password Reset Email to ${email}`);
-					UI.hideMenu();
+					UI.toast(`Sending Password Reset Email to ${email}`, "success");
+				}).catch((error) => {
+					switch (error.code) {
+						case "auth/invalid-email":
+							UI.toast(`${email} not a valid email address`, "warning");
+							break;
+						case "auth/user-not-found":
+							UI.toast(`No user found for email: ${email}`);
+							break;
+					}
 				});
 			} else {
-				alert("Please Enter the email address for the account password you would like to reset")
+				UI.toast("Please Enter the email address for the account password you would like to reset")
 			}
 		}
 	}
@@ -100,25 +109,28 @@ class Auth {
 			const password = document.querySelector("#signUp-password").value;
 			const confirmation = document.querySelector("#signUp-confirmation").value;
 
-			// check if password and confirmation match...
-			if (password === confirmation) {
-				if (password.length > 5) {
-					// create the user and log in!
-					auth.createUserWithEmailAndPassword(email, password).catch((error) => {
-						switch (error.code) {
-							case "auth/email-already-in-use":
-								alert("Cannot Create New Account:\nEmail Already In Use.")
-								break;
-							case "auth/invalid-email":
-								alert("Cannot Create New Account:\nInvalid Email Address")
-								break;
-						}
-					});
-				} else {
-					alert("Password must be 6 characters or longer");
-				}
+			// validate inputs and return errors 
+			let errors = [];
+			if (email == "") errors.push(" • Email missing");
+			if (password == "") errors.push(" • Password missing");
+			if (confirmation == "") errors.push(" • Confirmation missing");
+			if (password !== confirmation) errors.push(" • Password and Confirmation must match");
+			if (password.length < 6) errors.push(" • Password must be at least 6 characters long");
+
+			if (errors.length) {
+				UI.toast(errors.join("<br>"))
 			} else {
-				alert("Password and Confirmation Must Match");
+				// create the user and log in!
+				auth.createUserWithEmailAndPassword(email, password).catch((error) => {
+					switch (error.code) {
+						case "auth/email-already-in-use":
+							UI.toast("Cannot Create New Account:<br>Email Already In Use", "warning")
+							break;
+						case "auth/invalid-email":
+							UI.toast("Cannot Create New Account:<br>Invalid Email Address", "warning")
+							break;
+					}
+				});
 			}
 		}
 	}
@@ -133,7 +145,7 @@ class Auth {
 		let credential = firebase.auth.EmailAuthProvider.credential(user.email, params.password);
 		let updated = [];
 
-		user.reauthenticateWithCredential(credential).then(()=>{
+		user.reauthenticateWithCredential(credential).then(() => {
 			// update the user
 			if (params.email) {
 				user.updateEmail(params.email);
@@ -148,8 +160,21 @@ class Auth {
 			}
 			
 			// let the user know if this worked with a toast message
-			alert(`successfully updated ${user.displayName}'s ${Format.list(updated)}`);
+			UI.toast(`Successfully updated ${Format.list(updated)}`, "success");
 			app.user = user;
+			UI.hideMenu();
+		}).catch((error) => {
+			switch (error.code) {
+				case "auth/invalid-email":
+					UI.toast(`${email} not a valid email address`);
+					break;
+				case "auth/user-not-found":
+					UI.toast(`No user found for email: ${email}`);
+					break;
+				case "auth/wrong-password":
+					UI.toast(`Incorrect Password`);
+					break;
+			}
 		});
 
 	}

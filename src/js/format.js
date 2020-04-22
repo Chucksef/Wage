@@ -376,11 +376,11 @@ class Format {
 				return `${arr.join(", ")}, and ${last}`;
 			} else if (arr.length == 2) {
 				return `${arr[0]} and ${arr[1]}`;
-			} else if (arr.length == 1) {
-				return `${arr[0]}`;
 			} else {
-				return `NO-ITEMS-IN-LIST`;
+				return `${arr[0]}`;
 			}
+		} else {
+			return `...Nothing`;
 		}
 	}
 }

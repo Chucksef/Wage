@@ -200,7 +200,7 @@ const TEMPLATES = {
 							<p class="tooltip right">Update User Profile</p>
 						</button>
 						<button type="button" class="btn-menu material-icons" id="reset">
-							lock
+							cached
 							<p class="tooltip top">Reset Password</p>
 						</button>
 						<button type="button" class="btn-menu material-icons" id="cancel">

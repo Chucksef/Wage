@@ -35,7 +35,6 @@ At the current stage of development (planning), we can anticipate that it would 
 ## Current TODO List
 
   * UI
-    * Tooltip system
     * Alert system
     * Let user use "Esc" to close modal windows
     * Create db loading wait animation
