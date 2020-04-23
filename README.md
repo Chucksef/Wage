@@ -35,7 +35,6 @@ At the current stage of development (planning), we can anticipate that it would 
 ## Current TODO List
 
   * UI
-    * BUG --DISCARD SESSION BUTTON DOES NOTHING ON EDIT SESSION MENU--
     * Menus submit with "Enter"
     * Create db loading wait animation
     * Clean up interface (simplify!!!);

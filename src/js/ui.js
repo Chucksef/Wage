@@ -455,9 +455,13 @@ class UI {
 			option.innerText = "Select Client";
 			clientDD.insertAdjacentElement("beforeend", option);
 		} else if (type == "SESSION") {
-			document.querySelector("#cancel").addEventListener("click", () => {
-				UI.hideMenu();
-			});
+			if (allowBack) {
+				document.querySelector("#cancel").remove();
+			} else {
+				document.querySelector("#cancel").addEventListener("click", () => {
+					UI.hideMenu();
+				});
+			}
 		}
 
 		// add event listener to the freshly-generated back button
@@ -557,7 +561,6 @@ class UI {
 						message += `• ${error}\n`;
 					});
 					UI.toast(message);
-					// UI.message();   // TODO: WRTIE FUNCTION TO HAVE NICER ALERT!! <----------------------
 				} else {
 					// pass the object to the app to save it
 					app.addProject(newProject);
