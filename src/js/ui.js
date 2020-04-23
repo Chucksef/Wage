@@ -479,6 +479,21 @@ class UI {
 
 		// add event listener to the freshly-generated submit button
 		document.querySelector("#submit").addEventListener("click", () => {
+			submitButton();
+		});
+
+		const inputs = modalBG.querySelectorAll("input");
+		inputs.forEach((input) => {
+			input.addEventListener("keydown", checkKey);
+		})
+
+		function checkKey(e) {
+			if(e.code == "Enter") {
+				submitButton();
+			};
+		}
+
+		function submitButton() {
 			// if the form is for a client...
 			if (type == "CLIENT") {
 				// grab and store form values
@@ -569,7 +584,7 @@ class UI {
 					UI.display(app, app.clients);
 				}
 			}
-		});
+		}
 
 		// grab the actual menu and some key properties used to animate it...
 		const menu = document.querySelector(".menu");

@@ -35,8 +35,10 @@ At the current stage of development (planning), we can anticipate that it would 
 ## Current TODO List
 
   * UI
-    * Menus submit with "Enter"
     * Create db loading wait animation
     * Clean up interface (simplify!!!);
     * Create "blank canvas" instructions
     * Entry expansion should look more like drawers opening (all sub-items anchored to bottom of container)
+
+  * Bugs
+    * Better validation needed on Session's Breaks field (reject non-numeric characters)
