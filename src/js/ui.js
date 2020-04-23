@@ -398,7 +398,6 @@ class UI {
 								UI.zoom(app, updatedSession.id);
 							});
 						}
-						UI.selectFirst();
 					});
 				}
 				// hide the controls
@@ -569,18 +568,19 @@ class UI {
 			}
 		});
 
-		UI.selectFirst();
-
 		// grab the actual menu and some key properties used to animate it...
 		const menu = document.querySelector(".menu");
-
+		
 		// calculate the value that will put the menu offscreen...
 		const parHeight = parseFloat(window.getComputedStyle(menu.parentNode).height);
 		const menuHeight = parseFloat(window.getComputedStyle(menu).height);
 		const mag = menuHeight + (parHeight - menuHeight) / 2;
-
+		
 		// animate the menu
 		Animator.flyIn(menu, "bottom", mag, 0.5, 0);
+
+		// select the first element on a .25s delay (so that the element is in view when it's selected)
+		setTimeout(UI.selectFirst, 250);
 	}
 
 	static hideMenu() {
@@ -772,7 +772,7 @@ class UI {
 	static selectFirst() {
 		const first = document.querySelector(".first");
 		first.focus();
-		if (first.tagName != "SELECT") first.select();
+		if (first.tagName == "INPUT") first.select();
 	}
 }
 
