@@ -35,10 +35,20 @@ At the current stage of development (planning), we can anticipate that it would 
 ## Current TODO List
 
   * UI
+    * Needs more pink
+    * Scale Entries for smaller screen formats
     * Create db loading wait animation
-    * Clean up interface (simplify!!!);
-    * Create "blank canvas" instructions
-    * Entry expansion should look more like drawers opening (all sub-items anchored to bottom of container)
 
   * Bugs
+    * User controls div doesn't resize on window change
+    * User Profile Animates Incorrectly
+    * Sign In Menu tooltip mislabeled
     * Better validation needed on Session's Breaks field (reject non-numeric characters)
+
+  * Tutorial
+    * Make system to detect first log-in
+    * Design series of 
+
+  * Art and Animations
+    * Piggy
+    * Main Logo

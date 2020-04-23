@@ -5,21 +5,33 @@ import { Utils } from "./utils";
 import { auth } from "./firebase";
 import { App } from "./app";
 import { Format } from "./format";
+import { Animator } from "./animator";
 
 // listen for auth status changes
 auth.onAuthStateChanged(user => {
 	if (user) {
-		console.log(`${JSON.stringify(user)}`);
+		// close the log-in screen
+		DOM.body.classList.remove("closed");
+		document.querySelector("#welcome").style.display = "none";
+		UI.hideMenu();
+
+		// set up the instance of the app
 		let app = new App(user.uid);
 		app.user = user;
-		UI.hideMenu();
-		document.querySelector("#welcome").style.display = "none";
 	} else {
+		// show the log-in screen
+		DOM.body.classList.add("closed");
+		document.querySelector("#welcome").style.display = "flex";
+
+		// fly MainMenu in
+		const startPos = Utils.getOOBValue(DOM.mainMenu, "top");
+		Animator.flyIn(DOM.mainMenu, "top", startPos, 1);
+		
+		// reset a few elements
 		DOM.ham.classList.add("show");
 		DOM.hamOptions.classList.add("show");
 		UI.toggleHamburger();
 		UI.reset();
-		document.querySelector("#welcome").style.display = "flex";
 	}
 })
 
@@ -31,12 +43,14 @@ class Auth {
 		DOM.btn_SignOut.addEventListener("click", Auth.signOut);
 
 		// Cheeky shortcut to signing in by clicking on menu      <------------------------------------------------------------------- DELETE ME LATER!!!
-		// document.querySelector(".centered").addEventListener("click", () => {
+		// document.querySelector("#mainMenu").addEventListener("click", () => {
 		// 	auth.signInWithEmailAndPassword("chucksef@gmail.com", "password");
 		// });
 	}
 
 	static showSignInMenu() {
+		const mag = Utils.getOOBValue(DOM.mainMenu, "top", 100);
+		Animator.flyOut(DOM.mainMenu, "top", mag, .75);
 		UI.menu(null, TEMPLATES.menus.signIn);
 
 		// duplicate both buttons to clear event listeners
@@ -46,8 +60,21 @@ class Auth {
 
 		// assign new event listeners
 		cancel.addEventListener("click", UI.hideMenu);
+		cancel.addEventListener("click", showMain);
 		submit.addEventListener("click", signUserIn);
+		document.querySelectorAll("input").forEach((input) => {
+			input.addEventListener("keydown", checkKey);
+		})
 		reset.addEventListener("click", sendReset);
+
+		function showMain() {
+			const mag2 = Utils.getOOBValue(DOM.mainMenu, "top", 100);
+			Animator.flyIn(DOM.mainMenu, "top", mag2, 1, .25);
+		}
+
+		function checkKey(e) {
+			if (e.code == "Enter") signUserIn();
+		}
 
 		function signUserIn() {
 			const email = document.querySelector("#signIn-email").value;
@@ -73,6 +100,8 @@ class Auth {
 	}
 
 	static showSignUpMenu() {
+		const mag = Utils.getOOBValue(DOM.mainMenu, "top", 100);
+		Animator.flyOut(DOM.mainMenu, "top", mag, .75);
 		UI.menu(null, TEMPLATES.menus.signUp);
 
 		// duplicate both buttons to clear event listeners
@@ -80,10 +109,16 @@ class Auth {
 		const submit = Utils.clearListeners(document.querySelector("#submit"));
 
 		// assign new event listerners
+		cancel.addEventListener("click", showMain);
 		cancel.addEventListener("click", () => {
 			UI.hideMenu();
 		});
 
+		function showMain() {
+			const mag2 = Utils.getOOBValue(DOM.mainMenu, "top", 100);
+			Animator.flyIn(DOM.mainMenu, "top", mag2, 1, .25);
+		}
+		
 		submit.addEventListener("click", signUserUp);
 
 		// checks the password for confirmation and signs the user in

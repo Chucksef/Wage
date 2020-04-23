@@ -8,6 +8,8 @@ let DOM = {
 	hamOptions: document.querySelector("#hamburger-options"),
 	toast: document.querySelector("#toast"),
 
+	mainMenu: document.querySelector("#mainMenu"),
+
 	btn_NewClient: document.querySelector("#btn-NewClient"),
 	btn_NewProject: document.querySelector("#btn-NewProject"),
 

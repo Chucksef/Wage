@@ -540,7 +540,6 @@ class UI {
 						message += `• ${error}\n`;
 					});
 					UI.toast(message);
-					// UI.message();   //  << NEED TO WRTIE FUNCTION TO HAVE NICER ALERT!!
 				} else {
 					// pass the object to save it
 					app.addClient(newClient);
@@ -585,14 +584,9 @@ class UI {
 				}
 			}
 		}
-
 		// grab the actual menu and some key properties used to animate it...
 		const menu = document.querySelector(".menu");
-		
-		// calculate the value that will put the menu offscreen...
-		const parHeight = parseFloat(window.getComputedStyle(menu.parentNode).height);
-		const menuHeight = parseFloat(window.getComputedStyle(menu).height);
-		const mag = menuHeight + (parHeight - menuHeight) / 2;
+		const mag = Utils.getOOBValue(menu);
 		
 		// animate the menu
 		Animator.flyIn(menu, "bottom", mag, 0.5, 0);
@@ -607,9 +601,8 @@ class UI {
 
 		if (modal) {
 			modal.classList.add("transparent");
-			let parHeight = parseFloat(window.getComputedStyle(menu.parentNode).height);
-			let menuHeight = parseFloat(window.getComputedStyle(menu).height);
-			let mag = menuHeight + (parHeight - menuHeight) / 2;
+			
+			let mag = Utils.getOOBValue(menu);
 
 			Animator.flyOut(menu, "bottom", mag, 0.5, 0);
 

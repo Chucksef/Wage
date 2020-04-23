@@ -23,6 +23,24 @@ class Utils {
 				break;
 		}
 	}
+
+	static getOOBValue(elem, dir="bottom", pad=0) {
+		switch (dir) {
+			case "bottom":
+			case "top":
+				let parentHeight = parseFloat(window.getComputedStyle(elem.parentNode).height);
+				let elemHeight = parseFloat(window.getComputedStyle(elem).height);
+				return (elemHeight + (parentHeight - elemHeight) / 2) + pad;
+				break;
+			case "left":
+			case "right":
+				let parentWidth = parseFloat(window.getComputedStyle(elem.parentNode).Width);
+				let elemWidth = parseFloat(window.getComputedStyle(elem).Width);
+				return (elemWidth + (parentWidth - elemWidth) / 2) + pad;
+				break;
+		}
+		
+	}
 }
 
 export { Utils };

@@ -30,11 +30,42 @@ option {
 	color: $entry;
 	margin: 0;
 	line-height: 1;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none;
 }
 
 body {
-	background: $primary;
+	background: $dark;
 	overflow: hidden;
+}
+
+body::before, body::after {
+	content: "";
+    height: 100%;
+    width: calc(19.741vw - 98.707px);
+    background: $dark;
+    position: absolute;
+    top: 0;
+    left: 0;
+	z-index: 50;
+	transition: 1s;
+	transition-delay: .25s;
+    box-shadow: 0 0.5em 2em 0px rgba(0,0,0,.5);
+}
+
+body::after {
+	left: auto;
+	right: 0;
+}
+
+body.closed::before, body.closed::after {
+	background: $primary;
+	width: 50%;
+	box-shadow: 0 0.5em 0em 0px rgba(0,0,0,.5);
 }
 
 div {
@@ -170,7 +201,6 @@ button.btn-dark:focus {
 	width: 33%;
 	height: 100%;
 	background: $dark;
-	box-shadow: 2px 0px 25px rgba(0, 0, 0, .5);
 	padding: 1em;
 	padding-bottom: 0;
 	
@@ -416,7 +446,6 @@ button.btn-icon:focus {
 	left: 33%;
 	padding: 0 1em;
 	background: $light;
-	box-shadow: 0px 0px 20px rgba(0, 0, 0, .5);
 }
 
 #filters {
