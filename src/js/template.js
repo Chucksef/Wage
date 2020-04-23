@@ -143,11 +143,15 @@ const TEMPLATES = {
 					<div class="buttons">
 						<button type="button" class="btn-menu material-icons" id="submit">
 							save
-							<p class="tooltip right">Update User Profile</p>
+							<p class="tooltip right">Update Session</p>
 						</button>
 						<button type="button" class="btn-menu material-icons" id="cancel">
 							delete_forever
-							<p class="tooltip left">Discard Session</p>
+							<p class="tooltip top">Discard Session</p>
+						</button>
+						<button type="button" class="btn-menu material-icons" id="back">
+							undo
+							<p class="tooltip left">Back</p>
 						</button>
 					</div>
 				</div>
