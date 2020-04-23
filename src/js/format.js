@@ -2,7 +2,7 @@ class Format {
 	static dollars(num) {
 		let split = num.toString().split(".");
 		if (split.length == 1) {
-			return `$${num}.00`;
+			return `${num}.00`;
 		} else {
 			let oldPrefix = split[0];
 			let newPrefix = "";
@@ -14,7 +14,7 @@ class Format {
 					newPrefix = `,${newPrefix}`;
 				}
 			}
-			return `$${newPrefix}.${(split[1] + "00").substr(0, 2)}`;
+			return `${newPrefix}.${(split[1] + "00").substr(0, 2)}`;
 		}
 	}
 

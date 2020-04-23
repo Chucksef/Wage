@@ -2,16 +2,37 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 /* Remapping Color Variables */
+    $primary: #ff80a2;
+    $primaryLight: #f8c6d4;
+    $primaryDark: #e9537b;
 
-$primary: #ff80a2;
-$secondary: #f8c6d4;
-$lightControl: #8bd8d4;
-$darkControl: #51807d;
-$entry: #ffffff;
-$light: #eeeeee;
-$dark: #5e5e5e;
+    $complement: #8bd8d4;
+    $complementDark: #51807d;
 
-$success: #06b148;
-$info: #06a5b1;
-$alert: #e2b11d;
-$warning: #e93c4e;
+    $light: #eeeeee;
+    $dark: #5e5e5e;
+
+// toast colors
+    $success: #06b148;
+    $info: #06a5b1;
+    $alert: #e2b11d;
+    $warning: #e93c4e;
+
+// assign colors to elementy types
+    $sidebar: $dark;
+    $doorOpen: $dark;
+    $doorClosed: $primary;
+
+    $entry1: white;
+    $entry2: $primary;
+    $entry3: $dark;
+
+    $lightText: white;
+    $text: white;
+    $darkText: $complementDark;
+    $welcomeText: $primary;
+
+    $button: $complement;
+
+    $modal: rgba(200,200,200,.8);
+    $menu: $primary;

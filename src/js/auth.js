@@ -43,9 +43,9 @@ class Auth {
 		DOM.btn_SignOut.addEventListener("click", Auth.signOut);
 
 		// Cheeky shortcut to signing in by clicking on menu      <------------------------------------------------------------------- DELETE ME LATER!!!
-		// document.querySelector("#mainMenu").addEventListener("click", () => {
-		// 	auth.signInWithEmailAndPassword("chucksef@gmail.com", "password");
-		// });
+		document.querySelector("#mainMenu").addEventListener("click", () => {
+			auth.signInWithEmailAndPassword("chucksef@gmail.com", "password");
+		});
 	}
 
 	static showSignInMenu() {

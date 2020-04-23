@@ -37,9 +37,9 @@ At the current stage of development (planning), we can anticipate that it would 
   * UI
     * Needs more pink
     * Scale Entries for smaller screen formats
-    * Create db loading wait animation
 
   * Bugs
+    * Clock In animates TOO HIGH!
     * User controls div doesn't resize on window change
     * User Profile Animates Incorrectly
     * Sign In Menu tooltip mislabeled

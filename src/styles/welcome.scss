@@ -21,7 +21,7 @@
 		position: relative;
 
 		* {
-			color: $primary;
+			color: $welcomeText;
 		}
 
 		p {
@@ -65,7 +65,7 @@
 
 					p {
 						font-size: calc(.667em + 1vw);
-						color: $lightControl;
+						color: $button;
 					}
 				}
 			}
