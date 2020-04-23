@@ -539,15 +539,17 @@ button.btn-icon:focus {
 .active {
 	justify-content: center;
 	align-items: center;
-	min-height: 1.75em;
+	min-height: 63px;
 	cursor: default;
 	padding: .5em;
 	border: 1px solid white;
 	transition: 1.5s;
+	transition-property: border-color, background;
 
 	h4 {
 		font-size: 2.25em;
 		margin: 0;
+		padding: 0;
 		transition: 1.5s;
 	}
 }
