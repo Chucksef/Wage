@@ -398,6 +398,7 @@ class UI {
 								UI.zoom(app, updatedSession.id);
 							});
 						}
+						UI.selectFirst();
 					});
 				}
 				// hide the controls
@@ -435,7 +436,7 @@ class UI {
 		let type = template.split(">")[0].trim();
 		type = type.substr(4, type.length - 6);
 
-		// populate the select client menu
+		// populate the select client dropdown menu
 		if (type == "PROJECT") {
 			let clientDD = document.querySelector("#client-ID");
 			let appClients = Object.keys(app.clients);
@@ -469,7 +470,7 @@ class UI {
 					UI.hideMenu();
 				});
 			} else {
-				document.querySelector("#back").remove();
+				backButton.remove();
 			}
 		}
 
@@ -568,13 +569,15 @@ class UI {
 			}
 		});
 
+		UI.selectFirst();
+
 		// grab the actual menu and some key properties used to animate it...
-		let menu = document.querySelector(".menu");
+		const menu = document.querySelector(".menu");
 
 		// calculate the value that will put the menu offscreen...
-		let parHeight = parseFloat(window.getComputedStyle(menu.parentNode).height);
-		let menuHeight = parseFloat(window.getComputedStyle(menu).height);
-		let mag = menuHeight + (parHeight - menuHeight) / 2;
+		const parHeight = parseFloat(window.getComputedStyle(menu.parentNode).height);
+		const menuHeight = parseFloat(window.getComputedStyle(menu).height);
+		const mag = menuHeight + (parHeight - menuHeight) / 2;
 
 		// animate the menu
 		Animator.flyIn(menu, "bottom", mag, 0.5, 0);
@@ -614,7 +617,7 @@ class UI {
 		DOM.ham.addEventListener("click", UI.toggleHamburger);
 		DOM.toast.addEventListener("click", () => UI.clearToast);
 		// assign listener to Profile Button.
-		DOM.btn_Profile.addEventListener("click", () => UI.setUpUserMenu(app));
+		DOM.btn_Profile.addEventListener("click", () => UI.showUserMenu(app));
 	}
 
 	static showClock(app, session, speed, delay) {
@@ -696,7 +699,7 @@ class UI {
 		}
 	}
 
-	static setUpUserMenu(app) {
+	static showUserMenu(app) {
 		// show the menu
 		UI.menu(app, TEMPLATES.menus.user);
 
@@ -729,6 +732,8 @@ class UI {
 			// submit the update action
 			Auth.updateUser(app, params);
 		});
+
+		UI.selectFirst();
 	}
 
 	static toast(message, level="alert") {
@@ -762,6 +767,12 @@ class UI {
 
 		// immediately send the current toast message away and generate a new one
 		DOM.toast.classList.remove("show");
+	}
+
+	static selectFirst() {
+		const first = document.querySelector(".first");
+		first.focus();
+		if (first.tagName != "SELECT") first.select();
 	}
 }
 

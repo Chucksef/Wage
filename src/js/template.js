@@ -53,7 +53,7 @@ const TEMPLATES = {
 				<h1>New Client</h1>
 				<hr>
 				<h6>Client Info</h6>
-				<input type="text" id="client-name" placeholder="Client Name">
+				<input type="text" class="first" id="client-name" placeholder="Client Name">
 				<input type="text" id="client-address" placeholder="Address">
 				<input type="text" id="client-city" placeholder="City">
 				<input type="text" id="client-state" placeholder="State">
@@ -94,7 +94,7 @@ const TEMPLATES = {
 				<h1>New Project</h1>
 				<hr>
 				<h6>Client</h6>
-				<select id="client-ID">
+				<select class="first" id="client-ID">
 				</select>
 				<h6>Details</h6>
 				<input type="text" id="project-name" placeholder="Name">
@@ -127,7 +127,7 @@ const TEMPLATES = {
 				<div class="row">
 					<div class="col">
 						<h6>Clock In</h6>
-						<input type="date" id="session-clockInDate">
+						<input type="date" class="first" id="session-clockInDate">
 						<input type="time" id="session-clockInTime">
 					</div>
 					<div class="col">
@@ -170,7 +170,7 @@ const TEMPLATES = {
 				<hr>
 				<div class="buttonRow">
 					<div class="buttons">
-						<button type="button" class="btn-menu material-icons" id="submit">
+						<button type="button" class="btn-menu material-icons first" id="submit">
 							delete_forever
 							<p class="tooltip right">Delete Forever</p>
 						</button>
@@ -189,7 +189,7 @@ const TEMPLATES = {
 				<h1>Sign In</h1>
 				<hr>
 				<label>Email</label>
-				<input type="email" id="signIn-email" placeholder="User Email" required>
+				<input type="email" class="first" id="signIn-email" placeholder="User Email" required>
 				<label>Password</label>
 				<input type="password" id="signIn-password" placeholder="Password" required>
 				<hr>
@@ -218,7 +218,7 @@ const TEMPLATES = {
 				<h1>Sign Up</h1>
 				<hr>
 				<label>Email</label>
-				<input type="email" id="signUp-email" placeholder="User Email" required>
+				<input type="email" class="first" id="signUp-email" placeholder="User Email" required>
 				<label>Password</label>
 				<input type="password" id="signUp-password" placeholder="Password" required>
 				<label>Confirm Password</label>
@@ -245,7 +245,7 @@ const TEMPLATES = {
 				<h1>User Profile</h1>
 				<hr>
 				<label>User Name</label>
-				<input type="text" id="user-name" placeholder="User Name" required>
+				<input type="text" class="first" id="user-name" placeholder="User Name" required>
 				<label>Primary Email Address</label>
 				<input type="email" id="user-email" placeholder="User Email" required>	
 				<label>Password</label>
