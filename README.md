@@ -34,9 +34,6 @@ At the current stage of development (planning), we can anticipate that it would 
 
 ## Current TODO List
 
-  * UI
-    * Scale Entries for smaller screen formats
-
   * Bugs
     * Clock In animates TOO HIGH!
     * User controls div doesn't resize on window change

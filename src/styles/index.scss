@@ -122,7 +122,7 @@ button {
 	color: $button;
 	border: 1px solid $button;
 	background: rgba(0, 0, 0, 0);
-	border-radius: calc(.379vw + 2.723px);
+	border-radius: calc(.3521vw + 3.2397px);
 	font-weight: 300;
 	font-size: 1.25em;
 	line-height: 1;
@@ -375,9 +375,9 @@ button:focus {
 	position: relative;
 	display: flex;
 	width: 100%;
-	min-height: 5.5em;
+	min-height: calc(1.1268vw + 66.3654px);
 	background: $entry1;
-	border-radius: 10px;
+	border-radius: calc(.3521vw + 3.2397px);
 	padding: .5em;
 	margin-bottom: 1em;
 	cursor: pointer;
@@ -396,9 +396,6 @@ button:focus {
 		color: $darkText;
 		margin: 0;
 		padding-bottom: .13em;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
 	}
 
 	div.data-block {
@@ -406,7 +403,20 @@ button:focus {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-evenly;
-		border-left: 1px solid $color1;
+		border-left: 1px solid $color4;
+		padding: 0 2px;
+
+		p {
+			font-size: calc(.1408vw + 13.2966px);
+		}
+
+		h3 {
+			font-size: calc(.5634vw + 17.1827px);
+		}
+
+		h4 {
+			font-size: calc(.4296vw + 13.3517px);
+		}
 	}
 
 	div.data-block.first-block {
@@ -464,6 +474,11 @@ button:focus {
 
 	div.data-block.last-block {
 		flex: 0 0 20%;
+	}
+
+	div.data-block.session-block {
+		flex: 0 0 50%;
+		padding-right: calc(-.7042vw + 13.5206px);
 	}
 }
 
@@ -533,13 +548,6 @@ button:focus {
 		background: $entry3;
 		border-bottom: 2px solid $entry2;
 
-		div h3,
-		div h4,
-		div h6,
-		div p {
-			color: $whiteText;
-		}
-
 		div.data-block {
 			border-left: 1px solid $neutral1;
 		}
@@ -552,8 +560,8 @@ button:focus {
 	.childSessions {
 		background: $entry3;
 		margin: -1em 1em 2em;
-		border-bottom-right-radius: 20px;
-		border-bottom-left-radius: 20px;
+		border-bottom-right-radius: calc(.7042vw + 6.4794px);
+		border-bottom-left-radius: calc(.7042vw + 6.4794px);
 		padding: 1em;
 		padding-bottom: 0px;
 		overflow: hidden;
