@@ -36,6 +36,7 @@ At the current stage of development (planning), we can anticipate that it would 
 
   * Bugs
     * Clock In animates TOO HIGH!
+    * Tag button delete error (double mouseover in .15s window)
     * User controls div doesn't resize on window change
     * User Profile Animates Incorrectly
     * Sign In Menu tooltip mislabeled

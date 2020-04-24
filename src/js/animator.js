@@ -137,6 +137,13 @@ class Animator {
 			} else {
 				clearInterval(i);
 				element.style[fromDir] = `${endPos}px`;
+				let shad = window.getComputedStyle(element);
+				setTimeout(resetShadow, 5);
+
+				function resetShadow() {
+					element.style.boxShadow = shad.boxShadow;
+					let shoop;
+				}
 			}
 		}
 	}

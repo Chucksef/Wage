@@ -748,8 +748,6 @@ class UI {
 			// submit the update action
 			Auth.updateUser(app, params);
 		});
-
-		UI.selectFirst();
 	}
 
 	static toast(message, level="alert") {
