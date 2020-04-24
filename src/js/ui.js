@@ -201,6 +201,7 @@ class UI {
 				UI.addEntry(app, entry, target);
 				// show the controls
 				function showControls() {
+					clearTimeout(window.tagTimer);
 					let db = tag.querySelector("#delete-button");
 					if(!db) {
 						// add the delete button
@@ -405,12 +406,12 @@ class UI {
 				}
 				// hide the controls
 				function hideControls() {
-					setTimeout(() => {
+					window.tagTimer = setTimeout(() => {
 						let deleteButton = this.querySelector("#delete-button");
 						let editButton = this.querySelector("#edit-button");
 						deleteButton.remove();
 						editButton.remove();
-					}, 150)
+					}, 200)
 				}
 			}
 		}
