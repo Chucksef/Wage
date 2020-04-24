@@ -136,6 +136,7 @@ button {
 button.btn-block {
 	position: relative;
 	width: calc(100% - calc(1.061vw + 3.629px));
+	min-height: 45px;
 	margin: .3em 0;
 	font-size: calc(.455vw + 15.264px);
 
@@ -465,7 +466,7 @@ button:focus {
 
 	div.data-block.first-block .tag:hover {
 		width: 100px;
-		height: calc(88px - 1em);
+		height: calc(calc(1.1268vw + 66.3654px) - 1em);
 		color: $whiteText;
 		background: $button;
 		transition-delay: 0s;
