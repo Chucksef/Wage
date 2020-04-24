@@ -702,15 +702,7 @@ class UI {
 		DOM.hamOptions.classList.toggle("show");
 
 		if (DOM.hamOptions.classList.contains("show")) {
-			DOM.hamOptions.style.height = "auto";
-			let hgt = parseFloat(window.getComputedStyle(DOM.hamOptions).height);
-			DOM.hamOptions.style.height = "0px";
-
-			// wait 1 ms, then set height to calculated value
-			setTimeout(increase, 1);
-			function increase() {
-				DOM.hamOptions.style.height = `${hgt}px`;
-			}
+			DOM.hamOptions.style.height = "calc(2.0775vw + 90.6128px)";
 		} else {
 			DOM.hamOptions.style.height = "0px";
 		}
