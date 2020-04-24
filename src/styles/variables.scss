@@ -1,16 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&family=Bellota+Text:wght@300;400;700&display=swap'); // Google Fonts Import
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
-/* Remapping Color Variables */
-    $primary: #ff80a2;
-    $primaryLight: #f8c6d4;
-    $primaryDark: #e9537b;
+/* Set Color Palette */
+    $color1: #ff84ab;
+    $color2: #58e4d8;
+    $color3: #74898d;
+    $color4: #ffa5c2;
+    $color5: #ffd34f;
 
-    $complement: #8bd8d4;
-    $complementDark: #51807d;
-
-    $light: #eeeeee;
-    $dark: #5e5e5e;
+    $neutral1: #e5eaec;
+    $neutral2: #576569;
 
 // toast colors
     $success: #06b148;
@@ -19,20 +18,24 @@
     $warning: #e93c4e;
 
 // assign colors to elementy types
-    $sidebar: $dark;
-    $doorOpen: $dark;
-    $doorClosed: $primary;
+    // main element colors
+        $sidebar: $neutral2;
+        $door1: $color4;
+        $door2: $color1;
 
-    $entry1: white;
-    $entry2: $primary;
-    $entry3: $dark;
+    // entry level colors
+        $entry1: white;
+        $entry2: $color1;
+        $entry3: $color3;
 
-    $lightText: white;
-    $text: white;
-    $darkText: $complementDark;
-    $welcomeText: $primary;
+    // text colors    
+        $darkText: $neutral2;
+        $specialText: $color1;
+        $sidebarText: white;
+        $whiteText: white;
 
-    $button: $complement;
-
-    $modal: rgba(200,200,200,.8);
-    $menu: $primary;
+    // misc colors
+        $button: $color2;
+        $logo: $color1;
+        $modal: rgba(200,200,200,.8);
+        $menu: $color1;

@@ -27,7 +27,7 @@ option {
 	font-size: 1em;
 	font-weight: 300;
 	font-family: "Bellota Text", cursive;
-	color: $text;
+	color: $sidebarText;
 	margin: 0;
 	line-height: 1;
 	-webkit-touch-callout: none; /* iOS Safari */
@@ -39,7 +39,7 @@ option {
 }
 
 body {
-	background: $dark;
+	background: $neutral2;
 	overflow: hidden;
 }
 
@@ -47,13 +47,14 @@ body::before, body::after {
 	content: "";
     height: 100%;
     width: calc(19.741vw - 98.707px);
-    background: $doorOpen;
+	background: $door1;
+	background: linear-gradient(180deg, $door1 0%, $door2 100%);
     position: absolute;
     top: 0;
     left: 0;
 	z-index: 50;
 	transition: 1s;
-	transition-delay: .25s;
+	transition-delay: .1s;
     box-shadow: 0 0.5em 2em 0px rgba(0,0,0,.5);
 }
 
@@ -63,7 +64,6 @@ body::after {
 }
 
 body.closed::before, body.closed::after {
-	background: $doorClosed;
 	width: 50%;
 	box-shadow: 0 0.5em 0em 0px rgba(0,0,0,.5);
 }
@@ -74,7 +74,7 @@ div {
 
 hr {
 	border: none;
-	border-bottom: 1px solid $primary;
+	border-bottom: 1px solid $color4;
 	margin: 10px 0;
 }
 
@@ -105,14 +105,6 @@ h5 {
 
 h6 {
 	font-size: 1.1em;
-}
-
-#logo {
-	position: relative;
-	bottom: -4px;
-	left: -20%;
-	width: calc(2.651vw + 53.242px);
-	fill: $primary;
 }
 
 /* BUTTONS */
@@ -251,7 +243,7 @@ button:focus {
 				}
 				
 				#hamburger.show {
-					color: white;
+					color: $whiteText;
 					background: $button;
 				}
 			}
@@ -271,6 +263,14 @@ button:focus {
 		position: absolute;
 		bottom: 0;
 		width: calc(100% - 2em);
+
+		#logo {
+			position: relative;
+			bottom: -4px;
+			left: -20%;
+			width: calc(2.651vw + 53.242px);
+			fill: $logo;
+		}
 	}
 
 	#clock {
@@ -288,7 +288,7 @@ button:focus {
 		h3 {
 			font-family: "Courier Prime", monospace;
 			font-size: calc(2.2535vw + 10.7324px);
-			color: white;
+			color: $whiteText;
 			font-weight: 400;
 		}
 
@@ -310,7 +310,7 @@ button:focus {
 			left: calc(1.2394vw + 3.8035px);
 			height: calc(100% - 1.5em);
 			width: calc(15.3345vw + 13.3276px);
-			color: white;
+			color: $whiteText;
 			background: $button;
 			transition-duration: .15s;
 			border-radius: 10px;
@@ -342,7 +342,7 @@ button:focus {
 	height: 100%;
 	left: 33%;
 	padding: 0 1em;
-	background: $light;
+	background: $neutral1;
 }
 
 #readout {
@@ -397,7 +397,7 @@ button:focus {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-evenly;
-		border-left: 1px solid $primary;
+		border-left: 1px solid $color1;
 	}
 
 	div.data-block.first-block {
@@ -427,13 +427,13 @@ button:focus {
 			height: 38px;
 			width: 38px;
 			border: 1px solid white;
-			color: white;
+			color: $whiteText;
 		}
 
 		#delete-button:hover,
 		#edit-button:hover {
 			color: $button;
-			background: white;
+			background: $whiteText;
 		}
 	}
 
@@ -445,7 +445,7 @@ button:focus {
 		align-items: center;
 		width: 100px;
 		height: calc(88px - 1em);
-		color: white;
+		color: $whiteText;
 		background: $button;
 		box-shadow: 0 0 10px rgba(0, 0, 0, .5);
 	}
@@ -482,7 +482,7 @@ button:focus {
 	background: $button;
 
 	h4 {
-		color: white;
+		color: $whiteText;
 	}
 }
 
@@ -490,17 +490,17 @@ button:focus {
 
 .entry.expanded {
 	background: $entry2;
-	border-bottom: 2px solid $light;
+	border-bottom: 2px solid $neutral1;
 
 	div h3,
 	div h4,
 	div h6,
 	div p {
-		color: white;
+		color: $whiteText;
 	}
 
 	div.data-block {
-		border-left: 1px solid $light;
+		border-left: 1px solid $neutral1;
 	}
 
 	div.data-block.first-block {
@@ -525,11 +525,11 @@ button:focus {
 		div h4,
 		div h6,
 		div p {
-			color: white;
+			color: $whiteText;
 		}
 
 		div.data-block {
-			border-left: 1px solid $light;
+			border-left: 1px solid $neutral1;
 		}
 
 		div.data-block.first-block {
@@ -587,7 +587,7 @@ button:focus {
 		* {
 			margin: 0;
 			padding: 0;
-			color: white;
+			color: $whiteText;
 			border: none;
 		}
 
@@ -639,7 +639,7 @@ button:focus {
 
 				button.btn-menu:hover {
 					background: $button;
-					color: white;
+					color: $whiteText;
 				}
 
 				button.btn-menu:focus {
@@ -651,7 +651,7 @@ button:focus {
 
 		*::selection {
 			background: $button;
-			color: white;
+			color: $whiteText;
 		}
 
 		label {
@@ -671,7 +671,7 @@ button:focus {
 			padding-left: 0;
 
 			* {
-				color: white;
+				color: $whiteText;
 				background: $button;
 			}
 		}
@@ -687,15 +687,15 @@ button:focus {
 			padding: .3em;
 			margin-top: .5em;
 			margin-bottom: 0;
-			color: white;
+			color: $whiteText;
 			border: 1px solid white;
 			position: relative;
 
 			.tooltip{
 				visibility: hidden;
-				background-color: $dark;
+				background-color: $neutral2;
 				display: inline-block;
-				color: white;
+				color: $whiteText;
 				text-align: center;
 				padding: 7.5px;
 				border-radius: 6px;
@@ -721,7 +721,7 @@ button:focus {
 				top: 50%;
 				left: 100%;
 				margin-top: -5px;
-				border-color: transparent transparent transparent $dark;
+				border-color: transparent transparent transparent $neutral2;
 			}
 
 			.right {
@@ -734,7 +734,7 @@ button:focus {
 				top: 50%;
 				right: 100%;
 				margin-top: -5px;
-				border-color: transparent $dark transparent transparent;
+				border-color: transparent $neutral2 transparent transparent;
 			}
 
 			.top {
@@ -747,7 +747,7 @@ button:focus {
 				left: 50%;
 				top: 100%;
 				margin-left: -5px;
-				border-color: $dark transparent transparent transparent;
+				border-color: $neutral2 transparent transparent transparent;
 			}
 
 			.bottom {
@@ -760,12 +760,12 @@ button:focus {
 				left: 50%;
 				bottom: 100%;
 				margin-left: -5px;
-				border-color: transparent transparent $dark transparent;
+				border-color: transparent transparent $neutral2 transparent;
 			}
 		}
 
 		button:hover {
-			color: $primary;
+			color: $color1;
 			background: white;
 		}
 
@@ -799,9 +799,9 @@ button:focus {
 		}
 
 		hr {
-			border: 1px solid $primaryLight;
+			border: 1px solid $neutral1;
 			height: 4px;
-			background: $primaryLight;
+			background: $neutral1;
 			border-radius: 5px;
 			margin: .5em 0;
 		}

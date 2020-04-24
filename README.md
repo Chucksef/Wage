@@ -35,7 +35,8 @@ At the current stage of development (planning), we can anticipate that it would 
 ## Current TODO List
 
   * UI
-    * Needs more pink
+    * Tag should LAG slightly on mouseleave
+    * Tag text not centered within circle buttons
     * Scale Entries for smaller screen formats
 
   * Bugs
