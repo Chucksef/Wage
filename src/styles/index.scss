@@ -53,9 +53,9 @@ body::before, body::after {
     top: 0;
     left: 0;
 	z-index: 50;
-	transition: 1s;
-	transition-delay: .1s;
-    box-shadow: 0 0.5em 2em 0px rgba(0,0,0,.5);
+	transition: 0s;
+	transition-delay: 0s;
+    box-shadow: 0 0 2.5em 0px rgba(0,0,0,.667);
 }
 
 body::after {
@@ -65,7 +65,16 @@ body::after {
 
 body.closed::before, body.closed::after {
 	width: 50%;
-	box-shadow: 0 0.5em 0em 0px rgba(0,0,0,.5);
+	transition: 1s;
+	transition-delay: .1s;
+	box-shadow: 0 0 0em 0px rgba(0,0,0,.667);
+}
+
+body.opening::before, body.opening::after {
+	width: calc(19.741vw - 98.707px);
+	transition: 1s;
+	transition-delay: .1s;
+	box-shadow: 0 0 2.5em 0px rgba(0,0,0,.667);
 }
 
 div {

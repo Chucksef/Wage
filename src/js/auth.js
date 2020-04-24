@@ -12,6 +12,10 @@ auth.onAuthStateChanged(user => {
 	if (user) {
 		// close the log-in screen
 		DOM.body.classList.remove("closed");
+		DOM.body.classList.add("opening");
+		setTimeout(() => {
+			DOM.body.classList.remove("opening");
+		}, 1001);
 		document.querySelector("#welcome").style.display = "none";
 		UI.hideMenu();
 
