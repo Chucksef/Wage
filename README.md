@@ -35,10 +35,10 @@ At the current stage of development (planning), we can anticipate that it would 
 ## Current TODO List
 
   * Bugs
-    * Clock In animates TOO HIGH!
     * Tag button delete error (double mouseover in .15s window)
     * User controls div doesn't resize on window change
     * User Profile Animates Incorrectly
+    * Dismissing Sign In/Sign Up menus (via modal click) SHOULD bring back up the main menu.
     * Sign In Menu tooltip mislabeled
     * Better validation needed on Session's Breaks field (reject non-numeric characters)
 

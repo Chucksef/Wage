@@ -105,7 +105,7 @@ class Animator {
 		let interval = 5;
 		let stepCount = (time * 1000) / interval
 		let currentStep = 1;
-		element.style[fromDir] = "auto";
+		element.style[fromDir] = "";
 		let endPos = parseFloat(window.getComputedStyle(element)[fromDir]);
 		element.style[fromDir] = `${startPos * -1}px`;
 
