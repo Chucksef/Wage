@@ -35,7 +35,6 @@ At the current stage of development (planning), we can anticipate that it would 
 ## Current TODO List
 
   * UI
-    * Tag text not centered within circle buttons
     * Scale Entries for smaller screen formats
 
   * Bugs
