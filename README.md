@@ -34,10 +34,6 @@ At the current stage of development (planning), we can anticipate that it would 
 
 ## Current TODO List
 
-  * Bugs
-    * Sign In Menu tooltip mislabeled
-    * Better validation needed on Session's Breaks field (reject non-numeric characters)
-
   * Tutorial
     * Make system to detect first log-in
     * Design series of 

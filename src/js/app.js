@@ -465,41 +465,46 @@ class App {
 
 		document.querySelector("#submit").addEventListener("click", () => {
 			let changed = false;
+			let regNum = /^[0-9]+[.]?[0-9]{0,2}$/
 
 			// return to default value for breaks if no input
 			if (breaks.value == "") {
 				breaks.value = 0;
 			}
-
-			if (
-				clockInDate.value !== Format.dateForInput(object.clockIn) ||
-				clockInTime.value !== Format.timeForInput(object.clockIn) ||
-				clockOutDate.value !== Format.dateForInput(object.clockOut) ||
-				clockOutTime.value !== Format.timeForInput(object.clockOut) ||
-				breaks.value != 0
-			) {
-				changed = true;
+			
+			if (!regNum.test(breaks.value)) {
+				UI.toast("Breaks can only contain numbers and can contain no more than two decimal point figures");
+			} else {
+				if (
+					clockInDate.value !== Format.dateForInput(object.clockIn) ||
+					clockInTime.value !== Format.timeForInput(object.clockIn) ||
+					clockOutDate.value !== Format.dateForInput(object.clockOut) ||
+					clockOutTime.value !== Format.timeForInput(object.clockOut) ||
+					breaks.value != 0
+				) {
+					changed = true;
+				}
+	
+				if (changed == true) {
+					// if so, generate new timestamps
+					let newStampIn = Format.getTimestamp(clockInDate.value, clockInTime.value);
+					let newStampOut = Format.getTimestamp(clockOutDate.value, clockOutTime.value);
+	
+					// and then write the changes to the db
+					db.collection("Sessions").doc(sessionID).update({
+						Clock_In: newStampIn,
+						Clock_Out: newStampOut,
+						Breaks: parseFloat(breaks.value),
+					});
+				}
+	
+				UI.hideMenu();
+				this.deriveProperties();
+				// re-load clients
+				UI.reset();
+				// zoom to relevant session
+				UI.zoom(this, sessionID);
 			}
-
-			if (changed == true) {
-				// if so, generate new timestamps
-				let newStampIn = Format.getTimestamp(clockInDate.value, clockInTime.value);
-				let newStampOut = Format.getTimestamp(clockOutDate.value, clockOutTime.value);
-
-				// and then write the changes to the db
-				db.collection("Sessions").doc(sessionID).update({
-					Clock_In: newStampIn,
-					Clock_Out: newStampOut,
-					Breaks: parseFloat(breaks.value),
-				});
-			}
-
-			UI.hideMenu();
-			this.deriveProperties();
-			UI.reset();
-			// re-load clients
-			UI.zoom(this, sessionID);
-			// zoom to relevant session
 		});
 	}
 

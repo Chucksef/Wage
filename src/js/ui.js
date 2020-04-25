@@ -368,7 +368,7 @@ class UI {
 									cancelButton: document.querySelector("#cancel"),
 									saveButton: document.querySelector("#submit"),
 								};
-	
+								
 								FORM.title.innerText = "Edit Session";
 								FORM.clientName.innerText = currentObj.clientName;
 								FORM.projectName.innerText = currentObj.projectName;
@@ -380,25 +380,37 @@ class UI {
 	
 								// replace Save Button to clear Event listeners
 								let newSaveButton = Utils.clearListeners(FORM.saveButton);
-	
 								// add session-specific event listener
 								newSaveButton.addEventListener("click", () => {
-									// generate new timestamps
-									let newStampIn = Format.getTimestamp(FORM.clockInDate.value, FORM.clockInTime.value);
-									let newStampOut = Format.getTimestamp(FORM.clockOutDate.value, FORM.clockOutTime.value);
-	
-									// find and update session in app CPS Model
-									let updatedSession = app.sessions[currentObj.id];
-									updatedSession.clockIn = newStampIn;
-									updatedSession.clockOut = newStampOut;
-									updatedSession.breaks = FORM.breaks.value;
-	
-									// find and updated session in FireStore
-									app.updateEntry(updatedSession);
-	
-									UI.reset();
-									UI.hideMenu();
-									UI.zoom(app, updatedSession.id);
+									// regex to check breaks agasint
+									let regNum = /^[0-9]+[.]?[0-9]{0,2}$/
+
+									// validate breaks
+									if (FORM.breaks.value == "") {
+										FORM.breaks.value = 0;
+									}
+									
+									if (!regNum.test(FORM.breaks.value)) {
+										UI.toast("Breaks can only contain numbers and can contain no more than two decimal point figures");
+									} else {
+										// generate new timestamps
+										let newStampIn = Format.getTimestamp(FORM.clockInDate.value, FORM.clockInTime.value);
+										let newStampOut = Format.getTimestamp(FORM.clockOutDate.value, FORM.clockOutTime.value);
+		
+										// find and update session in app CPS Model
+										let updatedSession = app.sessions[currentObj.id];
+										updatedSession.clockIn = newStampIn;
+										updatedSession.clockOut = newStampOut;
+										updatedSession.breaks = FORM.breaks.value;
+		
+										// find and updated session in FireStore
+										app.updateEntry(updatedSession);
+		
+										UI.reset();
+										UI.hideMenu();
+										UI.zoom(app, updatedSession.id);
+
+									}
 								});
 							}
 						});
@@ -438,9 +450,10 @@ class UI {
 			modalBG.addEventListener("mousedown", (e) => {
 				if (e.target == modalBG) {
 					UI.hideMenu();
-				}
-				if (e.target.children[0].id == "signup-menu" || e.target.children[0].id == "signin-menu") {
-					UI.showMain();
+					
+					if (e.target.children[0].id == "signup-menu" || e.target.children[0].id == "signin-menu") {
+						UI.showMain();
+					}
 				}
 			});
 		}

@@ -193,7 +193,7 @@ const TEMPLATES = {
 					<div class="buttons">
 						<button type="button" class="btn-menu material-icons" id="submit">
 							check
-							<p class="tooltip right">Update User Profile</p>
+							<p class="tooltip right">Sign In</p>
 						</button>
 						<button type="button" class="btn-menu material-icons" id="reset">
 							cached
