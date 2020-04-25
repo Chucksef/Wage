@@ -29,7 +29,7 @@ auth.onAuthStateChanged(user => {
 
 		// fly MainMenu in
 		const startPos = Utils.getOOBValue(DOM.mainMenu, "top");
-		Animator.flyIn(DOM.mainMenu, "top", startPos, 1);
+		Animator.flyIn(DOM.mainMenu, "top", startPos, .75);
 		
 		// reset a few elements
 		DOM.ham.classList.add("show");
@@ -61,20 +61,17 @@ class Auth {
 		const cancel = Utils.clearListeners(document.querySelector("#cancel"));
 		const submit = Utils.clearListeners(document.querySelector("#submit"));
 		const reset = Utils.clearListeners(document.querySelector("#reset"));
-
+		
 		// assign new event listeners
-		cancel.addEventListener("click", UI.hideMenu);
-		cancel.addEventListener("click", showMain);
+		cancel.addEventListener("click", () => {
+			UI.hideMenu();
+			UI.showMain();
+		});
 		submit.addEventListener("click", signUserIn);
 		document.querySelectorAll("input").forEach((input) => {
 			input.addEventListener("keydown", checkKey);
 		})
 		reset.addEventListener("click", sendReset);
-
-		function showMain() {
-			const mag2 = Utils.getOOBValue(DOM.mainMenu, "top", 100);
-			Animator.flyIn(DOM.mainMenu, "top", mag2, 1, .25);
-		}
 
 		function checkKey(e) {
 			if (e.code == "Enter") signUserIn();
@@ -113,16 +110,10 @@ class Auth {
 		const submit = Utils.clearListeners(document.querySelector("#submit"));
 
 		// assign new event listerners
-		cancel.addEventListener("click", showMain);
 		cancel.addEventListener("click", () => {
 			UI.hideMenu();
+			UI.showMain();
 		});
-
-		function showMain() {
-			const mag2 = Utils.getOOBValue(DOM.mainMenu, "top", 100);
-			Animator.flyIn(DOM.mainMenu, "top", mag2, 1, .25);
-		}
-		
 		submit.addEventListener("click", signUserUp);
 
 		// checks the password for confirmation and signs the user in

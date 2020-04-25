@@ -417,6 +417,11 @@ class UI {
 		}
 	}
 
+	static showMain() {
+		const mag = Utils.getOOBValue(DOM.mainMenu, "top", 100);
+		Animator.flyIn(DOM.mainMenu, "top", mag, .75, .25);
+	}
+
 	static menu(app, template, allowBack = true) {
 		let modalBG = document.createElement("div");
 		modalBG.id = "modal";
@@ -433,6 +438,9 @@ class UI {
 			modalBG.addEventListener("mousedown", (e) => {
 				if (e.target == modalBG) {
 					UI.hideMenu();
+				}
+				if (e.target.children[0].id == "signup-menu" || e.target.children[0].id == "signin-menu") {
+					UI.showMain();
 				}
 			});
 		}
@@ -595,7 +603,7 @@ class UI {
 		const mag = Utils.getOOBValue(menu);
 		
 		// animate the menu
-		Animator.flyIn(menu, "bottom", mag, 0.5, 0);
+		Animator.flyIn(menu, "bottom", mag, 0.75, 0);
 
 		// select the first element on a .25s delay (so that the element is in view when it's selected)
 		setTimeout(UI.selectFirst, 250);
@@ -610,9 +618,9 @@ class UI {
 			
 			let mag = Utils.getOOBValue(menu);
 
-			Animator.flyOut(menu, "bottom", mag, 0.5, 0);
+			Animator.flyOut(menu, "bottom", mag, 0.75, 0);
 
-			setTimeout(remove, 500);
+			setTimeout(remove, 750);
 		}
 
 		function remove() {
@@ -637,7 +645,7 @@ class UI {
 		DOM.btn_Profile.addEventListener("click", () => UI.showUserMenu(app));
 	}
 
-	static showClock(app, session, speed, delay) {
+	static showClock(app, session, speed=.75, delay) {
 		// build clock element
 		let clock = document.createElement("button");
 		clock.classList.add("btn-block");
@@ -702,7 +710,7 @@ class UI {
 		DOM.hamOptions.classList.toggle("show");
 
 		if (DOM.hamOptions.classList.contains("show")) {
-			DOM.hamOptions.style.height = "calc(2.0775vw + 90.6128px)";
+			DOM.hamOptions.style.height = "calc(.54577vw + 129.2712px)";
 		} else {
 			DOM.hamOptions.style.height = "0px";
 		}

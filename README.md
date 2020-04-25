@@ -35,8 +35,6 @@ At the current stage of development (planning), we can anticipate that it would 
 ## Current TODO List
 
   * Bugs
-    * User Profile Animates Incorrectly
-    * Dismissing Sign In/Sign Up menus (via modal click) SHOULD bring back up the main menu.
     * Sign In Menu tooltip mislabeled
     * Better validation needed on Session's Breaks field (reject non-numeric characters)
 

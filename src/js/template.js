@@ -45,7 +45,7 @@ const TEMPLATES = {
 	menus: {
 		client: `
 			<!--CLIENT-->
-			<div class="menu">
+			<div class="menu" id="client-menu">
 				<h1>New Client</h1>
 				<hr>
 				<h6>Client Info</h6>
@@ -86,7 +86,7 @@ const TEMPLATES = {
 
 		project: `
 			<!--PROJECT-->
-			<div class="menu">
+			<div class="menu" id="project-menu">
 				<h1>New Project</h1>
 				<hr>
 				<h6>Client</h6>
@@ -115,7 +115,7 @@ const TEMPLATES = {
 
 		session: `
 			<!--SESSION-->
-			<div class="menu">
+			<div class="menu" id="session-menu">
 				<h1>Save Session</h1>
 				<h3>%clientName</h3>
 				<h5>%projectName</h5>
@@ -156,7 +156,7 @@ const TEMPLATES = {
 
 		delete: `
 			<!--DELETE-->
-			<div class="menu">
+			<div class="menu" id="delete-menu">
 				<h1>Delete %type?</h1>
 				<hr>
 				<p>Are you sure you want to delete this item?</p>
@@ -181,7 +181,7 @@ const TEMPLATES = {
 
 		signIn: `
 			<!--SIGNIN-->
-			<div class="menu">
+			<div class="menu" id="signin-menu">
 				<h1>Sign In</h1>
 				<hr>
 				<label>Email</label>
@@ -210,7 +210,7 @@ const TEMPLATES = {
 
 		signUp: `
 			<!--SIGNUP-->
-			<div class="menu">
+			<div class="menu" id="signup-menu">
 				<h1>Sign Up</h1>
 				<hr>
 				<label>Email</label>
@@ -237,7 +237,7 @@ const TEMPLATES = {
 
 		user: `
 			<!--USER-->
-			<div class="menu">
+			<div class="menu" id="user-menu">
 				<h1>User Profile</h1>
 				<hr>
 				<label>User Name</label>
