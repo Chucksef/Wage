@@ -804,19 +804,45 @@ class UI {
 	}
 
 	static startTutorial() {
-		// set up Tutorial interface and skip button listener
+		// create the tutorial overlay
 		DOM.tutorial = document.createElement("div");
 		DOM.tutorial.id = "tutorial";
 		DOM.tutorial.innerHTML = TEMPLATES.tutorial;
 		DOM.body.insertAdjacentElement("beforeend", DOM.tutorial);
+
+		// create the highlight
+		DOM.highlight = document.createElement("div");
+		DOM.highlight.id = "highlight";
+		DOM.body.insertAdjacentElement("beforeend", DOM.highlight);
+
+		// close tutorial when button is clicked
 		DOM.tutorial.querySelector("button").addEventListener("click", UI.endTutorial);
 		
+		/*
+			BEGIN TUTORIAL
+		*/
+
 		let msg = document.querySelector("#msg");
+		UI.highlight(DOM.ham, );
 	}
 
 	static endTutorial() {
 		DOM.tutorial.remove();
 		DOM.tutorial = undefined;
+		DOM.highlight.remove();
+		DOM.highlight = undefined;
+	}
+
+	static highlight(elem, func) {
+		// clear the highlight's event listeners
+		
+		// get computed location of element
+
+		// set highlight location to encircle the element
+
+		// set the msg location to be just below the highlight
+
+		// set the highlight's on-click action
 	}
 }
 

@@ -35,7 +35,7 @@ At the current stage of development (planning), we can anticipate that it would 
 ## Current TODO List
 
   * Tutorial
-    * Design basic Tutorial Modal Highlight Function
+    * Create UI.highlight method
     * Guide User Through...
       * Creating a Client
       * Creating a Project

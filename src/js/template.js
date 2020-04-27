@@ -271,9 +271,13 @@ const TEMPLATES = {
 	`,
 
 	tutorial: `
-		<div id="highlight"></div>
-		<div id="msg">First, create a new CLIENT</div>
-		<button>Skip >></button>
+		<div id="msgBox">
+			<div id="msg">
+				<h1>Tutorial</h1>
+				<p>This is where we type all of our text. Maybe if I keep typing text, it'll break where I want it to!</p>
+			</div>
+			<button>Skip Tutorial</button>
+		</div>
 	`,
 };
 
