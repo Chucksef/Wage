@@ -835,14 +835,21 @@ class UI {
 
 	static highlight(elem, func) {
 		// clear the highlight's event listeners
+		DOM.highlight = Utils.clearListeners(DOM.highlight);
 		
 		// get computed location of element
+		let elemCorners = window.getComputedStyle(elem).borderRadius;
+		let elemRect = elem.getBoundingClientRect();
 
 		// set highlight location to encircle the element
-
-		// set the msg location to be just below the highlight
+		DOM.highlight.style.left = `${elemRect.left}px`;
+		DOM.highlight.style.top = `${elemRect.top}px`;
+		DOM.highlight.style.width = `${elemRect.width}px`;
+		DOM.highlight.style.height = `${elemRect.height}px`;
+		DOM.highlight.style.borderRadius = `${elemCorners}`;
 
 		// set the highlight's on-click action
+		DOM.highlight.addEventListener("click", func);
 	}
 }
 
