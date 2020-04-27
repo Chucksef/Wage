@@ -35,8 +35,13 @@ At the current stage of development (planning), we can anticipate that it would 
 ## Current TODO List
 
   * Tutorial
-    * Make system to detect first log-in
-    * Design series of 
+    * Design basic Tutorial Modal Highlight Function
+    * Guide User Through...
+      * Creating a Client
+      * Creating a Project
+      * Clocking In
+      * Clocking Out
+      * Deleting a Session
 
   * Art and Animations
     * Piggy

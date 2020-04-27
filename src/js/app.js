@@ -26,6 +26,7 @@ class App {
 		this.userID = uid;
 		this.loadClients(this.userID); //    <-------------------------------------------------------------------- DB INIT
 		UI.setUpEventListeners(this);
+		this.firstLogin();
 	}
 
 	// load all FireStore user clients into a clients{} object
@@ -639,6 +640,23 @@ class App {
 				});
 				break;
 		}
+	}
+
+	firstLogin() {
+		// check Users collection for doc matching uid
+		let userRef = db.collection("Users").doc(this.userID);
+
+		userRef.get().then((doc) => {
+			if (!doc.exists) {
+				// if no match, create doc with uid but no properties. Return true.
+				userRef.set({});
+
+				// run tutorial
+				alert("this is your first log in. Please follow the tutorial to learn how to use wage. Or click 'skip' to start using now.");
+			}
+		}).catch((error) => {
+			console.log("Error getting document: ", error);
+		})
 	}
 }
 
