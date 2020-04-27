@@ -1,8 +1,15 @@
 @import './variables.scss';
 
 @keyframes pulse {
-    from {transform: scale(1);}
-    to {transform: scale(1.25);}
+    from {
+        transform: scale(1.05);
+    }
+    
+    to {
+        transform: scale(1.75);
+        border-width: 0px;
+        border-color: transparent;
+    }
 }
 
 #highlight {
@@ -12,10 +19,9 @@
     width: 100px;
     height: 100px;
     background: transparent;
-    border: 5px solid $button;
+    border: 4px solid $highlight;
     border-radius: 100%;
-    box-shadow: 0 0 10em 5em $color1;
-    animation: pulse 1s ease-in-out infinite alternate-reverse;
+    animation: pulse 1.5s ease-out infinite;
     z-index: 1000;
 }
 
