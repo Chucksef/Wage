@@ -269,6 +269,12 @@ const TEMPLATES = {
 		<h6><b>%clientName</b></h6>
 		<p>%projectName</p>
 	`,
+
+	tutorial: `
+		<div id="highlight"></div>
+		<div id="msg">First, create a new CLIENT</div>
+		<button>Skip >></button>
+	`,
 };
 
 export { TEMPLATES };

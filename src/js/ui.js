@@ -802,6 +802,22 @@ class UI {
 		first.focus();
 		if (first.tagName == "INPUT") first.select();
 	}
+
+	static startTutorial() {
+		// set up Tutorial interface and skip button listener
+		DOM.tutorial = document.createElement("div");
+		DOM.tutorial.id = "tutorial";
+		DOM.tutorial.innerHTML = TEMPLATES.tutorial;
+		DOM.body.insertAdjacentElement("beforeend", DOM.tutorial);
+		DOM.tutorial.querySelector("button").addEventListener("click", UI.endTutorial);
+		
+		let msg = document.querySelector("#msg");
+	}
+
+	static endTutorial() {
+		DOM.tutorial.remove();
+		DOM.tutorial = undefined;
+	}
 }
 
 export { UI };

@@ -643,20 +643,23 @@ class App {
 	}
 
 	firstLogin() {
-		// check Users collection for doc matching uid
-		let userRef = db.collection("Users").doc(this.userID);
 
-		userRef.get().then((doc) => {
-			if (!doc.exists) {
-				// if no match, create doc with uid but no properties. Return true.
-				userRef.set({});
+		UI.startTutorial();
 
-				// run tutorial
-				alert("this is your first log in. Please follow the tutorial to learn how to use wage. Or click 'skip' to start using now.");
-			}
-		}).catch((error) => {
-			console.log("Error getting document: ", error);
-		})
+		// // check Users collection for doc matching uid
+		// let userRef = db.collection("Users").doc(this.userID);
+
+		// userRef.get().then((doc) => {
+		// 	if (!doc.exists) {
+		// 		// if no match, create doc with uid but no properties. Return true.
+		// 		userRef.set({});
+
+		// 		// run tutorial
+		// 		UI.startTutorial();
+		// 	}
+		// }).catch((error) => {
+		// 	console.log("Error getting document: ", error);
+		// })
 	}
 }
 
