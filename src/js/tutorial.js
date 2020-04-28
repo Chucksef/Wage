@@ -5,12 +5,20 @@ import { TEMPLATES } from './template';
 
 class Tutorial {
     static event1() {
-        Tutorial.highlight(DOM.btn_NewClient, Tutorial.event2);
+
+        Tutorial.hideHighlight();
+
 		DOM.title.innerText = "Welcome!";
         DOM.msg.innerText = `Thank you for trying out Wage!\n
                                 This tutorial will show you the basics of using the app, including creating clients and projects, clocking in/out, and editing your records.\n
                                 Please click the highlighted 'Client' button above to start the process of building your portfolio!\n
                                 You may also skip this tutorial at any time using the button below.`;
+
+        setTimeout(showHighlight, 750);
+
+        function showHighlight() {
+            Tutorial.highlight(DOM.btn_NewClient, Tutorial.event2);
+        }
     }
 
     static event2() {
@@ -22,7 +30,7 @@ class Tutorial {
         document.querySelector("#client-zip").value = "94043";
         document.querySelector("#client-country").value = "USA";
         document.querySelector("#client-notes").value = "They are always watching you";
-        document.querySelector("#client-contact").value = "Dr. John Google";
+        document.querySelector("#client-contact").value = "Dr. John Magoogle";
         document.querySelector("#client-email").value = "drjohn@google.com";
         document.querySelector("#client-phone").value = "(650) NOT-EVIL";
         document.querySelector("#client-rate").value = "40.00";
@@ -30,7 +38,7 @@ class Tutorial {
 
         Tutorial.hideHighlight();
 
-        UI.toast("We've taken the liberty of filling out this form for you.\nTake a minute to look it over before clicking the highlighted Save button below.\n\nThese messages will go away on their own, or you can click them to dismiss immediately.", "success");
+        UI.toast("We've taken the liberty of filling out this form for you.\nTake a minute to look it over before clicking the highlighted Save button below.\n\nThese messages will go away on their own, or you can click them to dismiss immediately.", "info");
         
         let submit = document.querySelector("#submit");
 
@@ -43,23 +51,23 @@ class Tutorial {
 
     static event3() {
         document.querySelector("#submit").click();
-        UI.hideMenu();
 
-        Tutorial.highlight(DOM.btn_NewProject, Tutorial.event4);
-
+        
 		DOM.title.innerText = "Clients and Projects";
         DOM.msg.innerText = `Congratulations on landing the big Google account!\n
                                 Next, let's add our first project we'll be working on.\n
                                 Click the 'New Project' button now.`;
+        
+        Tutorial.highlight(DOM.btn_NewProject, Tutorial.event4);
     }
 
     static event4() {
         UI.menu(window.app, TEMPLATES.menus.project);
         document.querySelector("#client-ID").selectedIndex = 0;
         document.querySelector("#project-name").value = "Invent new search algorithm";
-        document.querySelector("#project-description").value = `• Keep Dr. Google informed with regular emails.\n• Never refer to him as Dr. Google.`;
+        document.querySelector("#project-description").value = `• Keep Dr. Magoogle informed with regular emails.\n• Never refer to him as Dr. Google.`;
 
-        UI.toast("This is the New Project form, conveniently filled out for you.\nWe didn't fill out anything under 'Project Hourly Rate' because we want Wage to default to using our client's hourly rate of $40/hour.", "info");
+        UI.toast("This is the New Project form, conveniently filled out for you.\nNotice that we didn't fill out anything under 'Project Hourly Rate'.\nThat's because we want Wage to default to using our client's hourly rate of $40/hour.", "info");
 
         Tutorial.hideHighlight();
         
@@ -73,18 +81,17 @@ class Tutorial {
     }
 
     static event5() {
-        UI.hideMenu();
+        document.querySelector("#submit").click();
 
-        Tutorial.highlight(DOM.btn_NewProject, Tutorial.event6);
+		DOM.title.innerText = "Clocking In/Out";
+        DOM.msg.innerText = `Now that you have your first client and project, you should get to work!\n
+                                To clock in, we'll first need to find the project we'd like to work on. To do so, click on Google's client entry above...`;
 
-		DOM.title.innerText = "Clients";
-        DOM.msg.innerText = `
-                                You can fill add clients later. Once you do, you'll want to add Projects to each client.\n
-                                Click the New Project button now to check it out.`;
+        Tutorial.highlight(document.querySelector(".entry"), Tutorial.event6);
     }
 
     static event6() {
-        UI.hideMenu()
+
     }
 
     static highlight(elem, func) {
