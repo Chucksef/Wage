@@ -48,10 +48,9 @@ class Tutorial {
         Tutorial.highlight(DOM.btn_NewProject, Tutorial.event4);
 
 		DOM.title.innerText = "Clients and Projects";
-        DOM.msg.innerText = `Congratulations!\n
-                                You can fill out your impressive roster of clients later. Afterwards, you'll want to add Projects to each client.\n
-                                Even if the project is just called 'General,' it's still a good idea to keep it organized.\n
-                                Click the 'New Project' button now to check it out before closing it and returning back here.`;
+        DOM.msg.innerText = `Congratulations on landing the big Google account!\n
+                                Next, let's add our first project we'll be working on.\n
+                                Click the 'New Project' button now.`;
     }
 
     static event4() {
