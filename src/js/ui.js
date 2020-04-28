@@ -809,6 +809,16 @@ class UI {
 		first.focus();
 		if (first.tagName == "INPUT") first.select();
 	}
+
+	static blockInput() {
+		let blocker = document.createElement("div");
+		blocker.id = "blocker";
+		DOM.body.insertAdjacentElement("beforeend", blocker);
+	}
+
+	static allowInput() {
+		document.querySelector("#blocker").remove();
+	}
 }
 
 export { UI };

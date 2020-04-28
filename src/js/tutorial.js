@@ -74,6 +74,7 @@ class Tutorial {
 
         Tutorial.hideHighlight();
 
+        UI.blockInput();
         UI.toast("We've taken the liberty of filling out this form for you.\nTake a minute to look it over before clicking the highlighted Save button below.\n\nThese messages will go away on their own, or you can click them to dismiss immediately.", "info", 15);
         
         let submit = document.querySelector("#submit");
@@ -86,8 +87,8 @@ class Tutorial {
     }
 
     static event3() {
+        UI.allowInput();
         document.querySelector("#submit").click();
-
         
 		DOM.title.innerText = "Adding Projects";
         DOM.msg.innerText = `Congratulations on landing the big Google account!\n
@@ -103,6 +104,7 @@ class Tutorial {
         document.querySelector("#project-name").value = "Invent new search algorithm";
         document.querySelector("#project-description").value = `• Keep Dr. Magoogle informed with regular emails.\n• Never refer to him as Dr. Google.`;
 
+        UI.blockInput();
         UI.toast("This is the New Project form, conveniently filled out for you.\nNotice that we didn't fill out anything under 'Project Hourly Rate'.\nThat's because we want Wage to default to using our client's hourly rate of $40/hour.", "info", 17);
 
         Tutorial.hideHighlight();
@@ -117,6 +119,7 @@ class Tutorial {
     }
 
     static event5() {
+        UI.allowInput();
         document.querySelector("#submit").click();
 
 		DOM.title.innerText = "Clocking In";
@@ -177,6 +180,7 @@ class Tutorial {
 
         Tutorial.hideHighlight();
 
+        UI.blockInput();
         UI.toast("This is the Save Session interface.\nHere, you can adjust any clock in/out times, or add breaks to your session.\n\nFor now, just click the highlighted Save button below.", "info", 15);
 
         setTimeout(showHighlight, 750);
@@ -187,6 +191,7 @@ class Tutorial {
     }
 
     static event10() {
+        UI.allowInput();
         document.querySelector("#submit").click();
 
         Tutorial.hideHighlight();

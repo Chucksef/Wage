@@ -74,3 +74,13 @@
     }
     
 }
+
+#blocker {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background: transparent;
+    z-index: 101;
+}
