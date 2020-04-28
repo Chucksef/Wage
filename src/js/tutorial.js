@@ -55,15 +55,20 @@ class Tutorial {
 
     static event4() {
         UI.menu(window.app, TEMPLATES.menus.project);
+        document.querySelector("#client-ID").selectedIndex = 0;
+        document.querySelector("#project-name").value = "Invent new search algorithm";
+        document.querySelector("#project-description").value = `• Keep Dr. Google informed with regular emails.\n• Never refer to him as Dr. Google.`;
+
+        UI.toast("This is the New Project form, conveniently filled out for you.\nWe didn't fill out anything under 'Project Hourly Rate' because we want Wage to default to using our client's hourly rate of $40/hour.", "info");
 
         Tutorial.hideHighlight();
         
-        let backButton = document.querySelector("#back");
+        let submit = document.querySelector("#submit");
 
         setTimeout(showHighlight, 750);
 
         function showHighlight() {
-            Tutorial.highlight(backButton, Tutorial.event5);
+            Tutorial.highlight(submit, Tutorial.event5);
         }
     }
 
