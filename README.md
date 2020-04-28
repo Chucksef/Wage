@@ -34,15 +34,11 @@ At the current stage of development (planning), we can anticipate that it would 
 
 ## Current TODO List
 
-  * Tutorial
-    * Create UI.highlight method
-    * Guide User Through...
-      * Creating a Client
-      * Creating a Project
-      * Clocking In
-      * Clocking Out
-      * Deleting a Session
+  * Bugs2
+    * tag not deleting sub-buttons if another tag is hovered quickly
+    * need to prevent all forms from being editable/clickable during tutorial
 
   * Art and Animations
-    * Piggy
+    * Piggy needs tail
+    * Piggy should oink on 
     * Main Logo
