@@ -4,6 +4,37 @@ import { Utils } from './utils';
 import { TEMPLATES } from './template';
 
 class Tutorial {
+
+    static startTutorial() {
+		// create the tutorial overlay
+		DOM.tutorial = document.createElement("div");
+		DOM.tutorial.id = "tutorial";
+		DOM.tutorial.innerHTML = TEMPLATES.tutorial;
+		DOM.body.insertAdjacentElement("beforeend", DOM.tutorial);
+
+		// create the highlight
+		DOM.highlight = document.createElement("div");
+		DOM.highlight.id = "highlight";
+		DOM.body.insertAdjacentElement("beforeend", DOM.highlight);
+
+		// close tutorial when button is clicked
+		DOM.tutorial.querySelector("button").addEventListener("click", Tutorial.endTutorial);
+		DOM.title = document.querySelector("#msg h1");
+		DOM.msg = document.querySelector("#msg p");
+
+        // begin tutorial...
+		Tutorial.event1();
+	}
+
+	static endTutorial() {
+		DOM.tutorial.remove();
+		DOM.tutorial = undefined;
+		DOM.highlight.remove();
+		DOM.highlight = undefined;
+		DOM.title = undefined;
+		DOM.msg = undefined;
+	}
+
     static event1() {
 
         Tutorial.hideHighlight();
@@ -53,9 +84,9 @@ class Tutorial {
         document.querySelector("#submit").click();
 
         
-		DOM.title.innerText = "Clients and Projects";
+		DOM.title.innerText = "Adding Projects";
         DOM.msg.innerText = `Congratulations on landing the big Google account!\n
-                                Next, let's add our first project we'll be working on.\n
+                                Next, let's add our first Project to the Client so that we can get to work.\n
                                 Click the 'New Project' button now.`;
         
         Tutorial.highlight(DOM.btn_NewProject, Tutorial.event4);
@@ -67,7 +98,7 @@ class Tutorial {
         document.querySelector("#project-name").value = "Invent new search algorithm";
         document.querySelector("#project-description").value = `• Keep Dr. Magoogle informed with regular emails.\n• Never refer to him as Dr. Google.`;
 
-        UI.toast("This is the New Project form, conveniently filled out for you.\nNotice that we didn't fill out anything under 'Project Hourly Rate'.\nThat's because we want Wage to default to using our client's hourly rate of $40/hour.", "info", 15);
+        UI.toast("This is the New Project form, conveniently filled out for you.\nNotice that we didn't fill out anything under 'Project Hourly Rate'.\nThat's because we want Wage to default to using our client's hourly rate of $40/hour.", "info", 17);
 
         Tutorial.hideHighlight();
         
@@ -109,7 +140,7 @@ class Tutorial {
 
         Tutorial.hideHighlight();
 
-        DOM.msg.innerText = `This is the clock-in button. Clicking this button will start logging your time towards the project it falls beneath.\n\nClick it now.`;
+        DOM.msg.innerText = `This is the clock-in button. Clicking this button will start logging your time towards the project it belongs to.\n\nClick it now.`;
 
         setTimeout(showHighlight, 250);
 
@@ -167,8 +198,8 @@ class Tutorial {
         setTimeout(showHighlight, 750);
 
         function showHighlight() {
-            Tutorial.highlight(document.querySelector(".tag"), UI.endTutorial);
-            DOM.highlight.addEventListener("mouseover", UI.endTutorial);
+            Tutorial.highlight(document.querySelector(".tag"), Tutorial.endTutorial);
+            DOM.highlight.addEventListener("mouseover", Tutorial.endTutorial);
         }
     }
 

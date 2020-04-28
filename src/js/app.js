@@ -6,16 +6,7 @@ import { Session } from "./session";
 import { UI } from "./ui";
 import { Format } from "./format";
 import { db } from "./firebase";
-
-// BULLSHIT WAY TO CHANGE userIDs EN MASSE...
-//
-// db.collection("Sessions").where("User_ID", "==", "aZ30ququkdO2fMisBHBUVMflNBv2").get().then((snap) => {
-//     snap.forEach((session) => {
-//         db.collection("Sessions").doc(session.id).update({
-//             User_ID: "iJ2DJB2YABeSFWsOwpxqU6Ve1GX2",
-//         })
-//     });
-// });
+import { Tutorial } from "./tutorial";
 
 class App {
 	constructor(uid) {
@@ -643,23 +634,20 @@ class App {
 	}
 
 	firstLogin() {
+		// check Users collection for doc matching uid
+		let userRef = db.collection("Users").doc(this.userID);
 
-		UI.startTutorial();
+		userRef.get().then((doc) => {
+			if (!doc.exists) {
+				// if no match, create doc with uid but no properties. Return true.
+				userRef.set({});
 
-		// // check Users collection for doc matching uid
-		// let userRef = db.collection("Users").doc(this.userID);
-
-		// userRef.get().then((doc) => {
-		// 	if (!doc.exists) {
-		// 		// if no match, create doc with uid but no properties. Return true.
-		// 		userRef.set({});
-
-		// 		// run tutorial
-		// 		UI.startTutorial();
-		// 	}
-		// }).catch((error) => {
-		// 	console.log("Error getting document: ", error);
-		// })
+				// run tutorial
+				Tutorial.startTutorial();
+			}
+		}).catch((error) => {
+			console.log("Error getting document: ", error);
+		})
 	}
 }
 

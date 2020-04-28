@@ -6,7 +6,6 @@ import { Project } from "./project";
 import { Client } from "./client";
 import { Utils } from "./utils";
 import { Auth } from "./auth";
-import { Tutorial } from './tutorial';
 
 class UI {
 	static addEntry(app, entry, destination) {
@@ -802,39 +801,6 @@ class UI {
 		const first = document.querySelector(".first");
 		first.focus();
 		if (first.tagName == "INPUT") first.select();
-	}
-
-	static startTutorial() {
-		// create the tutorial overlay
-		DOM.tutorial = document.createElement("div");
-		DOM.tutorial.id = "tutorial";
-		DOM.tutorial.innerHTML = TEMPLATES.tutorial;
-		DOM.body.insertAdjacentElement("beforeend", DOM.tutorial);
-
-		// create the highlight
-		DOM.highlight = document.createElement("div");
-		DOM.highlight.id = "highlight";
-		DOM.body.insertAdjacentElement("beforeend", DOM.highlight);
-
-		// close tutorial when button is clicked
-		DOM.tutorial.querySelector("button").addEventListener("click", UI.endTutorial);
-		DOM.title = document.querySelector("#msg h1");
-		DOM.msg = document.querySelector("#msg p");
-		
-		/*
-			BEGIN TUTORIAL
-		*/
-
-		Tutorial.event1();
-	}
-
-	static endTutorial() {
-		DOM.tutorial.remove();
-		DOM.tutorial = undefined;
-		DOM.highlight.remove();
-		DOM.highlight = undefined;
-		DOM.title = undefined;
-		DOM.msg = undefined;
 	}
 }
 
