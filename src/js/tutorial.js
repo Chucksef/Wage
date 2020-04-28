@@ -136,6 +136,20 @@ class Tutorial {
         }
     }
 
+    static event9() {
+        document.querySelector("#clock").click();
+
+        Tutorial.hideHighlight();
+
+        UI.toast("This is the Save Session interface.\nHere, you can adjust any clock in/out times, or add breaks to your session.\n\nFor now, just click the highlighted Save button below.", "info");
+
+        setTimeout(showHighlight, 750);
+
+        function showHighlight() {
+            Tutorial.highlight(document.querySelector("#submit"), Tutorial.event10);
+        }
+    }
+
     static highlight(elem, func) {
 		// clear the highlight's event listeners
         DOM.highlight = Utils.clearListeners(DOM.highlight);
