@@ -35,7 +35,7 @@ At the current stage of development (planning), we can anticipate that it would 
 ## Current TODO List
 
   * Bugs2
-    * sign-up form not submitting on ENTER
+    * Fix persistent tag buttons problem
 
   * Art and Animations
     * Piggy needs tail

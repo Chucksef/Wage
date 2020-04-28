@@ -201,6 +201,7 @@ class UI {
 				UI.addEntry(app, entry, target);
 				// show the controls
 				function showControls() {
+					console.log("ENTERED");
 					// delete all delete and edit buttons on whole page
 					let delButtons = Array.from(document.querySelectorAll("#delete-button"));
 					let edButtons = Array.from(document.querySelectorAll("#edit-button"));
@@ -209,8 +210,8 @@ class UI {
 					})
 					// clear timer to delete elements
 					clearTimeout(window.tagTimer);
-					let db = tag.querySelector("#delete-button");
-					if(!db) {
+					let delButton = tag.querySelector("#delete-button");
+					if(!delButton) {
 						// add the delete button
 						let deleteButton = document.createElement("button");
 						deleteButton.id = "delete-button";
@@ -425,6 +426,7 @@ class UI {
 				}
 				// hide the controls
 				function hideControls() {
+					console.log("left");
 					window.tagTimer = setTimeout(() => {
 						let deleteButton = this.querySelector("#delete-button");
 						let editButton = this.querySelector("#edit-button");
@@ -522,7 +524,7 @@ class UI {
 		})
 
 		function checkKey(e) {
-			if(e.code == "Enter") {
+			if(e.code == "Enter" || e.code == "NumpadEnter") {
 				submitButton();
 			};
 		}

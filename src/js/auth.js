@@ -68,13 +68,15 @@ class Auth {
 			UI.showMain();
 		});
 		submit.addEventListener("click", signUserIn);
+		reset.addEventListener("click", sendReset);
+
+		// add event listeners for ENTER keypress
 		document.querySelectorAll("input").forEach((input) => {
 			input.addEventListener("keydown", checkKey);
 		})
-		reset.addEventListener("click", sendReset);
 
 		function checkKey(e) {
-			if (e.code == "Enter") signUserIn();
+			if (e.code == "Enter" || e.code == "NumpadEnter") signUserIn();
 		}
 
 		function signUserIn() {
@@ -115,6 +117,15 @@ class Auth {
 			UI.showMain();
 		});
 		submit.addEventListener("click", signUserUp);
+
+		// add event listeners for ENTER keypress
+		document.querySelectorAll("input").forEach((input) => {
+			input.addEventListener("keydown", checkKey);
+		})
+
+		function checkKey(e) {
+			if (e.code == "Enter" || e.code == "NumpadEnter") signUserUp();
+		}
 
 		// checks the password for confirmation and signs the user in
 		function signUserUp() {
