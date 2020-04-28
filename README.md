@@ -35,8 +35,8 @@ At the current stage of development (planning), we can anticipate that it would 
 ## Current TODO List
 
   * Bugs2
-    * tag not deleting sub-buttons if another tag is hovered quickly
     * need to prevent all forms from being editable/clickable during tutorial
+    * sign-up form not submitting on ENTER
 
   * Art and Animations
     * Piggy needs tail

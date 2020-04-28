@@ -201,6 +201,13 @@ class UI {
 				UI.addEntry(app, entry, target);
 				// show the controls
 				function showControls() {
+					// delete all delete and edit buttons on whole page
+					let delButtons = Array.from(document.querySelectorAll("#delete-button"));
+					let edButtons = Array.from(document.querySelectorAll("#edit-button"));
+					edButtons.concat(delButtons).forEach((but) => {
+						but.remove();
+					})
+					// clear timer to delete elements
 					clearTimeout(window.tagTimer);
 					let db = tag.querySelector("#delete-button");
 					if(!db) {
