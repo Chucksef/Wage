@@ -20,7 +20,7 @@ auth.onAuthStateChanged(user => {
 		UI.hideMenu();
 
 		// set up the instance of the app
-		let app = new App(user.uid);
+		window.app = new App(user.uid);
 		app.user = user;
 	} else {
 		// show the log-in screen
