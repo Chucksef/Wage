@@ -85,12 +85,26 @@ class Tutorial {
 
 		DOM.title.innerText = "Clocking In/Out";
         DOM.msg.innerText = `Now that you have your first client and project, you should get to work!\n
-                                To clock in, we'll first need to find the project we'd like to work on. To do so, click on Google's client entry above...`;
+                                To clock in, we'll first need to find the project we'd like to work on. To do so, click on the client entry above...`;
 
         Tutorial.highlight(document.querySelector(".entry"), Tutorial.event6);
     }
 
     static event6() {
+        document.querySelector(".entry").click();
+
+        Tutorial.hideHighlight();
+
+        DOM.msg.innerText = `Good. Now click the project highlighted...`;
+
+        setTimeout(showHighlight, 250);
+
+        function showHighlight() {
+            Tutorial.highlight(document.querySelector(".childProjects .entry"), Tutorial.event7);
+        }
+    }
+
+    static event7() {
 
     }
 
