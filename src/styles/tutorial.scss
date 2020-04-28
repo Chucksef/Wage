@@ -2,11 +2,11 @@
 
 @keyframes pulse {
     from {
-        transform: scale(1.05);
+        transform: scale(1);
     }
     
     to {
-        transform: scale(1.75);
+        transform: scale(1.25);
         border-width: 0px;
         border-color: transparent;
     }
@@ -19,7 +19,7 @@
     width: 100px;
     height: 100px;
     background: transparent;
-    border: 4px solid $highlight;
+    border: 5px solid $highlight;
     border-radius: 100%;
     animation: pulse .75s ease-out infinite;
     z-index: 1000;
