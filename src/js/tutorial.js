@@ -2,6 +2,7 @@ import { DOM } from './dom';
 import { UI } from './ui';
 import { Utils } from './utils';
 import { TEMPLATES } from './template';
+import { db } from './firebase';
 
 class Tutorial {
 
@@ -32,7 +33,11 @@ class Tutorial {
 		DOM.highlight.remove();
 		DOM.highlight = undefined;
 		DOM.title = undefined;
-		DOM.msg = undefined;
+        DOM.msg = undefined;
+        
+        let userRef = db.collection("Users").doc(app.userID);
+		// if no match, create doc with uid but no properties. Return true.
+		userRef.set({});
 	}
 
     static event1() {

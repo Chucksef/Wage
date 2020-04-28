@@ -639,8 +639,6 @@ class App {
 
 		userRef.get().then((doc) => {
 			if (!doc.exists) {
-				// if no match, create doc with uid but no properties. Return true.
-				userRef.set({});
 
 				// run tutorial
 				Tutorial.startTutorial();
