@@ -38,7 +38,7 @@ class Tutorial {
 
         Tutorial.hideHighlight();
 
-        UI.toast("We've taken the liberty of filling out this form for you.\nTake a minute to look it over before clicking the highlighted Save button below.\n\nThese messages will go away on their own, or you can click them to dismiss immediately.", "info");
+        UI.toast("We've taken the liberty of filling out this form for you.\nTake a minute to look it over before clicking the highlighted Save button below.\n\nThese messages will go away on their own, or you can click them to dismiss immediately.", "info", 15);
         
         let submit = document.querySelector("#submit");
 
@@ -67,7 +67,7 @@ class Tutorial {
         document.querySelector("#project-name").value = "Invent new search algorithm";
         document.querySelector("#project-description").value = `• Keep Dr. Magoogle informed with regular emails.\n• Never refer to him as Dr. Google.`;
 
-        UI.toast("This is the New Project form, conveniently filled out for you.\nNotice that we didn't fill out anything under 'Project Hourly Rate'.\nThat's because we want Wage to default to using our client's hourly rate of $40/hour.", "info");
+        UI.toast("This is the New Project form, conveniently filled out for you.\nNotice that we didn't fill out anything under 'Project Hourly Rate'.\nThat's because we want Wage to default to using our client's hourly rate of $40/hour.", "info", 15);
 
         Tutorial.hideHighlight();
         
@@ -141,12 +141,34 @@ class Tutorial {
 
         Tutorial.hideHighlight();
 
-        UI.toast("This is the Save Session interface.\nHere, you can adjust any clock in/out times, or add breaks to your session.\n\nFor now, just click the highlighted Save button below.", "info");
+        UI.toast("This is the Save Session interface.\nHere, you can adjust any clock in/out times, or add breaks to your session.\n\nFor now, just click the highlighted Save button below.", "info", 15);
 
         setTimeout(showHighlight, 750);
 
         function showHighlight() {
             Tutorial.highlight(document.querySelector("#submit"), Tutorial.event10);
+        }
+    }
+
+    static event10() {
+        document.querySelector("#submit").click();
+
+        Tutorial.hideHighlight();
+
+        DOM.title.innerText = `Editing Entries`
+        DOM.msg.innerText = `One last thing!\n
+                                If you ever want to edit or delete a Client, Project, or Session, simply hover over three dots highlighted above.\n
+                                Hover over Google's 3-dot options menu now, and select the Garbage Can icon to delete it!\n
+                                Thanks again for using Wage!
+        `;
+
+
+
+        setTimeout(showHighlight, 750);
+
+        function showHighlight() {
+            Tutorial.highlight(document.querySelector(".tag"), UI.endTutorial);
+            DOM.highlight.addEventListener("mouseover", UI.endTutorial);
         }
     }
 

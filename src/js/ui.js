@@ -765,7 +765,7 @@ class UI {
 		});
 	}
 
-	static toast(message, level="alert") {
+	static toast(message, level="alert", time=7.5) {
 		// clear toastTimer if needed
 		UI.clearToast();
 
@@ -779,7 +779,7 @@ class UI {
 		DOM.toast.addEventListener("click", UI.clearToast);
 
 		setTimeout(show,1);
-		toastTimer = setTimeout(hide,7500);
+		toastTimer = setTimeout(hide,time * 1000);
 
 		function show() {
 			DOM.toast.classList.add("show");
