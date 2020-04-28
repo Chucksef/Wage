@@ -83,7 +83,7 @@ class Tutorial {
     static event5() {
         document.querySelector("#submit").click();
 
-		DOM.title.innerText = "Clocking In/Out";
+		DOM.title.innerText = "Clocking In";
         DOM.msg.innerText = `Now that you have your first client and project, you should get to work!\n
                                 To clock in, we'll first need to find the project we'd like to work on. To do so, click on the client entry above...`;
 
@@ -105,7 +105,35 @@ class Tutorial {
     }
 
     static event7() {
+        document.querySelector(".childProjects .entry").click();
 
+        Tutorial.hideHighlight();
+
+        DOM.msg.innerText = `This is the clock-in button. Clicking this button will start logging your time towards the project it falls beneath.\n\nClick it now.`;
+
+        setTimeout(showHighlight, 250);
+
+        function showHighlight() {
+            Tutorial.highlight(document.querySelector("#clock-in"), Tutorial.event8);
+        }
+    }
+
+    static event8() {
+        document.querySelector("#clock-in").click();
+
+        Tutorial.hideHighlight();
+
+        DOM.title.innerText = `Clocking Out`
+        DOM.msg.innerText = `You are now officially on the clock!\n
+                                The clock, highlighted in the lower left, will run until you clock out, whether that's in two seconds or twelve years!\n
+                                Go ahead and click it now.
+        `;
+
+        setTimeout(showHighlight, 750);
+
+        function showHighlight() {
+            Tutorial.highlight(document.querySelector("#clock"), Tutorial.event9);
+        }
     }
 
     static highlight(elem, func) {
