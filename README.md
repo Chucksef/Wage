@@ -34,10 +34,7 @@ At the current stage of development (planning), we can anticipate that it would 
 
 ## Current TODO List
 
-  * Bugs2
-    * Fix persistent tag buttons problem
-
   * Art and Animations
-    * Piggy needs tail
-    * Piggy should oink on 
+    * Piggy should oink on occasion
+    * Piggy should "speak" tutorial
     * Main Logo
