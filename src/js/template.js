@@ -139,7 +139,7 @@ const TEMPLATES = {
 					<div class="buttons">
 						<button type="button" class="btn-menu material-icons" id="submit">
 							save
-							<p class="tooltip right">Update Session</p>
+							<p class="tooltip right">Save/Update Session</p>
 						</button>
 						<button type="button" class="btn-menu material-icons" id="cancel">
 							delete_forever
