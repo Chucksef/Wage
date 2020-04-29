@@ -7,6 +7,7 @@ let DOM = {
 	ham: document.querySelector("#hamburger"),
 	hamOptions: document.querySelector("#hamburger-options"),
 	toast: document.querySelector("#toast"),
+	piggy: document.querySelector("#logo"),
 
 	mainMenu: document.querySelector("#mainMenu"),
 

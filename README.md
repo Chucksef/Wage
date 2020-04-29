@@ -28,13 +28,12 @@ At the current stage of development (planning), we can anticipate that it would 
     * Firestore DB
     * Firebase Auth
   * Webpack
-  * No JS or CSS frameworks used
+  * No JS frameworks or libraries used
+  * No CSS frameworks used
   * Google Fonts & Material Icons
-  * Custom PNGs and SVGs created by me
+  * Custom art assets created and animated by me
 
 ## Current TODO List
 
   * Art and Animations
     * Piggy should oink on occasion
-    * Piggy should "speak" tutorial
-    * Main Logo

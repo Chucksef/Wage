@@ -1,3 +1,5 @@
+import { DOM } from "./dom";
+
 class Timing {
 	static easeOut(x, pwr) {
 		if (pwr < 1 || pwr > 15 ) {
