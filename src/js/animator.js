@@ -198,7 +198,7 @@ class Animator {
 		}
 	}
 
-	static oink(minCount=2, maxCount=4, delay=.3) {
+	static oink(minCount=2, maxCount=4, delay=.5) {
 		// get random number of oinks within range
 		let count = minCount + Math.round((Math.random() * (maxCount - minCount)));
 		let i = 0;
@@ -215,7 +215,25 @@ class Animator {
 
 				// create an oink
 				let oink = document.createElement("p");
-				oink.innerText = "OINK";
+				let oinkFlavor = Math.round(Math.random() * 4);
+
+				switch (oinkFlavor) {
+					case 0:
+						oink.innerText = "oink";
+						break;
+					case 1:
+						oink.innerText = "OINK";
+						break;
+					case 2:
+						oink.innerText = "*SNORT*";
+						break;
+					case 3:
+						oink.innerText = "wheee";
+						break;
+					case 4:
+						oink.innerText = "SQUEEE";
+						break;
+				}
 				oink.classList.add("oink");
 				DOM.piggy.insertAdjacentElement("afterend", oink);
 		
@@ -224,7 +242,7 @@ class Animator {
 
 				let randDisp = ((elemRect.left - parentRect.left) - 20) + (Math.random() * (rectDiff + 40));
 				let randRot = (Math.random() * 90) - 45;
-				let randScale = (Math.random() * .5) + .2;
+				let randScale = (Math.random() * .5) + .375;
 				oink.style.transformOrigin = "center";
 				oink.style.left = randDisp + "px";
 				oink.style.transform = `scale(${randScale}) rotate(${randRot}deg)`;
