@@ -198,7 +198,7 @@ class Animator {
 		}
 	}
 
-	static oink(minCount=1, maxCount=3, delay=.3) {
+	static oink(minCount=2, maxCount=4, delay=.3) {
 		// get random number of oinks within range
 		let count = minCount + Math.round((Math.random() * (maxCount - minCount)));
 		let i = 0;
@@ -224,7 +224,7 @@ class Animator {
 
 				let randDisp = ((elemRect.left - parentRect.left) - 20) + (Math.random() * (rectDiff + 40));
 				let randRot = (Math.random() * 90) - 45;
-				let randScale = (Math.random() * .25) + .5;
+				let randScale = (Math.random() * .5) + .2;
 				oink.style.transformOrigin = "center";
 				oink.style.left = randDisp + "px";
 				oink.style.transform = `scale(${randScale}) rotate(${randRot}deg)`;
@@ -233,7 +233,7 @@ class Animator {
 				oink.classList.add("fade-out");
 		
 				// remove it
-				setTimeout(removeOink, 1000);
+				setTimeout(removeOink, 2000);
 
 				function removeOink() {
 					oink.remove();
