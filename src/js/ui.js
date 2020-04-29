@@ -730,6 +730,9 @@ class UI {
 	}
 
 	static toggleHamburger() {
+
+		Animator.oink();
+
 		DOM.ham.classList.toggle("show");
 		DOM.hamOptions.classList.toggle("show");
 

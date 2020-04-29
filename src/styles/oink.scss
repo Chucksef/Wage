@@ -1,0 +1,18 @@
+@import './variables.scss';
+
+.oink {
+    bottom: 100%;
+    color: $color4;
+    position: absolute;
+    z-index: 49;
+    font-size: 1.5em;
+    font-weight: 500;
+    font-family: "Bellota Text", sans-serif;
+    transition: 1.5s;
+    transition-property: bottom, color;
+}
+
+.oink.fade-out {
+    bottom: 150%;
+    color: transparent;
+}

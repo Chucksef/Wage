@@ -197,6 +197,54 @@ class Animator {
 			}
 		}
 	}
+
+	static oink(minCount=1, maxCount=3, delay=.3) {
+		// get random number of oinks within range
+		let count = minCount + Math.round((Math.random() * (maxCount - minCount)));
+		let i = 0;
+
+		let parentRect = DOM.piggy.parentNode.getBoundingClientRect();
+		let elemRect = DOM.piggy.getBoundingClientRect();
+		
+		// generate them one-by-one, delaying between
+		let oinkTimer = setInterval(oinkGen, delay*1000);
+		
+		function oinkGen() {
+			if (i < count) {
+				i++;
+
+				// create an oink
+				let oink = document.createElement("p");
+				oink.innerText = "*oink*";
+				oink.classList.add("oink");
+				DOM.piggy.insertAdjacentElement("afterend", oink);
+		
+				// displaceX and rotate randomly
+				let rectDiff = elemRect.width - oink.getBoundingClientRect().width;
+
+				let randDisp = ((elemRect.left - parentRect.left) - 20) + (Math.random() * (rectDiff + 40));
+				let randRot = (Math.random() * 90) - 45;
+				let randScale = (Math.random() * .25) + .5;
+				oink.style.transformOrigin = "center";
+				oink.style.left = randDisp + "px";
+				oink.style.transform = `scale(${randScale}) rotate(${randRot}deg)`;
+		
+				// apply fade-out class
+				oink.classList.add("fade-out");
+		
+				// remove it
+				setTimeout(removeOink, 1000);
+
+				function removeOink() {
+					oink.remove();
+				}
+			} else {
+				clearInterval(oinkTimer);
+			}
+			
+		}
+
+	}
 }
 
 export { Animator };
