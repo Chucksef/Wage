@@ -183,259 +183,261 @@ class UI {
 
 			// delete the tag element if this is THE active session
 			if (app.activeSession == currentObj.id) {
+
 				// remove the controls to delete/edit
 				tag.remove();
 
 				//remove the second two child-elements
 				entry.classList.add("active");
 				entry.innerHTML = "<div class='inset-border'><h4>Active Session</h4></div>";
-			}
+			} else {
 
-			/*
-			ADD TAG CONTROL ELEMENTS IF THERE'S STILL A TAG ELEMENT
-			*/
-
-			if (tag) {
+				// add tag controls since this isn't an active entry
 				tag.addEventListener("mouseenter", showControls, false);
 				tag.addEventListener("mouseleave", hideControls, false);
 				UI.addEntry(app, entry, target);
+
 				// show the controls
 				function showControls() {
-					console.log("ENTERED");
-					// delete all delete and edit buttons on whole page
-					let delButtons = Array.from(document.querySelectorAll("#delete-button"));
-					let edButtons = Array.from(document.querySelectorAll("#edit-button"));
-					edButtons.concat(delButtons).forEach((but) => {
-						but.remove();
-					})
-					// clear timer to delete elements
 					clearTimeout(window.tagTimer);
-					let delButton = tag.querySelector("#delete-button");
-					if(!delButton) {
-						// add the delete button
-						let deleteButton = document.createElement("button");
-						deleteButton.id = "delete-button";
-						deleteButton.classList.add("material-icons");
-						deleteButton.innerText = "delete";
-						this.insertAdjacentElement("afterbegin", deleteButton);
-						deleteButton.addEventListener("click", (e) => {
-							// stop propagation
-							e.stopPropagation();
-	
-							// show the confirm menu on click
-							// replace the %type with the item type
-							let temp = TEMPLATES.menus.delete.replace(
-								/%type/g,
-								currentObj.type.charAt(0).toUpperCase() + currentObj.type.slice(1),
-							);
-	
-							UI.menu(app, temp);
-							// add functionality to the menu buttons
-							document.querySelector("#cancel").addEventListener("click", () => {
-								UI.hideMenu();
-							});
-							document.querySelector("#submit").addEventListener("click", () => {
-								UI.hideMenu();
-								app.deleteItem(currentObj);
-							});
-						});
-	
-						// add the edit button
-						let editButton = document.createElement("button");
-						editButton.id = "edit-button";
-						editButton.classList.add("material-icons");
-						editButton.innerText = "edit";
-						this.insertAdjacentElement("afterbegin", editButton);
-						editButton.addEventListener("click", (e) => {
-							/*
-							SHOW ENTRY EDIT MENU...
-							*/
-	
-							// stop propagation
-							e.stopPropagation();
-	
-							let FORM;
-	
-							// find out what kind of item this is...
-							if (currentObj.type == "client") {
-								UI.menu(app, TEMPLATES.menus.client);
-	
-								// grab all the client form fields
-								FORM = {
-									title: document.querySelector(".menu h1"),
-									address: document.querySelector("#client-address"),
-									city: document.querySelector("#client-city"),
-									contactName: document.querySelector("#client-contact"),
-									country: document.querySelector("#client-country"),
-									email: document.querySelector("#client-email"),
-									invoiceFrequency: document.querySelector("#client-frequency"),
-									name: document.querySelector("#client-name"),
-									notes: document.querySelector("#client-notes"),
-									phone: document.querySelector("#client-phone"),
-									rate: document.querySelector("#client-rate"),
-									state: document.querySelector("#client-state"),
-									zip: document.querySelector("#client-zip"),
-									saveButton: document.querySelector("#submit"),
-								};
-	
-								// set the form's fields to match currentObj's properties
-								FORM.title.innerText = "Edit Client";
-								FORM.address.value = currentObj.address;
-								FORM.city.value = currentObj.city;
-								FORM.contactName.value = currentObj.contactName;
-								FORM.country.value = currentObj.country;
-								FORM.email.value = currentObj.email;
-								FORM.invoiceFrequency.value = currentObj.invoiceFrequency;
-								FORM.name.value = currentObj.name;
-								FORM.notes.value = currentObj.notes;
-								FORM.phone.value = currentObj.phone;
-								FORM.rate.value = currentObj.rate;
-								FORM.state.value = currentObj.state;
-								FORM.zip.value = currentObj.zip;
-	
-								// replace Save Button to clear Event listeners
-								let newSaveButton = Utils.clearListeners(FORM.saveButton);
-	
-								// add client-specific event listener
-								newSaveButton.addEventListener("click", () => {
-									// find and update client in app CPS model
-									let updatedClient = app.clients[currentObj.id];
-									updatedClient.address = FORM.address.value;
-									updatedClient.city = FORM.city.value;
-									updatedClient.contactName = FORM.contactName.value;
-									updatedClient.country = FORM.country.value;
-									updatedClient.email = FORM.email.value;
-									updatedClient.invoiceFrequency = FORM.invoiceFrequency.value;
-									updatedClient.name = FORM.name.value;
-									updatedClient.notes = FORM.notes.value;
-									updatedClient.phone = FORM.phone.value;
-									updatedClient.rate = FORM.rate.value;
-									updatedClient.state = FORM.state.value;
-									updatedClient.zip = FORM.zip.value;
-	
-									// find and updated client in FireStore
-									app.updateEntry(updatedClient);
-	
-									UI.reset();
-									UI.hideMenu();
-									UI.zoom(app, updatedClient.id);
-								});
-							} else if (currentObj.type == "project") {
-								UI.menu(app, TEMPLATES.menus.project);
-	
-								// grab all the client form fields
-								FORM = {
-									title: document.querySelector(".menu h1"),
-									clientID: document.querySelector("#client-ID"),
-									description: document.querySelector("#project-description"),
-									name: document.querySelector("#project-name"),
-									rate: document.querySelector("#project-rate"),
-									saveButton: document.querySelector("#submit"),
-								};
-	
-								// set the form's fields to match currentObj's properties
-								FORM.title.innerText = "Edit Project";
-								FORM.clientID.value = currentObj.clientID;
-								FORM.description.value = currentObj.description;
-								FORM.name.value = currentObj.name;
-								FORM.rate.value = currentObj.rate;
-	
-								// replace Save Button to clear Event listeners
-								let newSaveButton = Utils.clearListeners(FORM.saveButton);
-	
-								// add project-specific event listener
-								newSaveButton.addEventListener("click", () => {
-									// find and update project in app CPS Model
-									let updatedProject = app.projects[currentObj.id];
-									updatedProject.clientID = FORM.clientID.value;
-									updatedProject.description = FORM.description.value;
-									updatedProject.name = FORM.name.value;
-									updatedProject.rate = FORM.rate.value;
-	
-									// find and updated project in FireStore
-									app.updateEntry(updatedProject);
-	
-									UI.reset();
-									UI.hideMenu();
-									UI.zoom(app, updatedProject.id);
-								});
-							} else {
-								// type = "session"...
-								UI.menu(app, TEMPLATES.menus.session);
-	
-								// grab all the client form fields
-								FORM = {
-									title: document.querySelector(".menu h1"),
-									clientName: document.querySelector(".menu h3"),
-									projectName: document.querySelector(".menu h5"),
-									breaks: document.querySelector("#session-breaks"),
-									clockInDate: document.querySelector("#session-clockInDate"),
-									clockInTime: document.querySelector("#session-clockInTime"),
-									clockOutDate: document.querySelector("#session-clockOutDate"),
-									clockOutTime: document.querySelector("#session-clockOutTime"),
-									cancelButton: document.querySelector("#cancel"),
-									saveButton: document.querySelector("#submit"),
-								};
-								
-								FORM.title.innerText = "Edit Session";
-								FORM.clientName.innerText = currentObj.clientName;
-								FORM.projectName.innerText = currentObj.projectName;
-								FORM.breaks.value = currentObj.breaks;
-								FORM.clockInDate.value = Format.dateForInput(currentObj.clockIn);
-								FORM.clockInTime.value = Format.timeForInput(currentObj.clockIn);
-								FORM.clockOutDate.value = Format.dateForInput(currentObj.clockOut);
-								FORM.clockOutTime.value = Format.timeForInput(currentObj.clockOut);
-	
-								// replace Save Button to clear Event listeners
-								let newSaveButton = Utils.clearListeners(FORM.saveButton);
-								// add session-specific event listener
-								newSaveButton.addEventListener("click", () => {
-									// regex to check breaks agasint
-									let regNum = /^[0-9]+[.]?[0-9]{0,2}$/
-
-									// validate breaks
-									if (FORM.breaks.value == "") {
-										FORM.breaks.value = 0;
-									}
-									
-									if (!regNum.test(FORM.breaks.value)) {
-										UI.toast("Breaks can only contain numbers and can contain no more than two decimal point figures");
-									} else {
-										// generate new timestamps
-										let newStampIn = Format.getTimestamp(FORM.clockInDate.value, FORM.clockInTime.value);
-										let newStampOut = Format.getTimestamp(FORM.clockOutDate.value, FORM.clockOutTime.value);
+					window.tagTimer = setTimeout(() => {
+						// delete all delete and edit buttons on whole page
+						UI.removeButtons();
+						// clear timer to delete elements
+						clearTimeout(window.tagTimer);
+						let delButton = tag.querySelector("#delete-button");
+						if(!delButton) {
+							// add the delete button
+							let deleteButton = document.createElement("button");
+							deleteButton.id = "delete-button";
+							deleteButton.classList.add("material-icons");
+							deleteButton.innerText = "delete";
+							this.insertAdjacentElement("afterbegin", deleteButton);
+							deleteButton.addEventListener("click", (e) => {
+								// stop propagation[[]]
+								e.stopPropagation();
 		
-										// find and update session in app CPS Model
-										let updatedSession = app.sessions[currentObj.id];
-										updatedSession.clockIn = newStampIn;
-										updatedSession.clockOut = newStampOut;
-										updatedSession.breaks = FORM.breaks.value;
+								// show the confirm menu on click
+								// replace the %type with the item type
+								let temp = TEMPLATES.menus.delete.replace(
+									/%type/g,
+									currentObj.type.charAt(0).toUpperCase() + currentObj.type.slice(1),
+								);
 		
-										// find and updated session in FireStore
-										app.updateEntry(updatedSession);
+								UI.menu(app, temp);
+								// add functionality to the menu buttons
+								document.querySelector("#cancel").addEventListener("click", () => {
+									UI.hideMenu();
+								});
+								document.querySelector("#submit").addEventListener("click", () => {
+									UI.hideMenu();
+									app.deleteItem(currentObj);
+								});
+							});
+		
+							// add the edit button
+							let editButton = document.createElement("button");
+							editButton.id = "edit-button";
+							editButton.classList.add("material-icons");
+							editButton.innerText = "edit";
+							this.insertAdjacentElement("afterbegin", editButton);
+							editButton.addEventListener("click", (e) => {
+								/*
+								SHOW ENTRY EDIT MENU...
+								*/
+		
+								// stop propagation
+								e.stopPropagation();
+		
+								let FORM;
+		
+								// find out what kind of item this is...
+								if (currentObj.type == "client") {
+									UI.menu(app, TEMPLATES.menus.client);
+		
+									// grab all the client form fields
+									FORM = {
+										title: document.querySelector(".menu h1"),
+										address: document.querySelector("#client-address"),
+										city: document.querySelector("#client-city"),
+										contactName: document.querySelector("#client-contact"),
+										country: document.querySelector("#client-country"),
+										email: document.querySelector("#client-email"),
+										invoiceFrequency: document.querySelector("#client-frequency"),
+										name: document.querySelector("#client-name"),
+										notes: document.querySelector("#client-notes"),
+										phone: document.querySelector("#client-phone"),
+										rate: document.querySelector("#client-rate"),
+										state: document.querySelector("#client-state"),
+										zip: document.querySelector("#client-zip"),
+										saveButton: document.querySelector("#submit"),
+									};
+		
+									// set the form's fields to match currentObj's properties
+									FORM.title.innerText = "Edit Client";
+									FORM.address.value = currentObj.address;
+									FORM.city.value = currentObj.city;
+									FORM.contactName.value = currentObj.contactName;
+									FORM.country.value = currentObj.country;
+									FORM.email.value = currentObj.email;
+									FORM.invoiceFrequency.value = currentObj.invoiceFrequency;
+									FORM.name.value = currentObj.name;
+									FORM.notes.value = currentObj.notes;
+									FORM.phone.value = currentObj.phone;
+									FORM.rate.value = currentObj.rate;
+									FORM.state.value = currentObj.state;
+									FORM.zip.value = currentObj.zip;
+		
+									// replace Save Button to clear Event listeners
+									let newSaveButton = Utils.clearListeners(FORM.saveButton);
+		
+									// add client-specific event listener
+									newSaveButton.addEventListener("click", () => {
+										// find and update client in app CPS model
+										let updatedClient = app.clients[currentObj.id];
+										updatedClient.address = FORM.address.value;
+										updatedClient.city = FORM.city.value;
+										updatedClient.contactName = FORM.contactName.value;
+										updatedClient.country = FORM.country.value;
+										updatedClient.email = FORM.email.value;
+										updatedClient.invoiceFrequency = FORM.invoiceFrequency.value;
+										updatedClient.name = FORM.name.value;
+										updatedClient.notes = FORM.notes.value;
+										updatedClient.phone = FORM.phone.value;
+										updatedClient.rate = FORM.rate.value;
+										updatedClient.state = FORM.state.value;
+										updatedClient.zip = FORM.zip.value;
+		
+										// find and updated client in FireStore
+										app.updateEntry(updatedClient);
 		
 										UI.reset();
 										UI.hideMenu();
-										UI.zoom(app, updatedSession.id);
-
-									}
-								});
-							}
-						});
-					}
+										UI.zoom(app, updatedClient.id);
+									});
+								} else if (currentObj.type == "project") {
+									UI.menu(app, TEMPLATES.menus.project);
+		
+									// grab all the client form fields
+									FORM = {
+										title: document.querySelector(".menu h1"),
+										clientID: document.querySelector("#client-ID"),
+										description: document.querySelector("#project-description"),
+										name: document.querySelector("#project-name"),
+										rate: document.querySelector("#project-rate"),
+										saveButton: document.querySelector("#submit"),
+									};
+		
+									// set the form's fields to match currentObj's properties
+									FORM.title.innerText = "Edit Project";
+									FORM.clientID.value = currentObj.clientID;
+									FORM.description.value = currentObj.description;
+									FORM.name.value = currentObj.name;
+									FORM.rate.value = currentObj.rate;
+		
+									// replace Save Button to clear Event listeners
+									let newSaveButton = Utils.clearListeners(FORM.saveButton);
+		
+									// add project-specific event listener
+									newSaveButton.addEventListener("click", () => {
+										// find and update project in app CPS Model
+										let updatedProject = app.projects[currentObj.id];
+										updatedProject.clientID = FORM.clientID.value;
+										updatedProject.description = FORM.description.value;
+										updatedProject.name = FORM.name.value;
+										updatedProject.rate = FORM.rate.value;
+		
+										// find and updated project in FireStore
+										app.updateEntry(updatedProject);
+		
+										UI.reset();
+										UI.hideMenu();
+										UI.zoom(app, updatedProject.id);
+									});
+								} else {
+									// type = "session"...
+									UI.menu(app, TEMPLATES.menus.session);
+		
+									// grab all the client form fields
+									FORM = {
+										title: document.querySelector(".menu h1"),
+										clientName: document.querySelector(".menu h3"),
+										projectName: document.querySelector(".menu h5"),
+										breaks: document.querySelector("#session-breaks"),
+										clockInDate: document.querySelector("#session-clockInDate"),
+										clockInTime: document.querySelector("#session-clockInTime"),
+										clockOutDate: document.querySelector("#session-clockOutDate"),
+										clockOutTime: document.querySelector("#session-clockOutTime"),
+										cancelButton: document.querySelector("#cancel"),
+										saveButton: document.querySelector("#submit"),
+									};
+									
+									FORM.title.innerText = "Edit Session";
+									FORM.clientName.innerText = currentObj.clientName;
+									FORM.projectName.innerText = currentObj.projectName;
+									FORM.breaks.value = currentObj.breaks;
+									FORM.clockInDate.value = Format.dateForInput(currentObj.clockIn);
+									FORM.clockInTime.value = Format.timeForInput(currentObj.clockIn);
+									FORM.clockOutDate.value = Format.dateForInput(currentObj.clockOut);
+									FORM.clockOutTime.value = Format.timeForInput(currentObj.clockOut);
+		
+									// replace Save Button to clear Event listeners
+									let newSaveButton = Utils.clearListeners(FORM.saveButton);
+									// add session-specific event listener
+									newSaveButton.addEventListener("click", () => {
+										// regex to check breaks agasint
+										let regNum = /^[0-9]+[.]?[0-9]{0,2}$/
+		
+										// validate breaks
+										if (FORM.breaks.value == "") {
+											FORM.breaks.value = 0;
+										}
+										
+										if (!regNum.test(FORM.breaks.value)) {
+											UI.toast("Breaks can only contain numbers and can contain no more than two decimal point figures");
+										} else {
+											// generate new timestamps
+											let newStampIn = Format.getTimestamp(FORM.clockInDate.value, FORM.clockInTime.value);
+											let newStampOut = Format.getTimestamp(FORM.clockOutDate.value, FORM.clockOutTime.value);
+			
+											// find and update session in app CPS Model
+											let updatedSession = app.sessions[currentObj.id];
+											updatedSession.clockIn = newStampIn;
+											updatedSession.clockOut = newStampOut;
+											updatedSession.breaks = FORM.breaks.value;
+			
+											// find and updated session in FireStore
+											app.updateEntry(updatedSession);
+			
+											UI.reset();
+											UI.hideMenu();
+											UI.zoom(app, updatedSession.id);
+		
+										}
+									});
+								}
+							});
+						}
+					}, 35);
 				}
 				// hide the controls
 				function hideControls() {
-					console.log("left");
+					clearTimeout(window.tagTimer);
 					window.tagTimer = setTimeout(() => {
-						let deleteButton = this.querySelector("#delete-button");
-						let editButton = this.querySelector("#edit-button");
-						deleteButton.remove();
-						editButton.remove();
-					}, 200)
+						// delete all delete and edit buttons on whole page
+						UI.removeButtons();
+					}, 200);
 				}
-			}
+			}			
 		}
+	}
+	
+	static removeButtons() {
+		let deleteButtons = Array.from(document.querySelectorAll("#delete-button"));
+		let editButtons = Array.from(document.querySelectorAll("#edit-button"));
+		editButtons.concat(deleteButtons).forEach((but) => {
+			but.remove();
+		})
 	}
 
 	static showMain() {
