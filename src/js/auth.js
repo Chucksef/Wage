@@ -22,6 +22,7 @@ auth.onAuthStateChanged(user => {
 		// set up the instance of the app
 		window.app = new App(user.uid);
 		app.user = user;
+		Animator.oink();
 		UI.startOinking();
 	} else {
 		// show the log-in screen

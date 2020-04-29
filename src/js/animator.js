@@ -215,7 +215,7 @@ class Animator {
 
 				// create an oink
 				let oink = document.createElement("p");
-				oink.innerText = "*oink*";
+				oink.innerText = "OINK";
 				oink.classList.add("oink");
 				DOM.piggy.insertAdjacentElement("afterend", oink);
 		

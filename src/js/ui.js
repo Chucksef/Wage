@@ -52,6 +52,7 @@ class UI {
 
 					// CLICK Clock-In button
 					clock.addEventListener("click", () => {
+						Animator.oink();
 						// clock in @ the project
 						let projectID = clock.parentNode.previousSibling.id;
 						app.clockIn(projectID);
