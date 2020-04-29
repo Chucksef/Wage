@@ -731,8 +731,6 @@ class UI {
 
 	static toggleHamburger() {
 
-		Animator.oink();
-
 		DOM.ham.classList.toggle("show");
 		DOM.hamOptions.classList.toggle("show");
 
@@ -825,6 +823,20 @@ class UI {
 
 	static allowInput() {
 		document.querySelector("#blocker").remove();
+	}
+
+	static startOinking() {
+		let interval = 8 + (Math.random() * 12);
+		window.oinkTimer = setTimeout(oinkItUp, interval*1000)
+
+		function oinkItUp() {
+			Animator.oink();
+			UI.startOinking();
+		}
+	}
+
+	static stopOinking() {
+		clearTimeout(window.oinkTimer);
 	}
 }
 

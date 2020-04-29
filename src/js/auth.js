@@ -22,6 +22,7 @@ auth.onAuthStateChanged(user => {
 		// set up the instance of the app
 		window.app = new App(user.uid);
 		app.user = user;
+		UI.startOinking();
 	} else {
 		// show the log-in screen
 		DOM.body.classList.add("closed");
@@ -36,6 +37,7 @@ auth.onAuthStateChanged(user => {
 		DOM.hamOptions.classList.add("show");
 		UI.toggleHamburger();
 		UI.reset();
+		UI.stopOinking();
 	}
 })
 
