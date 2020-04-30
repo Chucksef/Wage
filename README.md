@@ -34,7 +34,3 @@ At the current stage of development (planning), we can anticipate that it would 
   * Custom art assets created and animated by me
 
 ## Current TODO List
-
-  * Mobile layout
-    * Create window.resize event to dynamically size the hamburger-options menu
-    * Tag click event propagation?

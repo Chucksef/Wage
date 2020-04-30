@@ -733,6 +733,7 @@ class UI {
 
 	static toggleHamburger() {
 
+		clearTimeout(window.hamTimer);
 		DOM.ham.classList.toggle("show");
 		DOM.hamOptions.classList.toggle("show");
 
@@ -742,8 +743,19 @@ class UI {
 
 		if (DOM.hamOptions.classList.contains("show")) {
 			DOM.hamOptions.style.height = hei;
+
+			// set it back to auto after it's done animating
+			window.hamTimer = setTimeout(() => {
+				DOM.hamOptions.style.height = "auto";
+			}, 250);
+
 		} else {
-			DOM.hamOptions.style.height = "0px";
+			let ht = DOM.hamOptions.getBoundingClientRect().height;
+			DOM.hamOptions.style.height = `${ht}px`;
+			
+			window.hamTimer = setTimeout(() => {
+				DOM.hamOptions.style.height = "0px";
+			}, 20);
 		}
 	}
 
