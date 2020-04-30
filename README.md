@@ -35,5 +35,12 @@ At the current stage of development (planning), we can anticipate that it would 
 
 ## Current TODO List
 
-  * Art and Animations
-    * Piggy should oink on occasion
+  * Mobile layout
+    * Sidebar padding
+    * Wage top logo & hamburger menu positioning
+    * Tagline scaling / breaking
+    * Entry layout
+    * Clock scaling
+    * Main menu padding
+    * Barn Door shadowing
+    * Tag click event propagation?

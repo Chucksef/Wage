@@ -1,0 +1,54 @@
+@import './variables.scss';
+
+@media only screen and (max-width: 600px) {
+    #sidebar {
+        padding: .75em .5em .5em .5em;
+        
+        #header {
+
+
+            .row {
+                flex-direction: column-reverse;
+
+                .col {
+                    width: 100%;
+                    flex-direction: row;
+
+                    #hamburger {
+                        font-size: calc(7.93391vw - 2.60346px);
+                        width: 100%;
+                        border-radius: 5px;
+                    }
+                }
+                
+                #wage-logo {
+                    width: 100%;
+                    font-size: calc(8.99175vw + 8.0495px);
+                    padding-bottom: calc(1.05785vw + 9.6529px);
+                }
+            }
+
+            #hamburger-options{
+
+            }
+
+            hr {
+                
+            }
+
+            h2 {
+                font-size: calc(2.64463vw + 4.63222px);
+            }
+        }
+
+        #controls{
+            button.btn-block {
+
+            }
+        }
+        
+        #timer {
+            width: calc(100% - 1em);
+        }
+    }
+}
