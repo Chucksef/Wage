@@ -1,6 +1,14 @@
 @import './variables.scss';
 
 @media only screen and (max-width: 600px) {
+    body::before, body::after {
+        box-shadow: 0 0 1.5em 2px rgba(0, 0, 0, 0.66);
+    }
+
+    body.opening::before, body.opening::after {
+        box-shadow: 0 0 1.5em 2px rgba(0, 0, 0, 0.66);
+    }
+    
     #sidebar {
         padding: .75em .5em .5em .5em;
 
@@ -77,11 +85,6 @@
                 top: calc(5.28927vw + 23.26438px);
             }
         }
-    }
-
-    #readout {
-
-
     }
     
     .entry {

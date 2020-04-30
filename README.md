@@ -36,7 +36,5 @@ At the current stage of development (planning), we can anticipate that it would 
 ## Current TODO List
 
   * Mobile layout
-    * Main menu padding
-    * Barn Door shadowing
     * Create window.resize event to dynamically size the hamburger-options menu
     * Tag click event propagation?
