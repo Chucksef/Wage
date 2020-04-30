@@ -61,6 +61,21 @@
         
         #timer {
             width: calc(100% - 1em);
+
+            #clock {
+                
+                
+                h6:after {
+                    top: 100%;
+                    left: calc(2.64463vw - 5.86778px);
+                    width: calc(14.28103vw + 35.31382px);
+                    transition-property: top;
+                } 
+            }
+
+            #clock:hover h6:after {
+                top: calc(5.28927vw + 23.26438px);
+            }
         }
     }
 
