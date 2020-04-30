@@ -117,14 +117,14 @@
             }
 
             .tag {
-                left: 5px;
+                left: 10px;
                 top: 50%;
                 height: 35px;
                 transform: translateY(-50%);
             }
 
             .tag:hover {
-                height: calc(100% - 10px);
+                height: calc(100% - 20px);
             }
         }
 

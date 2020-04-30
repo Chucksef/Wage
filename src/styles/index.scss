@@ -437,10 +437,10 @@ button:focus {
 		color: $button;
 		position: absolute;
 		left: 0;
-		top: 0;
+		top: 50%;
 		width: 1em;
 		height: 50%;
-		transform: translate(10px, 50%);
+		transform: translate(10px, -50%);
 		border-radius: 5px;
 		transition: .20s;
 		transition-delay: .20s;
