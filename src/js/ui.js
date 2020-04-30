@@ -691,9 +691,10 @@ class UI {
 		Animator.flyIn(DOM.timer, "bottom", mag, speed, delay);
 
 		// grab the 3 output fields in the clock element
-		let clockTime = DOM.timer.querySelector("h3");
-		let clockClient = DOM.timer.querySelector("h6");
-		let clockProject = DOM.timer.querySelector("p");
+		let clk = document.querySelector("#clock");
+		let clockTime = clk.querySelector("h3");
+		let clockClient = clk.querySelector("h6");
+		let clockProject = clk.querySelector("p");
 
 		// fill in the project name
 		clockProject.innerText = app.projects[session.projectID].name;
