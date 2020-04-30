@@ -735,8 +735,12 @@ class UI {
 		DOM.ham.classList.toggle("show");
 		DOM.hamOptions.classList.toggle("show");
 
+		// get value for small screens
+		let hei = "calc(.54577vw + 129.2712px)"
+		if (window.innerWidth <= 600) hei = "159px";
+
 		if (DOM.hamOptions.classList.contains("show")) {
-			DOM.hamOptions.style.height = "calc(.54577vw + 129.2712px)";
+			DOM.hamOptions.style.height = hei;
 		} else {
 			DOM.hamOptions.style.height = "0px";
 		}

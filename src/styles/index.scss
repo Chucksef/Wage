@@ -436,12 +436,15 @@ button:focus {
 		text-align: center;
 		color: $button;
 		position: absolute;
-		left: 0.5em;
+		left: 0;
+		top: 0;
 		width: 1em;
 		height: 50%;
+		transform: translate(10px, 50%);
 		border-radius: 5px;
 		transition: .20s;
 		transition-delay: .20s;
+		transition-property: width, background, height, color, box-shadow;
 		background-image: radial-gradient(circle, $button 2px, transparent 2.5px);
 		background-size: 100% 33.333%;
 

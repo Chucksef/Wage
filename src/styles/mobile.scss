@@ -3,9 +3,15 @@
 @media only screen and (max-width: 600px) {
     #sidebar {
         padding: .75em .5em .5em .5em;
+
+        * button {
+            width: 100%;
+            font-size: 22px;
+            min-height: 64px;
+            margin: 0;
+        }
         
         #header {
-
 
             .row {
                 flex-direction: column-reverse;
@@ -28,8 +34,12 @@
                 }
             }
 
-            #hamburger-options{
-
+            #hamburger-options.show {
+                height: 159px;
+            }
+            
+            #hamburger-options #btn-SignOut {
+                margin-top: 10px;
             }
 
             hr {
@@ -41,14 +51,106 @@
             }
         }
 
-        #controls{
-            button.btn-block {
+        #controls {
+            top: calc(-.42254vw - 4.8872px);
 
+            #btn-NewProject {
+                margin-top: 10px;
             }
         }
         
         #timer {
             width: calc(100% - 1em);
         }
+    }
+
+    #readout {
+
+
+    }
+    
+    .entry {
+        display: block;
+        padding-left: 25px;
+        min-height: 45px;
+
+        * {
+            padding-bottom: .25em;
+        }
+
+        div.data-block {
+            width: 45%;
+            display: inline-flex;
+            border: none;
+            padding-top: 5px;
+        }
+        
+        div.data-block.first-block {
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid $color4;
+            padding: 0;
+            margin: 0;
+
+            h3, h4 {
+                width: 100%;
+                padding: 0;
+                margin-bottom: 5px;
+            }
+
+            .tag {
+                left: 5px;
+                top: 50%;
+                height: 35px;
+                transform: translateY(-50%);
+            }
+
+            .tag:hover {
+                height: calc(100% - 10px);
+            }
+        }
+
+        div.data-block.last-block {
+            border: none;
+            border-left: 1px solid $color4;
+        }
+    }
+
+    .entry.active {
+        padding: 0;
+        display: flex;
+        height: 55.8438px;
+        
+        * {
+            font-size: 31.9154px;
+        }
+    }
+
+    .entry.expanded, .childProjects .entry.expanded {
+
+        div.data-block {
+            border-color: $neutral1;
+            border-left: none;
+        }
+
+        div.data-block.last-block {
+            border: none;
+            border-left: 1px solid $neutral1;
+        }
+    }
+
+    .childProjects, .childProjects .childSessions {
+        margin: -1em 0 2em;
+    }
+
+    .childSessions .entry .data-block {
+        width: 100%;
+    }
+
+
+
+
+    #clock-in {
+        font-size: calc(4.23142vw + 6.61148px);
     }
 }
