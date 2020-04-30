@@ -46,7 +46,7 @@ body {
 body::before, body::after {
 	content: "";
     height: 100%;
-    width: calc(19.741vw - 98.707px);
+    width: calc(18.17818vw - 68.70106px);
 	background: $door1;
 	background: linear-gradient(180deg, $door1 0%, $door2 100%);
     position: absolute;
@@ -172,8 +172,8 @@ button:focus {
 	position: absolute;
 	top: 0;
 	height: 100vh;
-	left: calc(19.741vw - 98.707px);
-	width: calc(60.518vw + 197.414px);
+	left: calc(18.17818vw - 68.70106px);
+	width: calc(63.63953vw + 137.48102px);
 }
 
 #sidebar {
@@ -369,7 +369,7 @@ button:focus {
 }
 
 #spacer {
-	margin-bottom: 1em;
+	margin-bottom: calc(0.53013vw + 5.8215px);
 }
 
 .entry {
